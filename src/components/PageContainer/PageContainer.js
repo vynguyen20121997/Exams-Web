@@ -1,2 +1,2 @@
 export const pageContainer =
-    " bg-white mx-auto container md rounded-3xl px-20 py-10"
+    " bg-white mx-auto container lg rounded-3xl px-20 py-10"
