@@ -2,27 +2,29 @@ import React from "react";
 import { SimpleFooter } from "../../../components/Footer/Footer";
 import { Logo } from "../../../components/Logo/Logo";
 import { Button } from "@material-tailwind/react";
-import { headerBoxContainer } from "../../../components/BoxContainer/BoxContainer";
-import AddBarRow from "./components/AddBarRow/AddBarRow";
+import DataTable from "./components/DataTable/DataTable";
 
 const AdminPage = () => {
   return (
-    <div className="background-website">
-      <div class="bg-white w-11/12 mx-auto rounded-3xl px-20 py-5">
-        <div class="flex w-full flex-row flex-wrap items-center justify-between gap-y-6 gap-x-12 pt-5 pb-20">
+    <div className="background-website-admin">
+      <div className="bg-white w-11/12 mx-auto rounded-3xl pb-5 ">
+        <div
+          className="bg-purple rounded-t-3xl h-20 flex w-full flex-row pt-4
+        justify-between px-20"
+        >
           <div>
-            <Logo />
+            <Logo textcolor="text-white" logocolor="white" />
           </div>
-          <div>
-            <Button variant="gradient">Register</Button>
-          </div>
+          <div></div>
         </div>
 
-        <div>
-          <AddBarRow />
+        <div className="px-20 py-10">
+          <DataTable />
         </div>
 
-        <SimpleFooter />
+        <div className="px-20">
+          <SimpleFooter />
+        </div>
       </div>
     </div>
   );

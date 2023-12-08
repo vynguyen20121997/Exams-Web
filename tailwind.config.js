@@ -11,6 +11,7 @@ module.exports = withMT({
       transparent: "transparent",
       current: "currentColor",
       'purple': "#9333ea",
+      'blackpurple': '#6b21a8',
       'white': "#f8fafc",
     },
     fontFamily: {
