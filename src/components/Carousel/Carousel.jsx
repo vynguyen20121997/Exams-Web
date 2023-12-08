@@ -9,7 +9,7 @@ const imageData = [
 ];
 export function CarouselTransition() {
   return (
-    <Card className="w-full max-w-[40rem]">
+    <Card className=" max-w-[40rem] h-3/5">
       <Carousel
         autoplay={true}
         loop={true}
@@ -20,7 +20,7 @@ export function CarouselTransition() {
           <img
             src={item.link}
             alt={index}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain"
           />
         ))}
       </Carousel>

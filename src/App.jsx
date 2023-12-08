@@ -1,23 +1,26 @@
-import { Route, BrowserRouter as Router  , Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import LoginPage from "./feature/page/StartingPage/LoginPage";
-import RegisterPage from "./feature/page/StartingPage/RegisterPage";
+import ForgotPassPage from "./feature/page/StartingPage/ForgotPassPage";
+import ResetPassPage from "./feature/page/StartingPage/ResetPassPage";
+import AdminPage from "./feature/page/AdminPage/AdminPage";
 
 function App() {
   return (
     <Router>
-    <Routes>
-      {/* <Route path='/' element={<SiteLayout />}> */}
+      <Routes>
+        {/* <Route path='/' element={<SiteLayout />}> */}
         {/* <Route index element={<ProtectedRoute component={Home} />} /> */}
         {/* <Route
           path='profile'
           element={<ProtectedRoute component={Profile} />}
         /> */}
         <Route path="" element={<LoginPage />} />
-        <Route path='signup' element={<RegisterPage />} />
-      {/* </Route> */}
-    </Routes>
-  </Router>
+        <Route path="forgot-password" element={<ForgotPassPage />} />
+        <Route path="reset-password" element={<ResetPassPage />} />
+        <Route path="admin" element={<AdminPage />} />
+      </Routes>
+    </Router>
   );
 }
 

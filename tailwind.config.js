@@ -13,7 +13,9 @@ module.exports = withMT({
       'purple': "#9333ea",
       'white': "#f8fafc",
     },
-
-  },
-  plugins: [],
+    fontFamily: {
+      mono: ['ui-monospace', 'SFMono-Regular'],
+    },
+    plugins: [],
+  }
 });
