@@ -1,12 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { Card, Carousel } from "@material-tailwind/react";
+import { imageData } from "./ImageData/LoginPageImageData";
 
-const imageData = [
-  { link: "https://i.ibb.co/8PSfGYJ/1.png" },
-  { link: "https://i.ibb.co/dpmhRXq/2.png" },
-  { link: "https://i.ibb.co/xhSzJ4h/3.png" },
-  { link: "https://i.ibb.co/HGfSq23/4.png" },
-];
 export function CarouselTransition() {
   return (
     <Card className=" max-w-[40rem] h-3/5">
@@ -18,6 +13,7 @@ export function CarouselTransition() {
       >
         {imageData.map((item, index) => (
           <img
+            key={index}
             src={item.link}
             alt={index}
             className="h-full w-full object-contain"

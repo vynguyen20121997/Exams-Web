@@ -1,7 +1,7 @@
 export const Logo = ({ textcolor, logocolor }) => {
   return (
     <>
-      <div class="flex">
+      <div className="flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
