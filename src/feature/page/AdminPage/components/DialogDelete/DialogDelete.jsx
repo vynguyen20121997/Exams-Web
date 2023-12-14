@@ -1,13 +1,13 @@
-import React from "react";
 import {
   Button,
   Dialog,
-  DialogHeader,
   DialogBody,
   DialogFooter,
+  DialogHeader,
 } from "@material-tailwind/react";
+import React from "react";
 
-export const DialogDefault = ({ open, handleOpen }) => {
+export const DialogDelete = ({ open, handleOpen }) => {
   return (
     <>
       <Dialog open={open} handler={handleOpen}>

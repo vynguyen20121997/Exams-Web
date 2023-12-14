@@ -1,7 +1,6 @@
 import React from "react";
 import { SimpleFooter } from "../../../components/Footer/Footer";
 import { Logo } from "../../../components/Logo/Logo";
-import { Button } from "@material-tailwind/react";
 import DataTable from "./components/DataTable/DataTable";
 
 const AdminPage = () => {
@@ -18,7 +17,7 @@ const AdminPage = () => {
           <div></div>
         </div>
 
-        <div className="px-20 py-10">
+        <div className="px-20 pt-5 pb-10">
           <DataTable />
         </div>
 

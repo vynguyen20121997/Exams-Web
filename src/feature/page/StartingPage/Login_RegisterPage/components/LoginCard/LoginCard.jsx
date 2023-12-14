@@ -11,14 +11,12 @@ import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import AuthAPI from "../../../../../../services/AuthAPI";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/ErrorCutomMessage";
 
 export function LoginCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {

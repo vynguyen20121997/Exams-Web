@@ -11,7 +11,7 @@ import { pageContainer } from "../../../../components/PageContainer/PageContaine
 import { RegisterCard } from "./components/RegisterCard/RegisterCard";
 import { LoginCard } from "./components/LoginCard/LoginCard";
 
-const Login_RegisterPage = () => {
+const LoginRegisterPage = () => {
   const [register, setRegister] = useState(false);
 
   return (
@@ -43,4 +43,4 @@ const Login_RegisterPage = () => {
   );
 };
 
-export default Login_RegisterPage;
+export default LoginRegisterPage;

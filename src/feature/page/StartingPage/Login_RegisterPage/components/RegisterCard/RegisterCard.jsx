@@ -10,18 +10,16 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
-import RegisterValidationSchema from "../../validations/register-schema";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthAPI from "../../../../../../services/AuthAPI";
 import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/ErrorCutomMessage";
-import { useDispatch } from "react-redux";
+import AuthAPI from "../../../../../../services/AuthAPI";
 
 export function RegisterCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -51,7 +49,6 @@ export function RegisterCard({ setRegister }) {
         setLoading(false);
       }
     },
-    //lỗi
   });
   const { handleSubmit, handleChange, setFieldValue, setFieldTouched, errors } =
     formik;
