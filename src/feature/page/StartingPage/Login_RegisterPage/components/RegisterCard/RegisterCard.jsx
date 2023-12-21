@@ -14,6 +14,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/ErrorCutomMessage";
 import AuthAPI from "../../../../../../services/AuthAPI";
+import {
+  RegisterCardRoleData,
+  RegisterCardSubjectData,
+} from "../../untils/data";
 
 export function RegisterCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
@@ -26,6 +30,7 @@ export function RegisterCard({ setRegister }) {
       name: "",
       email: "",
       role: "",
+      subject: "",
       username: "",
       password: "",
       reenterpassword: "",
@@ -82,12 +87,26 @@ export function RegisterCard({ setRegister }) {
           onChange={(value) => setFieldValue("role", value)}
           onBlur={() => setFieldTouched("role", true)}
         >
-          <Option value="student" label="student">
-            Student
-          </Option>
-          <Option value="teacher" label="teacher">
-            Teacher
-          </Option>
+          {RegisterCardRoleData.map((item) => (
+            <Option value={item.roleValue} label="student">
+              {item.roleName}
+            </Option>
+          ))}
+        </Select>
+        {errors.email && <CustomErrorMessage content={errors.email} />}
+
+        <Select
+          label="Which subject are you teaching?"
+          id="subject"
+          name="subject"
+          onChange={(value) => setFieldValue("subject", value)}
+          onBlur={() => setFieldTouched("subject", true)}
+        >
+          {RegisterCardSubjectData.map((item) => (
+            <Option value={item.subjectValue} label="student">
+              {item.subjectName}
+            </Option>
+          ))}
         </Select>
         {errors.email && <CustomErrorMessage content={errors.email} />}
 
