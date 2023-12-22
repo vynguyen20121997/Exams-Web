@@ -1,4 +1,4 @@
-export const testData = [
+export const subjectData = [
     {
         subject: " Subject",
         topic: "Topic",

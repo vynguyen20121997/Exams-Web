@@ -2,7 +2,7 @@ import React from "react";
 import { TestCard } from "../../../components/CardHolder/Card";
 import { SimplePagination } from "../../../components/Pagination/Pagination";
 
-const TestByCollection = () => {
+const ExamsByClass = () => {
   return (
     <>
       <div>
@@ -15,4 +15,4 @@ const TestByCollection = () => {
   );
 };
 
-export default TestByCollection;
+export default ExamsByClass;

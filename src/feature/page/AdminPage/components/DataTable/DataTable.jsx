@@ -25,9 +25,10 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { DialogDelete } from "../DialogDelete/DialogDelete";
-import { TABLE_HEAD, TABLE_ROWS, TABS } from "../../data/DataTable";
+import { TABLE_HEAD, TABS } from "../../constants/constants";
 import { DialogEdit } from "../DialogEdit/DialogEdit";
 import { DialogAdd } from "../DialogAdd/DialogAdd";
+import { UserTableData } from "../../../../../tests/data/AdminPage/UserData";
 
 const DataTable = () => {
   const [open, setOpen] = useState(false);
@@ -106,9 +107,9 @@ const DataTable = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
+              {UserTableData.map(
                 ({ img, name, email, job, org, online, date }, index) => {
-                  const isLast = index === TABLE_ROWS.length - 1;
+                  const isLast = index === UserTableData.length - 1;
                   const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";

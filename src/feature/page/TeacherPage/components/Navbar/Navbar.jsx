@@ -17,7 +17,7 @@ import {
   navListItems,
   navListMenuItems,
   profileMenuItems,
-} from "../Ex-data/data";
+} from "../constants/constants";
 
 // profile menu component
 

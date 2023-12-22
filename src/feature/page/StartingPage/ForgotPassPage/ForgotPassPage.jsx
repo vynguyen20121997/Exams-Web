@@ -1,5 +1,5 @@
+import { Logo } from "../../../../assets/Logo/Logo";
 import { SimpleFooter } from "../../../../components/Footer/Footer";
-import { Logo } from "../../../../components/Logo/Logo";
 import { ForgotPassCard } from "./components/FogotPassCard/FogotPassCard";
 
 const ForgotPassPage = () => {

@@ -15,8 +15,6 @@ import AuthAPI from "../../../../../services/AuthAPI";
 export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
   const [loading, setLoading] = useState(false);
 
-  console.log("openAdd", openAdd);
-
   const formik = useFormik({
     initialValues: {
       name: "",

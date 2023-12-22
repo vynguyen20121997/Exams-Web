@@ -1,21 +1,5 @@
-export const TABS = [
-    {
-        label: "All",
-        value: "all",
-    },
-    {
-        label: "Teacher",
-        value: "Teacher",
-    },
-    {
-        label: "Student",
-        value: "Student",
-    },
-];
 
-export const TABLE_HEAD = ["Member", "Function", "Status", "Active Date", ""];
-
-export const TABLE_ROWS = [
+export const UserTableData = [
     {
         img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
         name: "John Michael",

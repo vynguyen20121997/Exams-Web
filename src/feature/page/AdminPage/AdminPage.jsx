@@ -1,7 +1,7 @@
 import React from "react";
 import { SimpleFooter } from "../../../components/Footer/Footer";
-import { Logo } from "../../../components/Logo/Logo";
 import DataTable from "./components/DataTable/DataTable";
+import { Logo } from "../../../assets/Logo/Logo";
 
 const AdminPage = () => {
   return (

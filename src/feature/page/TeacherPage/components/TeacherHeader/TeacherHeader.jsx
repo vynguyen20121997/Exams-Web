@@ -1,6 +1,6 @@
 import React from "react";
 import { ComplexNavbar } from "../Navbar/Navbar";
-import { Logo } from "../../../../../components/Logo/Logo";
+import { Logo } from "../../../../../assets/Logo/Logo";
 
 export const TeacherHeader = () => {
   return (

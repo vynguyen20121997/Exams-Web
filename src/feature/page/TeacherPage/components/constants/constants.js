@@ -3,7 +3,6 @@ import {
     BookOpenIcon,
     CodeBracketSquareIcon,
     Cog6ToothIcon,
-    CubeTransparentIcon,
     InboxArrowDownIcon,
     LifebuoyIcon,
     PowerIcon,

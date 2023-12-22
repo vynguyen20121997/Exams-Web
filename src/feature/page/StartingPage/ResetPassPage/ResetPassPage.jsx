@@ -1,7 +1,7 @@
 import { Button, Typography } from "@material-tailwind/react";
 import { SimpleFooter } from "../../../../components/Footer/Footer";
-import { Logo } from "../../../../components/Logo/Logo";
 import { Link } from "react-router-dom";
+import { Logo } from "../../../../assets/Logo/Logo";
 
 const ResetPassPage = () => {
   return (

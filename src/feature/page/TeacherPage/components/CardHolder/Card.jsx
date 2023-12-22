@@ -9,10 +9,10 @@ import {
   IconButton,
   Progress,
 } from "@material-tailwind/react";
-import { testTopicData } from "../Ex-data/testsData";
+import { subjectData } from "../../../../../tests/data/TeacherPage/subjectData";
 
 export const TestCard = () => {
-  const topicData = testTopicData.topics;
+  const topicData = subjectData.topics;
   return (
     <>
       <div className=" min-w-full flex overflow-x-auto">

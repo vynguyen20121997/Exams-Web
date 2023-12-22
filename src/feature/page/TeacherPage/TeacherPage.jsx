@@ -1,7 +1,7 @@
 import React from "react";
 import { SimpleFooter } from "../../../components/Footer/Footer";
 import { TeacherHeader } from "./components/TeacherHeader/TeacherHeader";
-import TestManagement from "./Tabs/TestManagement/TestManagement";
+import ExamsManagement from "./Tabs/TestManagement/ExamsManagement";
 
 const TeacherPage = () => {
   return (
@@ -10,7 +10,7 @@ const TeacherPage = () => {
         <TeacherHeader />
 
         <div className="py-10">
-          <TestManagement />
+          <ExamsManagement />
         </div>
 
         <SimpleFooter />

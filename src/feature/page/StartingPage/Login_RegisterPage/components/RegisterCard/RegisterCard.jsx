@@ -55,8 +55,14 @@ export function RegisterCard({ setRegister }) {
       }
     },
   });
-  const { handleSubmit, handleChange, setFieldValue, setFieldTouched, errors } =
-    formik;
+  const {
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    setFieldTouched,
+    errors,
+    values,
+  } = formik;
 
   return (
     <Card className="w-96">
@@ -95,20 +101,21 @@ export function RegisterCard({ setRegister }) {
         </Select>
         {errors.email && <CustomErrorMessage content={errors.email} />}
 
-        <Select
-          label="Which subject are you teaching?"
-          id="subject"
-          name="subject"
-          onChange={(value) => setFieldValue("subject", value)}
-          onBlur={() => setFieldTouched("subject", true)}
-        >
-          {RegisterCardSubjectData.map((item) => (
-            <Option value={item.subjectValue} label="student">
-              {item.subjectName}
-            </Option>
-          ))}
-        </Select>
-        {errors.email && <CustomErrorMessage content={errors.email} />}
+        {values.role !== "" && values.role === "teacher" && (
+          <Select
+            label="Which subject are you teaching?"
+            id="subject"
+            name="subject"
+            onChange={(value) => setFieldValue("subject", value)}
+            onBlur={() => setFieldTouched("subject", true)}
+          >
+            {RegisterCardSubjectData.map((item) => (
+              <Option value={item.subjectValue} label="student">
+                {item.subjectName}
+              </Option>
+            ))}
+          </Select>
+        )}
 
         <Input
           label="Email"
