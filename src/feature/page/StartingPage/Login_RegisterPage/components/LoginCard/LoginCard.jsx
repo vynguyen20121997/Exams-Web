@@ -8,15 +8,19 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import AuthAPI from "../../../../../../services/AuthAPI";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import AuthAPI from "../../../../../../services/StartingPage/AuthAPI";
 import { useState } from "react";
 import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/ErrorCutomMessage";
+import { fetchCurrentUser } from "../../../../../../redux/auth/authAction";
+import { useDispatch, useSelector } from "react-redux";
 
 export function LoginCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -33,7 +37,7 @@ export function LoginCard({ setRegister }) {
         console.log("accessToken", accessToken);
         if (accessToken) {
           localStorage.setItem("accessToken", accessToken);
-          // await dispatch(fetchCurrentUser());
+          await dispatch(fetchCurrentUser());
           navigate("/");
         }
       } catch (error) {
@@ -46,6 +50,9 @@ export function LoginCard({ setRegister }) {
 
   const { handleSubmit, handleChange, errors } = formik;
 
+  if (isAuthenticated) {
+    return <Navigate to="/" />;
+  }
   return (
     <Card className="w-96">
       <CardHeader

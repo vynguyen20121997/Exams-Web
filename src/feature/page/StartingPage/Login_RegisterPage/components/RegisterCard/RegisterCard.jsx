@@ -10,20 +10,34 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/ErrorCutomMessage";
-import AuthAPI from "../../../../../../services/AuthAPI";
+import AuthAPI from "../../../../../../services/StartingPage/AuthAPI";
+import GetListRegisterCardAPI from "../../../../../../services/StartingPage/GetListRegisterCardAPI";
 import {
   RegisterCardRoleData,
   RegisterCardSubjectData,
 } from "../../untils/data";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function RegisterCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const [classList, setClassList] = useState({});
+
+  const fetchListData = async () => {
+    try {
+      const response = await GetListRegisterCardAPI.classes();
+
+      setClassList(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchListData();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -34,24 +48,72 @@ export function RegisterCard({ setRegister }) {
       username: "",
       password: "",
       reenterpassword: "",
+      class: 0,
     },
     // validationSchema: RegisterValidationSchema,
-    onSubmit: async (values) => {
-      console.log("values", values);
-      try {
-        setLoading(true);
-        const response = await AuthAPI.register(values);
-        console.log("response", response);
-        const accessToken = response.data.accessToken;
 
-        if (accessToken) {
-          // await dispatch(fetchCurrentUser());
-          navigate("/");
+    onSubmit: async (values) => {
+      if (values.role === "student") {
+        const studentClassID =
+          classList && classList.find((i) => i.title === values.class);
+        const studentPayLoad = {
+          name: values.name,
+          role: values.role,
+          email: values.email,
+          username: values.username,
+          password: values.password,
+          classId: studentClassID._id,
+        };
+
+        console.log("studentPayLoad", studentPayLoad);
+        try {
+          setLoading(true);
+          const response = await AuthAPI.register(studentPayLoad);
+          console.log("response", response);
+          const accessToken = response.data.accessToken;
+
+          if (accessToken) {
+            resetForm();
+            // toast.success("register successfully", {
+            //   draggable: false,
+            //   position: toast.POSITION.TOP_RIGHT,
+            // });
+            alert("fix the bug");
+            setRegister(false);
+          }
+        } catch (error) {
+          toast.error("error occured");
+        } finally {
+          setLoading(false);
         }
-      } catch (error) {
-        setError(error.response.data?.message);
-      } finally {
-        setLoading(false);
+      }
+
+      if (values.role === "teacher") {
+        const teacherPayLoad = {
+          name: values.name,
+          role: values.role,
+          email: values.email,
+          username: values.username,
+          password: values.password,
+          subject: values.subject,
+        };
+
+        console.log("teacherPayLoad", teacherPayLoad);
+        try {
+          setLoading(true);
+          // const response = await AuthAPI.register(values);
+          // console.log("response", response);
+          // const accessToken = response.data.accessToken;
+
+          // if (accessToken) {
+          // await dispatch(fetchCurrentUser());
+          //   navigate("/");
+          // }
+        } catch (error) {
+          setError(error.response.data?.message);
+        } finally {
+          setLoading(false);
+        }
       }
     },
   });
@@ -60,6 +122,7 @@ export function RegisterCard({ setRegister }) {
     handleChange,
     setFieldValue,
     setFieldTouched,
+    resetForm,
     errors,
     values,
   } = formik;
@@ -112,6 +175,22 @@ export function RegisterCard({ setRegister }) {
             {RegisterCardSubjectData.map((item) => (
               <Option value={item.subjectValue} label="student">
                 {item.subjectName}
+              </Option>
+            ))}
+          </Select>
+        )}
+
+        {values.role !== "" && values.role === "student" && (
+          <Select
+            label="Which class are you in?"
+            id="class"
+            name="class"
+            onChange={(value) => setFieldValue("class", value)}
+            onBlur={() => setFieldTouched("class", true)}
+          >
+            {classList?.map((item) => (
+              <Option value={item.title} label="student">
+                {item.title}
               </Option>
             ))}
           </Select>

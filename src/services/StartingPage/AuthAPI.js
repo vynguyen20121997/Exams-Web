@@ -1,16 +1,16 @@
-import api from "./axiosInstance";
+import api from "../axiosInstance";
 
 const AuthAPI = {
     register: (body) => {
-        const url = '/signup';
+        const url = '/auth/signup';
         return api.post(url, body)
     },
     login: (body) => {
-        const url = '/login';
+        const url = '/auth/login';
         return api.post(url, body)
     },
     fetchCurrentUser: () => {
-        const url = '/fetchcurentUser';
+        const url = '/auth/me';
         return api.get(url)
     }
 }

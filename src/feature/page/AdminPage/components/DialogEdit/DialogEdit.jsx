@@ -10,7 +10,7 @@ import {
   Option,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
-import AuthAPI from "../../../../../services/AuthAPI";
+import AuthAPI from "../../../../../services/StartingPage/AuthAPI";
 
 export const DialogEdit = ({ openEdit, handleOpenEdit }) => {
   const [loading, setLoading] = useState(false);

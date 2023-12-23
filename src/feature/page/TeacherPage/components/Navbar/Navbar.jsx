@@ -86,7 +86,7 @@ function NavListAlerBell() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const renderItems = navListMenuItems.map(({ title, description }) => (
-    <a href="" key={title}>
+    <a key={title}>
       <MenuItem>
         <Typography variant="h6" color="blue-gray" className="mb-1">
           {title}

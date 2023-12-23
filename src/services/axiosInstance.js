@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import { TOKEN_TYPES } from '../utils/constants';
 
-const BASE_API_URL = ' http://localhost:8081/api/v1';
+const BASE_API_URL = 'https://backend-project-b9qu.onrender.com/api/v1/';
 
 const api = axios.create({
     baseURL: BASE_API_URL,

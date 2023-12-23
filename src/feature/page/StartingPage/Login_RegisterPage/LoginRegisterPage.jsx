@@ -13,6 +13,7 @@ import { Logo } from "../../../../assets/Logo/Logo";
 
 const LoginRegisterPage = () => {
   const [register, setRegister] = useState(false);
+  console.log("register", register);
 
   return (
     <div className="background-website">
