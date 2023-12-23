@@ -15,4 +15,4 @@ const AuthAPI = {
     }
 }
 
-export default AuthAPI
+export default AuthAPI;
