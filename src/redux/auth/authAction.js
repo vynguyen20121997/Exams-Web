@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import AuthAPI from '../../services/AuthAPI';
+import AuthAPI from '../../services/StartingPage/AuthAPI';
 
 // Types
 const FETCH_CURRENT_USER = 'auth/me';

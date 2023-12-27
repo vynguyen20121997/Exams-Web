@@ -10,7 +10,7 @@ module.exports = withMT({
     colors: {
       transparent: "transparent",
       current: "currentColor",
-      'purple': "#9333ea",
+      // 'purple': "#9333ea",
       'blackpurple': '#6b21a8',
       'white': "#f8fafc",
     },
