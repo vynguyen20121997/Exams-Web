@@ -8,6 +8,7 @@ import {
   Option,
   Select,
   Typography,
+  Spinner,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
@@ -18,8 +19,6 @@ import {
   RegisterCardRoleData,
   RegisterCardSubjectData,
 } from "../../untils/data";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export function RegisterCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
@@ -82,7 +81,6 @@ export function RegisterCard({ setRegister }) {
             setRegister(false);
           }
         } catch (error) {
-          toast.error("error occured");
         } finally {
           setLoading(false);
         }
@@ -128,6 +126,7 @@ export function RegisterCard({ setRegister }) {
   } = formik;
 
   return (
+    <>
     <Card className="w-96">
       <CardHeader
         variant="gradient"
@@ -239,7 +238,8 @@ export function RegisterCard({ setRegister }) {
           fullWidth
           onClick={handleSubmit}
         >
-          Register
+           {loading === true && <Spinner color="purple" className="h-6 w-6 ml-[47%]" />}
+            {loading === false && <h2>Register</h2>}
         </Button>
         <Typography variant="small" className="mt-6 flex justify-center">
           Have an account?
@@ -256,5 +256,6 @@ export function RegisterCard({ setRegister }) {
         </Typography>
       </CardFooter>
     </Card>
+    </>
   );
 }

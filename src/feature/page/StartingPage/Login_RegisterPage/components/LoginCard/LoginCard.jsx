@@ -97,8 +97,9 @@ export function LoginCard({ setRegister }) {
         </CardBody>
 
         <CardFooter className="pt-0">
-          <Button variant="gradient" fullWidth onClick={handleSubmit}>
-            Sign In
+          <Button variant="gradient " fullWidth onClick={handleSubmit}>
+            {loading === true && <Spinner color="purple" className="h-6 w-6 ml-[47%]" />}
+            {loading === false && <h2>Sign In</h2>}
           </Button>
           <Typography variant="small" className="mt-6 flex justify-center">
             Don&apos;t have an account?
@@ -115,24 +116,6 @@ export function LoginCard({ setRegister }) {
           </Typography>
         </CardFooter>
       </Card>
-
-      <div className="w-96 h-1/2 animate-pulse absolute z-40  left-68 top-64 	">
-        <div
-          as="div"
-          variant="h1"
-          className="fixed z-60 top-52 right-68 w-96 h-32 rounded-xl bg-gray-300"
-        >
-          &nbsp;
-        </div>
-        <div
-          as="div"
-          variant="h1"
-          className="w-full h-full rounded-xl bg-gray-300"
-        >
-          &nbsp;
-        </div>
-        <Spinner color="purple" className="h-20 w-20 z-50 top-68 fixed " />
-      </div>
     </>
   );
 }
