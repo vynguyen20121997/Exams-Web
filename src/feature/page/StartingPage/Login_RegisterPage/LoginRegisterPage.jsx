@@ -13,14 +13,13 @@ import { Logo } from "../../../../assets/Logo/Logo";
 
 const LoginRegisterPage = () => {
   const [register, setRegister] = useState(false);
-  console.log("register", register);
 
   return (
     <div className="background-website">
       <div className={pageContainer}>
         <div className={headerBoxContainer}>
           <div>
-            <Logo />
+            <Logo  logocolor="black"/>
           </div>
           {register === false && (
             <div>

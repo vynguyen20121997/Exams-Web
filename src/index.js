@@ -1,20 +1,21 @@
+import { ThemeProvider } from '@material-tailwind/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { RouterProvider } from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { ThemeProvider } from '@material-tailwind/react';
-import "./style.css";
-import { RouterProvider } from 'react-router-dom';
 import router from './routes/routes';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import "./style.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider>
+    <QueryClientProvider client={ new QueryClient()}>
       {/* <Provider store={store}> */}
       <RouterProvider router={router} />
+      </QueryClientProvider>
       {/* </Provider> */}
     </ThemeProvider>
   </React.StrictMode>

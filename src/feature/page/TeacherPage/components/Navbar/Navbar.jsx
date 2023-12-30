@@ -86,6 +86,7 @@ function NavListAlerBell() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const renderItems = navListMenuItems.map(({ title, description }) => (
+    // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a key={title}>
       <MenuItem>
         <Typography variant="h6" color="blue-gray" className="mb-1">
@@ -159,7 +160,7 @@ function NavList() {
 
 export function ComplexNavbar() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
-  const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
+  // const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 
   useEffect(() => {
     window.addEventListener(

@@ -1,43 +1,66 @@
 import {
-  MagnifyingGlassIcon,
-  ChevronUpDownIcon,
+  MagnifyingGlassIcon
 } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
+  Button,
   Card,
+  CardBody,
+  CardFooter,
   CardHeader,
   Input,
-  Typography,
-  Button,
-  CardBody,
-  Chip,
-  CardFooter,
+  Tab,
   Tabs,
   TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
+  Typography
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { DialogDelete } from "../DialogDelete/DialogDelete";
-import { TABLE_HEAD, TABS } from "../../constants/constants";
-import { DialogEdit } from "../DialogEdit/DialogEdit";
+import { TABS } from "../../constants/constants";
 import { DialogAdd } from "../DialogAdd/DialogAdd";
-import { UserTableData } from "../../../../../tests/data/AdminPage/UserData";
+import { DialogDelete } from "../DialogDelete/DialogDelete";
+import { DialogEdit } from "../DialogEdit/DialogEdit";
+import DataListTable from "./DataListTable";
+import { useQuery } from "react-query";
+import { getListUserAdminPage } from "../../../../../services/AdminPage/GetlistAPI";
+import { useFormik } from "formik";
 
 const DataTable = () => {
-  const [open, setOpen] = useState(false);
+
+  const { data: userList } = useQuery("userList", () =>
+    getListUserAdminPage.getListUser(localStorage.getItem('accessToken'))
+  );
+
+  const { data: studentList } = useQuery("studentList", () =>
+    getListUserAdminPage.getListStudent(localStorage.getItem('accessToken'))
+  );
+
+  const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
 
-  const handleDelete = () => setOpen(!open);
+
+  const formik = useFormik({
+    initialValues: {
+      tab: "",
+    },
+  });
+
+  const {
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    setFieldTouched,
+    resetForm,
+    errors,
+    values,
+  } = formik;
+
+  console.log(values)
+
+  const handleDelete = () => setOpenDelete(!openDelete);
   const handleOpenEdit = () => setOpenEdit(!openEdit);
   const handleOpenAdd = () => setOpenAdd(!openAdd);
+
 
   return (
     <>
@@ -63,13 +86,17 @@ const DataTable = () => {
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-full md:w-max">
-              <TabsHeader>
+            <Tabs  
+              className="w-full md:w-max">
+              <TabsHeader  
+              >
+
                 {TABS.map(({ label, value }) => (
-                  <Tab key={value} value={value}>
+                  <Tab key={value} value={value} >
                     &nbsp;&nbsp;{label}&nbsp;&nbsp;
                   </Tab>
                 ))}
+
               </TabsHeader>
             </Tabs>
             <div className="w-full md:w-72">
@@ -81,127 +108,15 @@ const DataTable = () => {
           </div>
         </CardHeader>
         <CardBody className="overflow-scroll px-0">
-          <table className="mt-4 w-full min-w-max table-auto text-left">
-            <thead>
-              <tr>
-                {TABLE_HEAD.map((head, index) => (
-                  <th
-                    key={head}
-                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
-                  >
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
-                    >
-                      {head}{" "}
-                      {index !== TABLE_HEAD.length - 1 && (
-                        <ChevronUpDownIcon
-                          strokeWidth={2}
-                          className="h-4 w-4"
-                        />
-                      )}
-                    </Typography>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {UserTableData.map(
-                ({ img, name, email, job, org, online, date }, index) => {
-                  const isLast = index === UserTableData.length - 1;
-                  const classes = isLast
-                    ? "p-4"
-                    : "p-4 border-b border-blue-gray-50";
 
-                  return (
-                    <tr key={name}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <Avatar src={img} alt={name} size="sm" />
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {name}
-                            </Typography>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal opacity-70"
-                            >
-                              {email}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {job}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {org}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="w-max">
-                          <Chip
-                            variant="ghost"
-                            size="sm"
-                            value={online ? "online" : "offline"}
-                            color={online ? "green" : "blue-gray"}
-                          />
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {date}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Tooltip content="Edit User">
-                          <Menu>
-                            <MenuHandler>
-                              <IconButton>
-                                <PencilIcon className="h-4 w-4" />
-                              </IconButton>
-                            </MenuHandler>
-                            <MenuList>
-                              <MenuItem onClick={handleOpenEdit}>Edit</MenuItem>
-                              <MenuItem onClick={handleDelete}>
-                                <>Delete</>
-                              </MenuItem>
-                            </MenuList>
-                          </Menu>
-                        </Tooltip>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
-            </tbody>
-          </table>
+          <DataListTable handleOpenEdit={handleOpenEdit} handleDelete={handleDelete} UserTableData={userList} />
 
           <DialogEdit openEdit={openEdit} handleOpenEdit={handleOpenEdit} />
-          <DialogDelete open={open} handleOpen={handleDelete} />
+          <DialogDelete open={openDelete} handleOpen={handleDelete} />
           <DialogAdd openAdd={openAdd} handleOpenAdd={handleOpenAdd} />
+
         </CardBody>
+
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           <Typography variant="small" color="blue-gray" className="font-normal">
             Page 1 of 10

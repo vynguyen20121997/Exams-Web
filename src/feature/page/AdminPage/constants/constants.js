@@ -5,12 +5,23 @@ export const TABS = [
     },
     {
         label: "Teacher",
-        value: "Teacher",
+        value: "teacher",
     },
     {
         label: "Student",
-        value: "Student",
+        value: "student",
     },
 ];
 
 export const TABLE_HEAD = ["Member", "Function", "Status", "Active Date", ""];
+
+export const AddUserInitialValues = {
+    name: "",
+    email: "",
+    role: "",
+    subject: "",
+    username: "",
+    password: "",
+    confirm_password: "",
+    class: 0,
+  }

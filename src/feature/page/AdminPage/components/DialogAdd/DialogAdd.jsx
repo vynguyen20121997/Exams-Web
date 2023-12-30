@@ -11,34 +11,42 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import AuthAPI from "../../../../../services/StartingPage/AuthAPI";
+import { useQuery } from "react-query";
+import GetListAdminPageAPI from "../../../../../services/AdminPage/GetListAdminPageAPI";
+import AddUserValidationSchema from "../../validations/add-user-schema";
+import { RegisterCardSubjectData } from "../../../StartingPage/Login_RegisterPage/untils/data";
+import { generateUserPayload } from "../../../../../untils/generatorUserPayload";
+import { AddUserInitialValues } from "../../constants/constants";
 
 export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
   const [loading, setLoading] = useState(false);
 
+  const { data: classList } = useQuery("class", () =>
+  GetListAdminPageAPI.classes()
+);
+
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      role: "",
-      username: "",
-      password: "",
-      reenterpassword: "",
-    },
-    // validationSchema: RegisterValidationSchema,
+    initialValues: AddUserInitialValues,
+    validationSchema: AddUserValidationSchema,
+
     onSubmit: async (values) => {
-      console.log("values", values);
+      const payload = await generateUserPayload(values,classList);
       try {
         setLoading(true);
-        const response = await AuthAPI.register(values);
+        const response = await AuthAPI.register(payload);
         console.log("response", response);
       } catch (error) {
         console.log("response", error);
       } finally {
         setLoading(false);
+        resetForm()
+        handleOpenAdd();
       }
-    },
-  });
-  const { handleSubmit, handleChange, setFieldValue, setFieldTouched } = formik;
+    }},
+  // }
+  );
+  const { handleSubmit, handleChange, setFieldValue, setFieldTouched,values, errors, resetForm} = formik;
+
 
   return (
     <>
@@ -68,6 +76,38 @@ export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
             </Option>
           </Select>
 
+          {values.role !== "" && values.role === "teacher" && (
+            <Select
+              label="Which subject are you teaching?"
+              id="subject"
+              name="subject"
+              onChange={(value) => setFieldValue("subject", value)}
+              onBlur={() => setFieldTouched("subject", true)}
+            >
+              {RegisterCardSubjectData.map((item) => (
+                <Option value={item.subjectValue} label="student">
+                  {item.subjectName}
+                </Option>
+              ))}
+            </Select>
+          )}
+
+          {values.role !== "" && values.role === "student" && (
+            <Select
+              label="Which class are you in?"
+              id="class"
+              name="class"
+              onChange={(value) => setFieldValue("class", value)}
+              onBlur={() => setFieldTouched("class", true)}
+            >
+              {classList?.data.data.map((item) => (
+                <Option value={item.title} label="class">
+                  {item.title}
+                </Option>
+              ))}
+            </Select>
+          )}
+
           <Input
             label="Email"
             id="email"
@@ -88,8 +128,10 @@ export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
             name="password"
             type="password"
             onChange={handleChange}
+            value="123456789"
             size="lg"
           />
+
         </DialogBody>
         <DialogFooter>
           <Button
@@ -103,7 +145,7 @@ export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
           <Button
             variant="gradient"
             color="green"
-            onClick={(() => handleSubmit, handleOpenAdd)}
+            onClick={(() => handleSubmit())}
           >
             <span>Confirm</span>
           </Button>

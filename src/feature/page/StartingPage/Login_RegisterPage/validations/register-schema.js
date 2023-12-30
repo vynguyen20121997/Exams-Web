@@ -7,8 +7,7 @@ const RegisterValidationSchema = yup.object().shape({
         /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/,
         'Password must contain at least one number and one special character'
     ).min(8, 'Password must be at least 8 characters long').required(),
-    // reenterpassword: yup().string().oneOf([yup.ref('password')], 'Your passwords do not match.').required()
-
+    // confirm_password: yup.string().label('confirm password').required().oneOf([yup.ref('password'), null], 'Passwords must match'),
 })
 
 export default RegisterValidationSchema;

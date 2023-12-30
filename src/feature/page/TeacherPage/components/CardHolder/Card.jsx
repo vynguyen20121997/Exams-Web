@@ -1,13 +1,11 @@
 import {
+  Button,
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
-  Typography,
-  Button,
-  Tooltip,
+  CardHeader,
   IconButton,
-  Progress,
+  Typography
 } from "@material-tailwind/react";
 import { subjectData } from "../../../../../tests/data/TeacherPage/subjectData";
 

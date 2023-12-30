@@ -9,10 +9,11 @@ import {
 } from "@material-tailwind/react";
 import { Button } from "@material-tailwind/react";
 import { useFormik } from "formik";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthAPI from "../../../../../../services/StartingPage/AuthAPI";
 import { useState } from "react";
 import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/ErrorCutomMessage";
+import { loginInitialValues } from "../../constants/constants";
 // import { fetchCurrentUser } from "../../../../../../redux/auth/authAction";
 // import { useDispatch, useSelector } from "react-redux";
 
@@ -24,12 +25,8 @@ export function LoginCard({ setRegister }) {
   // const dispatch = useDispatch();
 
   const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
+    initialValues: loginInitialValues,
     onSubmit: async (values) => {
-      console.log("values", values);
       try {
         setLoading(true);
 

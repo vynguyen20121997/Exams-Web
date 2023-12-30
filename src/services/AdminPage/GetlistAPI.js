@@ -1,16 +1,28 @@
 import api from "../axiosInstance";
 
-export const UserAPI = {
-    getListAdmin: (body) => {
-        const url = '/listuser';
-        return api.get(url, body)
+export const getListUserAdminPage = {
+    getListUser: (token) => {
+        const url = '/users';
+        return api.get(url,  {
+            headers: {
+              'x-access-token': token, 
+            },
+          })
     },
-    getListTeacher: (body) => {
-        const url = '/listteacher';
-        return api.get(url, body)
+    getListTeacher:  (token) => {
+        const url = '/users/teachers';
+        return api.get(url,  {
+            headers: {
+              'x-access-token': token, 
+            },
+          })
     },
-    getListStudent: (body) => {
-        const url = '/liststudenr';
-        return api.get(url, body)
+    getListStudent: (token) => {
+        const url = '/users/students';
+        return api.get(url,  {
+            headers: {
+              'x-access-token': token, 
+            },
+          })
     },
 }
