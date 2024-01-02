@@ -7,16 +7,18 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import router from './routes/routes';
 import "./style.css";
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider>
-    <QueryClientProvider client={ new QueryClient()}>
-      {/* <Provider store={store}> */}
-      <RouterProvider router={router} />
+      <QueryClientProvider client={new QueryClient()}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
       </QueryClientProvider>
-      {/* </Provider> */}
     </ThemeProvider>
   </React.StrictMode>
 );

@@ -21,32 +21,44 @@ import { AddUserInitialValues } from "../../constants/constants";
 export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
   const [loading, setLoading] = useState(false);
 
-  const { data: classList } = useQuery("class", () =>
-  GetListAdminPageAPI.classes()
-);
-
-  const formik = useFormik({
-    initialValues: AddUserInitialValues,
-    validationSchema: AddUserValidationSchema,
-
-    onSubmit: async (values) => {
-      const payload = await generateUserPayload(values,classList);
-      try {
-        setLoading(true);
-        const response = await AuthAPI.register(payload);
-        console.log("response", response);
-      } catch (error) {
-        console.log("response", error);
-      } finally {
-        setLoading(false);
-        resetForm()
-        handleOpenAdd();
-      }
-    }},
-  // }
+  const { data: classList } = useQuery(
+    "class",
+    () => GetListAdminPageAPI.classes(),
+    { refetchOnChange: false },
+    { refetchOnMount: false }
   );
-  const { handleSubmit, handleChange, setFieldValue, setFieldTouched,values, errors, resetForm} = formik;
 
+  const formik = useFormik(
+    {
+      initialValues: AddUserInitialValues,
+      validationSchema: AddUserValidationSchema,
+
+      onSubmit: async (values) => {
+        const payload = await generateUserPayload(values, classList);
+        try {
+          setLoading(true);
+          const response = await AuthAPI.register(payload);
+          console.log("response", response);
+        } catch (error) {
+          console.log("response", error);
+        } finally {
+          setLoading(false);
+          resetForm();
+          handleOpenAdd();
+        }
+      },
+    }
+    // }
+  );
+  const {
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    setFieldTouched,
+    values,
+    errors,
+    resetForm,
+  } = formik;
 
   return (
     <>
@@ -131,7 +143,6 @@ export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
             value="123456789"
             size="lg"
           />
-
         </DialogBody>
         <DialogFooter>
           <Button
@@ -145,7 +156,7 @@ export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
           <Button
             variant="gradient"
             color="green"
-            onClick={(() => handleSubmit())}
+            onClick={() => handleSubmit()}
           >
             <span>Confirm</span>
           </Button>
