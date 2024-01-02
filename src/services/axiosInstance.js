@@ -10,7 +10,7 @@ const api = axios.create({
 
 // Attach accessToken to request headers
 // api.interceptors.request.use((config) => {
-//   const accessToken = localStorage.getItem(TOKEN_TYPES.ACCESS_TOKEN);
+//   const accessToken = localStorage.getItem(accessToken);
 
 //   if (accessToken) {
 //     config.headers['x-access-token'] = accessToken;

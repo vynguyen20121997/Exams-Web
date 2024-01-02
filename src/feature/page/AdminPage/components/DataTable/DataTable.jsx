@@ -74,7 +74,8 @@ const DataTable = () => {
     <>
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
-          <div className="mb-8 flex items-center justify-between gap-8">
+
+          <div className="mb-4 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
                 Users list
@@ -83,16 +84,14 @@ const DataTable = () => {
                 See information about all users
               </Typography>
             </div>
-            <div>
-              <Button
-                className="flex items-center gap-3"
-                size="sm"
-                onClick={handleOpenAdd}
-              >
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-              </Button>
-            </div>
+            <div className="w-full md:w-72">
+              <Input
+                label="Search"
+                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              />
+            </div> 
           </div>
+
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <Tabs className="w-full md:w-max">
               <TabsHeader>
@@ -107,16 +106,19 @@ const DataTable = () => {
                 ))}
               </TabsHeader>
             </Tabs>
-
-            <div className="w-full md:w-72">
-              <Input
-                label="Search"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              />
+            <div>
+              <Button
+                className="flex items-center gap-3"
+                size="sm"
+                onClick={handleOpenAdd}
+              >
+                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+              </Button>
             </div>
           </div>
         </CardHeader>
-        <CardBody className="max-h-80 overflow-y-auto px-0">
+
+        <CardBody className="max-h-96 overflow-y-auto px-0">
           <DataListTable
             handleOpenEdit={handleOpenEdit}
             handleDelete={handleDelete}
