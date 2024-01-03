@@ -124,7 +124,7 @@ const DataListTable = ({ handleOpenEdit, handleDelete, UserTableData }) => {
                       </MenuHandler>
                       <MenuList>
                         <MenuItem onClick={handleOpenEdit}>Edit</MenuItem>
-                        <MenuItem onClick={handleDelete}>
+                        <MenuItem onClick={() => handleDelete(_id)}>
                           <>Delete</>
                         </MenuItem>
                       </MenuList>

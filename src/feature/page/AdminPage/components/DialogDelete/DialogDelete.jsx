@@ -7,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 
-export const DialogDelete = ({ open, handleOpen }) => {
+export const DialogDelete = ({ open, handleOpen, handleDelete }) => {
   return (
     <>
       <Dialog open={open} handler={handleOpen}>
@@ -25,7 +25,7 @@ export const DialogDelete = ({ open, handleOpen }) => {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={handleOpen}>
+          <Button variant="gradient" color="green" onClick={handleDelete}>
             <span>Confirm</span>
           </Button>
         </DialogFooter>

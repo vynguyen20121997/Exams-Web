@@ -27,7 +27,7 @@ const DataTable = () => {
   const [openAdd, setOpenAdd] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
   const [dataTable, setDataTable] = useState([]);
-  const [selectedId, setSelectedId] = useState(0);
+const [selectedId, setSelectedId] = useState(0);
 
   const handleTabChange = (value) => {
     setActiveTab(value);
@@ -66,10 +66,11 @@ const DataTable = () => {
     }
   }, [activeTab, studentList, teacherList, userList]);
 
-  const handleDelete = () => setOpenDelete(!openDelete);
-  const handleOpenEdit = () => setOpenEdit(!openEdit);
+  const handleOpenDelete = (id) => { setOpenDelete(!openDelete); setSelectedId(id)}
+  const handleOpenEdit = (id) => setOpenEdit(!openEdit);
   const handleOpenAdd = () => setOpenAdd(!openAdd);
 
+  console.log('selectedId', selectedId)
   return (
     <>
       <Card className="h-full w-full">
@@ -121,12 +122,12 @@ const DataTable = () => {
         <CardBody className="max-h-96 overflow-y-auto px-0">
           <DataListTable
             handleOpenEdit={handleOpenEdit}
-            handleDelete={handleDelete}
+            handleDelete={handleOpenDelete}
             UserTableData={dataTable}
           />
 
           <DialogEdit openEdit={openEdit} handleOpenEdit={handleOpenEdit} />
-          <DialogDelete open={openDelete} handleOpen={handleDelete} />
+          <DialogDelete open={openDelete} handleOpen={handleOpenDelete} />
           <DialogAdd openAdd={openAdd} handleOpenAdd={handleOpenAdd} />
         </CardBody>
 
