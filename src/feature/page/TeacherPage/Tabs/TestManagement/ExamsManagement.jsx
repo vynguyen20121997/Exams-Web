@@ -11,17 +11,17 @@ const ExamsManagement = () => {
         <div className=" pb-3">
           <div className="pb-5 flex justify-between">
             <div>
-              {" "}
               <Typography variant="h4" color="blue-gray" className="font-small">
-                {" "}
                 Test by Class
               </Typography>
             </div>
-            <div className="flex">
-              <FilterExams /> <AddDialogExams />
+            <div className="flex ">
+              <FilterExams />
+              <AddDialogExams />
             </div>
           </div>
           <div>
+            {" "}
             <ExamsByClass />
           </div>
         </div>
@@ -33,9 +33,7 @@ const ExamsManagement = () => {
               Test by Collection
             </Typography>
           </div>
-          <div>
-            <ExamsByClass />
-          </div>
+          <div>{/* <ExamsByClass /> */}</div>
         </div>
       </div>{" "}
     </>

@@ -13,7 +13,9 @@ export const TABS = [
     },
 ];
 
-export const TABLE_HEAD = ["Member", "Function", "Status", "Active Date", ""];
+export const TABLE_HEAD_USER_MANAGEMENT = ["Member", "Function", "Status", "Active Date", ""];
+
+export const TABLE_HEAD_CLASS_MANAGEMENT = ["Class", "Form Teacher", "Status", "Active Date", ""];
 
 export const AddUserInitialValues = {
     name: "",

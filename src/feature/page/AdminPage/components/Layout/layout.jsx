@@ -1,10 +1,8 @@
-import React from "react";
-import { Logo } from "../../../assets/Logo/Logo";
-import { SimpleFooter } from "../../../components/Footer/Footer";
-import DataTable from "./components/DataTable/DataTable";
-import { AdminNavbar } from "./components/Navbar/Navbar";
+import { Logo } from "../../../../../assets/Logo/Logo";
+import { SimpleFooter } from "../../../../../components/Footer/Footer";
+import { AdminNavbar } from "../Navbar/Navbar";
 
-const AdminPage = () => {
+const AdminPageLayout = ({ children }) => {
   return (
     <div className="background-website-admin">
       <div className="bg-white w-11/12 mx-auto rounded-3xl py-5 ">
@@ -19,10 +17,7 @@ const AdminPage = () => {
             <AdminNavbar />
           </div>
         </div>
-
-        <div className="px-20 pt-5 pb-10">
-          <DataTable />
-        </div>
+        <div className="px-20 pt-5 pb-10"> {children}</div>
 
         <div className="px-20">
           <SimpleFooter />
@@ -32,4 +27,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default AdminPageLayout;

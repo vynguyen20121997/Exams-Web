@@ -16,12 +16,8 @@ import { useQuery } from "react-query";
 import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/ErrorCutomMessage";
 import AuthAPI from "../../../../../../services/StartingPage/AuthAPI";
 import GetListRegisterCardAPI from "../../../../../../services/StartingPage/GetListRegisterCardAPI";
-import {
-  RegisterCardRoleData,
-  RegisterCardSubjectData,
-} from "../../untils/data";
+import { RegisterCardRoleData } from "../../untils/data";
 import RegisterValidationSchema from "../../validations/register-schema";
-import { generateUserPayload } from "../../../../../../untils/generatorUserPayload";
 import { registerInitialValues } from "../../constants/constants";
 
 export function RegisterCard({ setRegister }) {
@@ -29,27 +25,35 @@ export function RegisterCard({ setRegister }) {
   const [error, setError] = useState(null);
 
   const { data: classList } = useQuery("class", () =>
-  GetListRegisterCardAPI.classes()
-);
+    GetListRegisterCardAPI.classes()
+  );
+
+  const { data: subjectList } = useQuery("subject", () =>
+    GetListRegisterCardAPI.subjects()
+  );
 
   const formik = useFormik({
-    initialValues:registerInitialValues,
+    initialValues: registerInitialValues,
     validationSchema: RegisterValidationSchema,
 
     onSubmit: async (values) => {
-      
       if (values.role === "student") {
-        const payload = await generateUserPayload(values,classList);
+        const payload = {
+          name: values.name,
+          role: values.role,
+          email: values.email,
+          username: values.username,
+          password: values.password,
+          classId: values.class,
+        };
         try {
           setLoading(true);
           const response = await AuthAPI.register(payload);
-          console.log("response", response);
           const accessToken = response.data.accessToken;
 
           if (accessToken) {
             resetForm();
             alert("fix the bug");
-            setRegister(false);
           }
         } catch (error) {
         } finally {
@@ -59,7 +63,7 @@ export function RegisterCard({ setRegister }) {
       }
 
       if (values.role === "teacher") {
-        const teacherPayLoad = {
+        const payLoad = {
           name: values.name,
           role: values.role,
           email: values.email,
@@ -67,21 +71,21 @@ export function RegisterCard({ setRegister }) {
           password: values.password,
           subject: values.subject,
         };
-        console.log("teacherPayLoad", teacherPayLoad);
         try {
           setLoading(true);
-          // const response = await AuthAPI.register(values);
-          // console.log("response", response);
-          // const accessToken = response.data.accessToken;
+          const response = await AuthAPI.register(payLoad);
+          const accessToken = response.data.accessToken;
 
-          // if (accessToken) {
-          // await dispatch(fetchCurrentUser());
-          //   navigate("/");
-          // }
+          if (accessToken) {
+            resetForm();
+            alert("fix the bug");
+            setRegister(false);
+          }
         } catch (error) {
           setError(error.response.data?.message);
         } finally {
           setLoading(false);
+          setRegister(false);
         }
       }
     },
@@ -132,7 +136,7 @@ export function RegisterCard({ setRegister }) {
               </Option>
             ))}
           </Select>
-          
+
           {errors.role && <CustomErrorMessage content={errors.role} />}
 
           {values.role !== "" && values.role === "teacher" && (
@@ -143,9 +147,9 @@ export function RegisterCard({ setRegister }) {
               onChange={(value) => setFieldValue("subject", value)}
               onBlur={() => setFieldTouched("subject", true)}
             >
-              {RegisterCardSubjectData.map((item) => (
-                <Option value={item.subjectValue} label="student">
-                  {item.subjectName}
+              {subjectList.data.data?.map((item) => (
+                <Option value={item._id} label="subject">
+                  {item.title}
                 </Option>
               ))}
             </Select>
@@ -160,7 +164,7 @@ export function RegisterCard({ setRegister }) {
               onBlur={() => setFieldTouched("class", true)}
             >
               {classList.data.data?.map((item) => (
-                <Option value={item.title} label="student">
+                <Option value={item._id} label="class">
                   {item.title}
                 </Option>
               ))}
@@ -208,11 +212,7 @@ export function RegisterCard({ setRegister }) {
           )}
         </CardBody>
         <CardFooter className="pt-0">
-          <Button
-            variant="gradient"
-            fullWidth
-            onClick={handleSubmit}
-          >
+          <Button variant="gradient" fullWidth onClick={handleSubmit}>
             {loading === true && (
               <Spinner color="purple" className="h-6 w-6 ml-[47%]" />
             )}

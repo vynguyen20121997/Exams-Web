@@ -6,7 +6,8 @@ const ExamsByClass = () => {
   return (
     <>
       <div>
-        <TestCard />
+        {" "}
+        <TestCard />{" "}
       </div>
       <div className="float-right py-6">
         <SimplePagination />

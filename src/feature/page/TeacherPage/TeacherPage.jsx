@@ -10,7 +10,8 @@ const TeacherPage = () => {
         <TeacherHeader />
 
         <div className="py-10">
-          <ExamsManagement />
+          {" "}
+          <ExamsManagement />{" "}
         </div>
 
         <SimpleFooter />

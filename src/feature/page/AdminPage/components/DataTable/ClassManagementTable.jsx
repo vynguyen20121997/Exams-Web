@@ -14,75 +14,72 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { getListUserAdminPage } from "../../../../../services/AdminPage/GetlistAPI";
+import ClassAPI from "../../../../../services/AdminPage/ClassAPI";
+import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
 import { TABS } from "../../constants/constants";
 import { DialogAdd } from "../DialogAdd/DialogAdd";
 import { DialogDelete } from "../DialogDelete/DialogDelete";
 import { DialogEdit } from "../DialogEdit/DialogEdit";
-import DataListTable from "./DataListTable";
+import ClassManagementDataTable from "./ClassManagementDataTable";
 
-const DataTable = () => {
+const ClassManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
   const [dataTable, setDataTable] = useState([]);
-const [selectedId, setSelectedId] = useState(0);
+  const [selectedId, setSelectedId] = useState(0);
 
   const handleTabChange = (value) => {
     setActiveTab(value);
   };
 
-  const { data: userList, loading: userListLoading } = useQuery(
-    "userList",
-    () => getListUserAdminPage.getListUser(localStorage.getItem("accessToken")),
+  const { data: classList, loading: classListLoading } = useQuery(
+    "classList",
+    () => ClassAPI.classes(),
     { fetchPolicy: "network-only" },
     { enabled: activeTab === "all" }
   );
 
-  const { data: studentList, loading: studentListLoading } = useQuery(
-    "studentList",
-    () =>
-      getListUserAdminPage.getListStudent(localStorage.getItem("accessToken")),
-    { enabled: activeTab === "student" }
-  );
-
-  const { data: teacherList, loading: teacherListLoading } = useQuery(
-    "teacherList",
-    () =>
-      getListUserAdminPage.getListTeacher(localStorage.getItem("accessToken")),
-    { enabled: activeTab === "teacher" }
-  );
-
   useEffect(() => {
-    if (userList && activeTab === "all") {
-      setDataTable(userList.data.data);
+    if (classList) {
+      setDataTable(classList.data.data);
     }
-    if (studentList && activeTab === "student") {
-      setDataTable(studentList.data.data);
-    }
-    if (teacherList && activeTab === "teacher") {
-      setDataTable(teacherList.data.data);
-    }
-  }, [activeTab, studentList, teacherList, userList]);
+  }, [activeTab, classList]);
 
-  const handleOpenDelete = (id) => { setOpenDelete(!openDelete); setSelectedId(id)}
+  const handleOpenDelete = (id) => {
+    setOpenDelete(!openDelete);
+    setSelectedId(id);
+  };
+
+  const handleDelete = async () => {
+    const token = localStorage.getItem("accessToken");
+    const payload = { vriable: String(selectedId) };
+    console.log("payload", payload);
+
+    try {
+      await UserAPI.delete(payload, token);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setOpenDelete(false);
+    }
+  };
+
   const handleOpenEdit = (id) => setOpenEdit(!openEdit);
   const handleOpenAdd = () => setOpenAdd(!openAdd);
 
-  console.log('selectedId', selectedId)
   return (
     <>
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
-
           <div className="mb-4 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Users list
+                Classes list
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
-                See information about all users
+                See information about all classes
               </Typography>
             </div>
             <div className="w-full md:w-72">
@@ -90,44 +87,35 @@ const [selectedId, setSelectedId] = useState(0);
                 label="Search"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
-            </div> 
+            </div>
           </div>
 
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs className="w-full md:w-max">
-              <TabsHeader>
-                {TABS.map(({ label, value }, index) => (
-                  <Tab
-                    key={index}
-                    value={value}
-                    onClick={() => handleTabChange(value)}
-                  >
-                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                  </Tab>
-                ))}
-              </TabsHeader>
-            </Tabs>
             <div>
               <Button
                 className="flex items-center gap-3"
                 size="sm"
                 onClick={handleOpenAdd}
               >
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add class
               </Button>
             </div>
           </div>
         </CardHeader>
 
-        <CardBody className="max-h-96 overflow-y-auto px-0">
-          <DataListTable
+        <CardBody className="max-h-[490px] overflow-y-auto px-0">
+          <ClassManagementDataTable
             handleOpenEdit={handleOpenEdit}
             handleDelete={handleOpenDelete}
             UserTableData={dataTable}
           />
 
           <DialogEdit openEdit={openEdit} handleOpenEdit={handleOpenEdit} />
-          <DialogDelete open={openDelete} handleOpen={handleOpenDelete} />
+          <DialogDelete
+            open={openDelete}
+            handleOpen={handleOpenDelete}
+            handleDelete={handleDelete}
+          />
           <DialogAdd openAdd={openAdd} handleOpenAdd={handleOpenAdd} />
         </CardBody>
 
@@ -149,4 +137,4 @@ const [selectedId, setSelectedId] = useState(0);
   );
 };
 
-export default DataTable;
+export default ClassManagementTable;

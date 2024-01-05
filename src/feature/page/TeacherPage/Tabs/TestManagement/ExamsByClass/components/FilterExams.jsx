@@ -4,7 +4,7 @@ import React from "react";
 const FilterExams = () => {
   return (
     <>
-      <div className="relative flex w-full gap-2 md:w-max">
+      <div className="relative flex w-full gap-2 md:w-max mr-5">
         <Input
           type="search"
           color="black"

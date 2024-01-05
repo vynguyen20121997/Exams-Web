@@ -1,29 +1,29 @@
-import React, { useState } from "react";
 import {
   Button,
   Dialog,
-  DialogHeader,
   DialogBody,
   DialogFooter,
+  DialogHeader,
   Input,
-  Select,
   Option,
+  Select,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
-import AuthAPI from "../../../../../services/StartingPage/AuthAPI";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
-import GetListAdminPageAPI from "../../../../../services/AdminPage/GetListAdminPageAPI";
-import AddUserValidationSchema from "../../validations/add-user-schema";
-import { RegisterCardSubjectData } from "../../../StartingPage/Login_RegisterPage/untils/data";
+import ClassAPI from "../../../../../services/AdminPage/ClassAPI";
+import AuthAPI from "../../../../../services/StartingPage/AuthAPI";
 import { generateUserPayload } from "../../../../../untils/generatorUserPayload";
+import { RegisterCardSubjectData } from "../../../StartingPage/Login_RegisterPage/untils/data";
 import { AddUserInitialValues } from "../../constants/constants";
+import AddUserValidationSchema from "../../validations/add-user-schema";
 
 export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
   const [loading, setLoading] = useState(false);
 
   const { data: classList } = useQuery(
     "class",
-    () => GetListAdminPageAPI.classes(),
+    () => ClassAPI.classes(),
     { refetchOnChange: false },
     { refetchOnMount: false }
   );

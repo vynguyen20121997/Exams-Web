@@ -38,39 +38,42 @@ const AddDialogExams = () => {
 
   return (
     <>
-      <Button onClick={handleOpen} size="sm" variant="gradient">
-        Create Exams
-      </Button>
+      {" "}
+      <div>
+        <Button onClick={handleOpen} size="md" variant="gradient">
+          Create Exams
+        </Button>
 
-      <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Add Exams</DialogHeader>
-        <DialogBody className="flex flex-col gap-4">
-          <Input
-            label="Topic Name"
-            id="topicName"
-            name="topicName"
-            onChange={handleChange}
-            size="lg"
-          />
-        </DialogBody>
-        <DialogFooter>
-          <Button
-            variant="text"
-            onClick={handleOpen}
-            color="red"
-            className="mr-1"
-          >
-            <span>Cancel</span>
-          </Button>
-          <Button
-            variant="gradient"
-            color="green"
-            onClick={(() => handleSubmit, handleOpen)}
-          >
-            <span>Confirm</span>
-          </Button>
-        </DialogFooter>
-      </Dialog>
+        <Dialog open={open} handler={handleOpen}>
+          <DialogHeader>Add Exams</DialogHeader>
+          <DialogBody className="flex flex-col gap-4">
+            <Input
+              label="Topic Name"
+              id="topicName"
+              name="topicName"
+              onChange={handleChange}
+              size="lg"
+            />
+          </DialogBody>
+          <DialogFooter>
+            <Button
+              variant="text"
+              onClick={handleOpen}
+              color="red"
+              className="mr-1"
+            >
+              <span>Cancel</span>
+            </Button>
+            <Button
+              variant="gradient"
+              color="green"
+              onClick={(() => handleSubmit, handleOpen)}
+            >
+              <span>Confirm</span>
+            </Button>
+          </DialogFooter>
+        </Dialog>
+      </div>{" "}
     </>
   );
 };

@@ -2,13 +2,15 @@
 import { wrapCreateBrowserRouter } from "@sentry/react";
 import { createBrowserRouter } from "react-router-dom";
 import { PATHS } from "../constants/urls";
-import LoginRegisterPage from "../feature/page/StartingPage/Login_RegisterPage/LoginRegisterPage";
+import ClassManagementPage from "../feature/page/AdminPage/ClassManagementPage";
+import SubjectManagementPage from "../feature/page/AdminPage/SubjectManagementPage";
+import UserManagementPage from "../feature/page/AdminPage/UserManagementPage";
 import ForgotPassPage from "../feature/page/StartingPage/ForgotPassPage/ForgotPassPage";
+import LoginRegisterPage from "../feature/page/StartingPage/Login_RegisterPage/LoginRegisterPage";
 import ResetPassPage from "../feature/page/StartingPage/ResetPassPage/ResetPassPage";
-import PublicRoute from "./PublicRoute/PublicRoute";
-import PrivateRoute from "./PrivateRoute/PrivateRoute";
-import AdminPage from "../feature/page/AdminPage/AdminPage";
 import TeacherPage from "../feature/page/TeacherPage/TeacherPage";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import PublicRoute from "./PublicRoute/PublicRoute";
 
 //Public route
 // const Login_RegisterPage = lazyWithRetry(() =>
@@ -48,7 +50,12 @@ const router = sentryCreateBrowserRouter([
   {
     element: <PrivateRoute />,
     children: [
-      { path: PATHS.admin_home, element: <AdminPage /> },
+      { path: PATHS.admin_home, element: <UserManagementPage /> },
+      { path: PATHS.admin_class_management, element: <ClassManagementPage /> },
+      {
+        path: PATHS.admin_subject_managment,
+        element: <SubjectManagementPage />,
+      },
       {
         path: PATHS.teacher_home,
         element: <TeacherPage />,

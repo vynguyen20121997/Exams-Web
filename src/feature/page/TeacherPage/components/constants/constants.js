@@ -1,12 +1,12 @@
 import {
     AcademicCapIcon,
     BookOpenIcon,
-    CodeBracketSquareIcon,
     Cog6ToothIcon,
     InboxArrowDownIcon,
     LifebuoyIcon,
     PowerIcon,
-    UserCircleIcon
+    UserCircleIcon,
+    UserIcon
 } from "@heroicons/react/24/solid";
 
 export const profileMenuItems = [
@@ -52,15 +52,15 @@ export const navListMenuItems = [
 
 export const navListItems = [
     {
-        label: "Class Management",
-        icon: AcademicCapIcon,
-    },
+        label: "User Management",
+        icon: UserIcon,
+    }, 
     {
-        label: "Test Management",
+        label: "Subject Management",
         icon: BookOpenIcon,
     },
     {
-        label: "Docs",
-        icon: CodeBracketSquareIcon,
+        label: "Class Management",
+        icon: AcademicCapIcon,
     },
 ];
