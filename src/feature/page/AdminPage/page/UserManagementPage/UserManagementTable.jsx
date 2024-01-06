@@ -21,6 +21,8 @@ import UserManagementDataTable from "./components/DataTable/UserManagementDataTa
 import { UserManagementDialogAdd } from "./components/DialogAdd/UserManagementDialogAdd";
 import { UserManagementDialogDelete } from "./components/DialogDelete/UserManagementDialogDelete";
 import { UserManagementDialogEdit } from "./components/DialogEdit/UserManagementDialogEdit";
+import { toast } from "react-toastify";
+import { CustomToastContainer } from "../../../../../untils/toast";
 
 const UserManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -73,16 +75,14 @@ const UserManagementTable = () => {
   };
 
   const handleDelete = async () => {
-    const token = localStorage.getItem("accessToken");
-    const payload = { vriable: String(selectedId) };
-    console.log("payload", payload);
-
+    const payload = { id: String(selectedId) };
     try {
-      await UserAPI.delete(payload, token);
+      await UserAPI.delete(payload);
     } catch (error) {
       console.log(error);
     } finally {
       setOpenDelete(false);
+      toast("User deleted successfully!");
     }
   };
 
@@ -172,6 +172,7 @@ const UserManagementTable = () => {
           </div>
         </CardFooter>
       </Card>
+      <CustomToastContainer />
     </>
   );
 };

@@ -1,23 +1,22 @@
-import axios from 'axios';
+import axios from "axios";
 // import { TOKEN_TYPES } from '../utils/constants';
 
-const BASE_API_URL = 'https://backend-project-b9qu.onrender.com/api/v1/';
+const BASE_API_URL = "https://backend-project-b9qu.onrender.com/api/v1/";
 
 const api = axios.create({
-    baseURL: BASE_API_URL,
-    timeout: 10000,
+  baseURL: BASE_API_URL,
+  timeout: 10000,
 });
 
 // Attach accessToken to request headers
-// api.interceptors.request.use((config) => {
-//   const accessToken = localStorage.getItem(accessToken);
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accessToken");
 
-//   if (accessToken) {
-//     config.headers['x-access-token'] = accessToken;
-//   }
-
-//   return config;
-// });
+  if (token) {
+    config.headers["x-access-token"] = token;
+  }
+  return config;
+});
 
 // api.interceptors.response.use(
 //   (response) => response,

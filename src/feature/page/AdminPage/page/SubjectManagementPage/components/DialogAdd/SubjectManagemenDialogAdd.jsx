@@ -8,7 +8,10 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import subjectAPI from "../../../../../../../services/AdminPage/SubjectAPI";
+import { CustomToastContainer } from "../../../../../../../untils/toast";
 import { addSubjectInitialValue } from "../../../../constants/constants";
 import { AddSubjectValidationSchema } from "../../../../validations/admin-page-schema";
 
@@ -21,7 +24,7 @@ export const SubjectManagemenDialogAdd = ({ openAdd, handleOpenAdd }) => {
 
     onSubmit: async (values) => {
       const payload = {
-        variable: values.subject,
+        title: values.subject,
       };
       try {
         setLoading(true);
@@ -32,6 +35,7 @@ export const SubjectManagemenDialogAdd = ({ openAdd, handleOpenAdd }) => {
         setLoading(false);
         resetForm();
         handleOpenAdd();
+        toast("Subject created successfully!");
       }
     },
   });
@@ -40,7 +44,7 @@ export const SubjectManagemenDialogAdd = ({ openAdd, handleOpenAdd }) => {
   return (
     <>
       <Dialog open={openAdd} handler={handleOpenAdd}>
-        <DialogHeader>Add user</DialogHeader>
+        <DialogHeader>Add Subject</DialogHeader>
         <DialogBody className="flex flex-col gap-4">
           <Input
             label="Subject Name"
@@ -68,6 +72,7 @@ export const SubjectManagemenDialogAdd = ({ openAdd, handleOpenAdd }) => {
           </Button>
         </DialogFooter>
       </Dialog>
+      <CustomToastContainer />
     </>
   );
 };

@@ -8,34 +8,22 @@ const ExamsManagement = () => {
   return (
     <>
       <div className="px-10">
-        <div className=" pb-3">
-          <div className="pb-5 flex justify-between">
-            <div>
-              <Typography variant="h4" color="blue-gray" className="font-small">
-                Test by Class
-              </Typography>
-            </div>
-            <div className="flex ">
-              <FilterExams />
-              <AddDialogExams />
-            </div>
-          </div>
+        <div className="pb-5 flex justify-between">
           <div>
-            {" "}
-            <ExamsByClass />
+            <Typography variant="h3" color="blue-gray" className="font-small">
+              All Test
+            </Typography>
+          </div>
+          <div className="flex ">
+            <FilterExams />
+            <AddDialogExams />
           </div>
         </div>
 
-        <div className=" pb-10">
-          <div className="pb-5">
-            <Typography variant="h4" color="blue-gray" className="font-small">
-              {" "}
-              Test by Collection
-            </Typography>
-          </div>
-          <div>{/* <ExamsByClass /> */}</div>
+        <div className="h-[420px]">
+          <ExamsByClass />
         </div>
-      </div>{" "}
+      </div>
     </>
   );
 };

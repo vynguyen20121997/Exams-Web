@@ -17,6 +17,8 @@ import SubjectManagementDataTable from "./components/DataTable/SubjectManagement
 import { SubjectManagemenDialogAdd } from "./components/DialogAdd/SubjectManagemenDialogAdd";
 import { SubjectManagementDialogDelete } from "./components/DialogDelete/SubjectManagementDialogDelete";
 import { SubjectManagementDialogEdit } from "./components/DialogEdit/SubjectManagementDialogEdit";
+import { toast } from "react-toastify";
+import { CustomToastContainer } from "../../../../../untils/toast";
 
 const SubjectManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -51,6 +53,7 @@ const SubjectManagementTable = () => {
       console.log(error);
     } finally {
       setOpenDelete(false);
+      toast("Subject deleted successfully!");
     }
   };
 
@@ -128,6 +131,7 @@ const SubjectManagementTable = () => {
           </div>
         </CardFooter>
       </Card>
+      <CustomToastContainer />
     </>
   );
 };

@@ -5,140 +5,49 @@ import {
   DialogFooter,
   DialogHeader,
   Input,
-  Option,
-  Select,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
 import ClassAPI from "../../../../../../../services/AdminPage/ClassAPI";
-import AuthAPI from "../../../../../../../services/StartingPage/AuthAPI";
-import { generateUserPayload } from "../../../../../../../untils/generatorUserPayload";
-import { RegisterCardSubjectData } from "../../../../../StartingPage/Login_RegisterPage/untils/data";
+import { addClassInitialValue } from "../../../../constants/constants";
+import { AddClassValidationSchema } from "../../../../validations/admin-page-schema";
+import { CustomToastContainer } from "../../../../../../../untils/toast";
+import { toast } from "react-toastify";
 
 export const ClassManagementDialogAdd = ({ openAdd, handleOpenAdd }) => {
   const [loading, setLoading] = useState(false);
 
-  const { data: classList } = useQuery(
-    "class",
-    () => ClassAPI.classes(),
-    { refetchOnChange: false },
-    { refetchOnMount: false }
-  );
+  const formik = useFormik({
+    initialValues: addClassInitialValue,
+    validationSchema: AddClassValidationSchema,
 
-  const formik = useFormik(
-    {
-      // initialValues: AddUserInitialValues,
-      // validationSchema: AddUserValidationSchema,
-
-      onSubmit: async (values) => {
-        const payload = await generateUserPayload(values, classList);
-        try {
-          setLoading(true);
-          const response = await AuthAPI.register(payload);
-          console.log("response", response);
-        } catch (error) {
-          console.log("response", error);
-        } finally {
-          setLoading(false);
-          resetForm();
-          handleOpenAdd();
-        }
-      },
-    }
-    // }
-  );
-  const {
-    handleSubmit,
-    handleChange,
-    setFieldValue,
-    setFieldTouched,
-    values,
-    errors,
-    resetForm,
-  } = formik;
+    onSubmit: async (values) => {
+      const payload = { title: values.class };
+      try {
+        setLoading(true);
+        await ClassAPI.createClass(payload);
+      } catch (error) {
+        console.log("response", error);
+      } finally {
+        setLoading(false);
+        resetForm();
+        handleOpenAdd();
+        toast("Class created successfully!");
+      }
+    },
+  });
+  const { handleSubmit, handleChange, resetForm } = formik;
 
   return (
     <>
       <Dialog open={openAdd} handler={handleOpenAdd}>
-        <DialogHeader>Add user</DialogHeader>
+        <DialogHeader>Add Class</DialogHeader>
         <DialogBody className="flex flex-col gap-4">
           <Input
-            label="Name"
-            id="name"
-            name="name"
+            label="Class Name"
+            id="class"
+            name="class"
             onChange={handleChange}
-            size="lg"
-          />
-
-          <Select
-            label="Role"
-            id="role"
-            name="role"
-            onChange={(value) => setFieldValue("role", value)}
-            onBlur={() => setFieldTouched("role", true)}
-          >
-            <Option value="student" label="student">
-              Student
-            </Option>
-            <Option value="teacher" label="teacher">
-              Teacher
-            </Option>
-          </Select>
-
-          {values.role !== "" && values.role === "teacher" && (
-            <Select
-              label="Which subject are you teaching?"
-              id="subject"
-              name="subject"
-              onChange={(value) => setFieldValue("subject", value)}
-              onBlur={() => setFieldTouched("subject", true)}
-            >
-              {RegisterCardSubjectData.map((item) => (
-                <Option value={item.subjectValue} label="student">
-                  {item.subjectName}
-                </Option>
-              ))}
-            </Select>
-          )}
-
-          {values.role !== "" && values.role === "student" && (
-            <Select
-              label="Which class are you in?"
-              id="class"
-              name="class"
-              onChange={(value) => setFieldValue("class", value)}
-              onBlur={() => setFieldTouched("class", true)}
-            >
-              {classList?.data.data.map((item) => (
-                <Option value={item.title} label="class">
-                  {item.title}
-                </Option>
-              ))}
-            </Select>
-          )}
-
-          <Input
-            label="Email"
-            id="email"
-            name="email"
-            onChange={handleChange}
-            size="lg"
-          />
-          <Input
-            label="Username"
-            id="username"
-            name="username"
-            onChange={handleChange}
-            size="lg"
-          />
-          <Input
-            label="Password"
-            id="password"
-            name="password"
-            type="password"
-            onChange={handleChange}
-            value="123456789"
             size="lg"
           />
         </DialogBody>
@@ -160,6 +69,7 @@ export const ClassManagementDialogAdd = ({ openAdd, handleOpenAdd }) => {
           </Button>
         </DialogFooter>
       </Dialog>
+      <CustomToastContainer />
     </>
   );
 };

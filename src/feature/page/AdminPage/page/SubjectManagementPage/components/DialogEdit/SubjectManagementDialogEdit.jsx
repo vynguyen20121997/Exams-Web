@@ -10,6 +10,8 @@ import {
   Option,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { CustomToastContainer } from "../../../../../../../untils/toast";
 
 export const SubjectManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
   const [loading, setLoading] = useState(false);
@@ -26,6 +28,7 @@ export const SubjectManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
       } catch (error) {
       } finally {
         setLoading(false);
+        toast("Subject edited successfully!");
       }
     },
   });
@@ -78,6 +81,7 @@ export const SubjectManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
           </Button>
         </DialogFooter>
       </Dialog>
+      <CustomToastContainer />
     </>
   );
 };

@@ -11,12 +11,13 @@ import {
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 import ClassAPI from "../../../../../../../services/AdminPage/ClassAPI";
-import { generateUserPayload } from "../../../../../../../untils/generatorUserPayload";
-import { UserAPI } from "../../../../../../../services/AdminPage/UserAPI";
 import subjectAPI from "../../../../../../../services/AdminPage/SubjectAPI";
+import AuthAPI from "../../../../../../../services/StartingPage/AuthAPI";
 import { AddUserInitialValues } from "../../../../constants/constants";
 import { AddUserValidationSchema } from "../../../../validations/admin-page-schema";
+import { CustomToastContainer } from "../../../../../../../untils/toast";
 
 export const UserManagementDialogAdd = ({ openAdd, handleOpenAdd }) => {
   const [loading, setLoading] = useState(false);
@@ -28,35 +29,59 @@ export const UserManagementDialogAdd = ({ openAdd, handleOpenAdd }) => {
     { refetchOnMount: false }
   );
 
-  const { data: teacherList } = useQuery(
-    "teacherList",
+  const { data: subjectList } = useQuery(
+    "subject",
     () => subjectAPI.subjects(),
     { refetchOnChange: false },
     { refetchOnMount: false }
   );
 
-  const formik = useFormik(
-    {
-      initialValues: AddUserInitialValues,
-      validationSchema: AddUserValidationSchema,
+  const formik = useFormik({
+    initialValues: AddUserInitialValues,
+    validationSchema: AddUserValidationSchema,
 
-      onSubmit: async (values) => {
-        const payload = await generateUserPayload(values, classList);
+    onSubmit: async (values) => {
+      if (values.role === "student") {
+        const payload = {
+          name: values.name,
+          role: values.role,
+          email: values.email,
+          username: values.username,
+          password: "12345678",
+          classId: values.class,
+        };
         try {
           setLoading(true);
-          const response = await UserAPI.register(payload);
-          console.log("response", response);
+          await AuthAPI.register(payload);
         } catch (error) {
-          console.log("response", error);
         } finally {
-          setLoading(false);
           resetForm();
-          handleOpenAdd();
+          setLoading(false);
+          toast("User created successfully!");
         }
-      },
-    }
-    // }
-  );
+      }
+      if (values.role === "teacher") {
+        const payLoad = {
+          name: values.name,
+          role: values.role,
+          email: values.email,
+          username: values.username,
+          password: "12345678",
+          subject: values.subject,
+        };
+        try {
+          setLoading(true);
+          await AuthAPI.register(payLoad);
+        } catch (error) {
+        } finally {
+          resetForm();
+          setLoading(false);
+          handleOpenAdd();
+          toast("User created successfully!");
+        }
+      }
+    },
+  });
   const {
     handleSubmit,
     handleChange,
@@ -102,9 +127,9 @@ export const UserManagementDialogAdd = ({ openAdd, handleOpenAdd }) => {
               onChange={(value) => setFieldValue("subject", value)}
               onBlur={() => setFieldTouched("subject", true)}
             >
-              {teacherList.map((item) => (
-                <Option value={item.subjectValue} label="student">
-                  {item.subjectName}
+              {subjectList?.data.data.map((item) => (
+                <Option value={item._id} label="student">
+                  {item.title}
                 </Option>
               ))}
             </Select>
@@ -119,7 +144,7 @@ export const UserManagementDialogAdd = ({ openAdd, handleOpenAdd }) => {
               onBlur={() => setFieldTouched("class", true)}
             >
               {classList?.data.data.map((item) => (
-                <Option value={item.title} label="class">
+                <Option value={item._id} label="class">
                   {item.title}
                 </Option>
               ))}
@@ -168,6 +193,7 @@ export const UserManagementDialogAdd = ({ openAdd, handleOpenAdd }) => {
           </Button>
         </DialogFooter>
       </Dialog>
+      <CustomToastContainer />
     </>
   );
 };

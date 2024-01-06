@@ -20,7 +20,7 @@ import {
   navListItems,
   navListMenuItems,
   profileMenuItems,
-} from "../../../TeacherPage/components/constants/constants";
+} from "../../constants/constants";
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

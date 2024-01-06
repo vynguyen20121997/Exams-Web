@@ -11,6 +11,8 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import AuthAPI from "../../../../../../../services/StartingPage/AuthAPI";
+import { CustomToastContainer } from "../../../../../../../untils/toast";
+import { toast } from "react-toastify";
 
 export const ClassManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
   const [loading, setLoading] = useState(false);
@@ -28,6 +30,7 @@ export const ClassManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
       } catch (error) {
       } finally {
         setLoading(false);
+        toast("Class Edited successfully!");
       }
     },
   });
@@ -80,6 +83,7 @@ export const ClassManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
           </Button>
         </DialogFooter>
       </Dialog>
+      <CustomToastContainer />
     </>
   );
 };

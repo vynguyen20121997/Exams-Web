@@ -13,10 +13,12 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import ClassAPI from "../../../../../services/AdminPage/ClassAPI";
 import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
-import ClassManagementDataTable from "../../components/DataTable/ClassManagementDataTable";
+import ClassManagementDataTable from "./components/DataTable/ClassManagementDataTable";
 import { ClassManagementDialogAdd } from "./components/DialogAdd/ClassManagementDialogAdd";
 import { ClassManagementDialogDelete } from "./components/DialogDelete/ClassManagementDialogDelete";
 import { ClassManagementDialogEdit } from "./components/DialogEdit/ClassManagementDialogEdit";
+import { CustomToastContainer } from "../../../../../untils/toast";
+import { toast } from "react-toastify";
 
 const ClassManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -59,6 +61,7 @@ const ClassManagementTable = () => {
       console.log(error);
     } finally {
       setOpenDelete(false);
+      toast("Class deleted successfully!");
     }
   };
 
@@ -135,6 +138,7 @@ const ClassManagementTable = () => {
           </div>
         </CardFooter>
       </Card>
+      <CustomToastContainer />
     </>
   );
 };

@@ -135,6 +135,8 @@ function NavListAlerBell() {
 }
 
 function NavList() {
+  const navigate = useNavigate();
+
   return (
     <ul className="mt-2  mb-4 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       {navListItems.map(({ label, icon }, key) => (
@@ -158,7 +160,7 @@ function NavList() {
   );
 }
 
-export function ComplexNavbar() {
+export function TeacherNavbar() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
   // const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 

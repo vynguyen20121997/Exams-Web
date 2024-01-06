@@ -11,3 +11,8 @@ export const AddSubjectValidationSchema = yup.object().shape({
     subject: yup.string().required(),
     
 })
+
+export const AddClassValidationSchema = yup.object().shape({
+    class: yup.string().required(),
+    
+})
