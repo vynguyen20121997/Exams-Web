@@ -10,9 +10,9 @@ import {
   Option,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
-import AuthAPI from "../../../../../services/StartingPage/AuthAPI";
+import AuthAPI from "../../../../../../../services/StartingPage/AuthAPI";
 
-export const DialogEdit = ({ openEdit, handleOpenEdit }) => {
+export const ClassManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
@@ -25,15 +25,15 @@ export const DialogEdit = ({ openEdit, handleOpenEdit }) => {
       try {
         setLoading(true);
         const response = await AuthAPI.register(values);
-        console.log("response", response);
       } catch (error) {
-        console.log("error", error);
       } finally {
         setLoading(false);
       }
     },
   });
   const { handleSubmit, handleChange, setFieldValue, setFieldTouched } = formik;
+
+  console.log("openEdit", openEdit);
   return (
     <>
       <Dialog open={openEdit} handler={handleOpenEdit}>

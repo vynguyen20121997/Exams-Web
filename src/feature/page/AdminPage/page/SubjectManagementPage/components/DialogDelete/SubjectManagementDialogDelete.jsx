@@ -7,7 +7,11 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 
-export const DialogDelete = ({ open, handleOpen, handleDelete }) => {
+export const SubjectManagementDialogDelete = ({
+  open,
+  handleOpen,
+  handleDelete,
+}) => {
   return (
     <>
       <Dialog open={open} handler={handleOpen}>

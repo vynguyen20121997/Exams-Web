@@ -8,6 +8,7 @@ import {
     UserCircleIcon,
     UserIcon
 } from "@heroicons/react/24/solid";
+import { PATHS } from "../../../../../constants/urls";
 
 export const profileMenuItems = [
     {
@@ -54,13 +55,18 @@ export const navListItems = [
     {
         label: "User Management",
         icon: UserIcon,
-    }, 
+        path:  "/"+PATHS.admin_home
+    },
     {
         label: "Subject Management",
         icon: BookOpenIcon,
+        path:  "/"+PATHS.admin_subject_managment
+
     },
     {
         label: "Class Management",
         icon: AcademicCapIcon,
+        path:  "/"+PATHS.admin_class_management
+
     },
 ];

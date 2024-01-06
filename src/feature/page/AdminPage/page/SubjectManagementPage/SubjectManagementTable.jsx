@@ -13,10 +13,10 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import subjectAPI from "../../../../../services/AdminPage/SubjectAPI";
 import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
-import { DialogAdd } from "../DialogAdd/DialogAdd";
-import { DialogDelete } from "../DialogDelete/DialogDelete";
-import { DialogEdit } from "../DialogEdit/DialogEdit";
-import ClassManagementDataTable from "./ClassManagementDataTable";
+import SubjectManagementDataTable from "./components/DataTable/SubjectManagementDataTable";
+import { SubjectManagemenDialogAdd } from "./components/DialogAdd/SubjectManagemenDialogAdd";
+import { SubjectManagementDialogDelete } from "./components/DialogDelete/SubjectManagementDialogDelete";
+import { SubjectManagementDialogEdit } from "./components/DialogEdit/SubjectManagementDialogEdit";
 
 const SubjectManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -45,8 +45,6 @@ const SubjectManagementTable = () => {
   const handleDelete = async () => {
     const token = localStorage.getItem("accessToken");
     const payload = { vriable: String(selectedId) };
-    console.log("payload", payload);
-
     try {
       await UserAPI.delete(payload, token);
     } catch (error) {
@@ -66,7 +64,7 @@ const SubjectManagementTable = () => {
           <div className="mb-4 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Classes list
+                Subject list
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
                 See information about all classes
@@ -87,26 +85,33 @@ const SubjectManagementTable = () => {
                 size="sm"
                 onClick={handleOpenAdd}
               >
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add class
+                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Subject
               </Button>
             </div>
           </div>
         </CardHeader>
 
         <CardBody className="max-h-[490px] overflow-y-auto px-0">
-          <ClassManagementDataTable
+          <SubjectManagementDataTable
             handleOpenEdit={handleOpenEdit}
             handleDelete={handleOpenDelete}
+            O
             UserTableData={dataTable}
           />
 
-          <DialogEdit openEdit={openEdit} handleOpenEdit={handleOpenEdit} />
-          <DialogDelete
+          <SubjectManagementDialogEdit
+            openEdit={openEdit}
+            handleOpenEdit={handleOpenEdit}
+          />
+          <SubjectManagementDialogDelete
             open={openDelete}
             handleOpen={handleOpenDelete}
             handleDelete={handleDelete}
           />
-          <DialogAdd openAdd={openAdd} handleOpenAdd={handleOpenAdd} />
+          <SubjectManagemenDialogAdd
+            openAdd={openAdd}
+            handleOpenAdd={handleOpenAdd}
+          />
         </CardBody>
 
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">

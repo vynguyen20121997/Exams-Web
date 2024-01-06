@@ -7,20 +7,16 @@ import {
   CardFooter,
   CardHeader,
   Input,
-  Tab,
-  Tabs,
-  TabsHeader,
   Typography,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import ClassAPI from "../../../../../services/AdminPage/ClassAPI";
 import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
-import { TABS } from "../../constants/constants";
-import { DialogAdd } from "../DialogAdd/DialogAdd";
-import { DialogDelete } from "../DialogDelete/DialogDelete";
-import { DialogEdit } from "../DialogEdit/DialogEdit";
-import ClassManagementDataTable from "./ClassManagementDataTable";
+import ClassManagementDataTable from "../../components/DataTable/ClassManagementDataTable";
+import { ClassManagementDialogAdd } from "./components/DialogAdd/ClassManagementDialogAdd";
+import { ClassManagementDialogDelete } from "./components/DialogDelete/ClassManagementDialogDelete";
+import { ClassManagementDialogEdit } from "./components/DialogEdit/ClassManagementDialogEdit";
 
 const ClassManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -110,13 +106,19 @@ const ClassManagementTable = () => {
             UserTableData={dataTable}
           />
 
-          <DialogEdit openEdit={openEdit} handleOpenEdit={handleOpenEdit} />
-          <DialogDelete
+          <ClassManagementDialogEdit
+            openEdit={openEdit}
+            handleOpenEdit={handleOpenEdit}
+          />
+          <ClassManagementDialogDelete
             open={openDelete}
             handleOpen={handleOpenDelete}
             handleDelete={handleDelete}
           />
-          <DialogAdd openAdd={openAdd} handleOpenAdd={handleOpenAdd} />
+          <ClassManagementDialogAdd
+            openAdd={openAdd}
+            handleOpenAdd={handleOpenAdd}
+          />
         </CardBody>
 
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">

@@ -13,14 +13,14 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import React, { createElement, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../../../../redux/auth/authSlice";
 import {
   navListItems,
   navListMenuItems,
   profileMenuItems,
 } from "../../../TeacherPage/components/constants/constants";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { logout } from "../../../../../redux/auth/authSlice";
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -147,18 +147,22 @@ function NavListAlerBell() {
 }
 
 function NavList() {
+  const navigate = useNavigate();
+
   return (
     <ul className="mt-2  mb-4 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      {navListItems.map(({ label, icon }, key) => (
+      {navListItems.map(({ label, icon, path }, key) => (
         <Typography
           key={label}
           as="a"
-          href="#"
           variant="small"
           color="gray"
           className=" text-blue-gray-500"
         >
-          <MenuItem className="flex items-center gap-2 lg:rounded-full">
+          <MenuItem
+            onClick={() => navigate(path)}
+            className="flex items-center gap-2 lg:rounded-full"
+          >
             {createElement(icon, { className: "h-[30px] w-[30px]" })}
             <span className="text-gray-900 font-medium "> {label}</span>
           </MenuItem>

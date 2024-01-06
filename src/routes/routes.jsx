@@ -2,15 +2,15 @@
 import { wrapCreateBrowserRouter } from "@sentry/react";
 import { createBrowserRouter } from "react-router-dom";
 import { PATHS } from "../constants/urls";
-import ClassManagementPage from "../feature/page/AdminPage/ClassManagementPage";
-import SubjectManagementPage from "../feature/page/AdminPage/SubjectManagementPage";
-import UserManagementPage from "../feature/page/AdminPage/UserManagementPage";
+import SubjectManagementPage from "../feature/page/AdminPage/page/SubjectManagementPage/SubjectManagementPage";
+import UserManagementPage from "../feature/page/AdminPage/page/UserManagementPage/UserManagementPage";
 import ForgotPassPage from "../feature/page/StartingPage/ForgotPassPage/ForgotPassPage";
 import LoginRegisterPage from "../feature/page/StartingPage/Login_RegisterPage/LoginRegisterPage";
 import ResetPassPage from "../feature/page/StartingPage/ResetPassPage/ResetPassPage";
 import TeacherPage from "../feature/page/TeacherPage/TeacherPage";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PublicRoute from "./PublicRoute/PublicRoute";
+import ClassManagementPage from "../feature/page/AdminPage/page/ClassManagementPage/ClassManagementPage";
 
 //Public route
 // const Login_RegisterPage = lazyWithRetry(() =>

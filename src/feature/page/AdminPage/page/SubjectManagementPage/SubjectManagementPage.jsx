@@ -1,6 +1,6 @@
 import React from "react";
-import SubjectManagementTable from "./components/DataTable/SubjectManagementTable";
-import AdminPageLayout from "./components/Layout/layout";
+import AdminPageLayout from "../../components/Layout/layout";
+import SubjectManagementTable from "./SubjectManagementTable";
 
 const SubjectManagementPage = () => {
   return (

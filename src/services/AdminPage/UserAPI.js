@@ -17,4 +17,8 @@ export const UserAPI = {
             },
         })
     },
+     register: (body) => {
+        const url = '/auth/signup';
+        return api.post(url, body)
+    },
 }

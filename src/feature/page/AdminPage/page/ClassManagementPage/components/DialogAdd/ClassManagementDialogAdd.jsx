@@ -11,14 +11,12 @@ import {
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import ClassAPI from "../../../../../services/AdminPage/ClassAPI";
-import AuthAPI from "../../../../../services/StartingPage/AuthAPI";
-import { generateUserPayload } from "../../../../../untils/generatorUserPayload";
-import { RegisterCardSubjectData } from "../../../StartingPage/Login_RegisterPage/untils/data";
-import { AddUserInitialValues } from "../../constants/constants";
-import AddUserValidationSchema from "../../validations/add-user-schema";
+import ClassAPI from "../../../../../../../services/AdminPage/ClassAPI";
+import AuthAPI from "../../../../../../../services/StartingPage/AuthAPI";
+import { generateUserPayload } from "../../../../../../../untils/generatorUserPayload";
+import { RegisterCardSubjectData } from "../../../../../StartingPage/Login_RegisterPage/untils/data";
 
-export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
+export const ClassManagementDialogAdd = ({ openAdd, handleOpenAdd }) => {
   const [loading, setLoading] = useState(false);
 
   const { data: classList } = useQuery(
@@ -30,8 +28,8 @@ export const DialogAdd = ({ openAdd, handleOpenAdd }) => {
 
   const formik = useFormik(
     {
-      initialValues: AddUserInitialValues,
-      validationSchema: AddUserValidationSchema,
+      // initialValues: AddUserInitialValues,
+      // validationSchema: AddUserValidationSchema,
 
       onSubmit: async (values) => {
         const payload = await generateUserPayload(values, classList);

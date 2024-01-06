@@ -17,10 +17,10 @@ import { useQuery } from "react-query";
 import { getListUserAdminPage } from "../../../../../services/AdminPage/GetlistAPI";
 import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
 import { TABS } from "../../constants/constants";
-import { DialogAdd } from "../DialogAdd/DialogAdd";
-import { DialogDelete } from "../DialogDelete/DialogDelete";
-import { DialogEdit } from "../DialogEdit/DialogEdit";
-import UserManagementDataTable from "./UserManagementDataTable";
+import UserManagementDataTable from "./components/DataTable/UserManagementDataTable";
+import { UserManagementDialogAdd } from "./components/DialogAdd/UserManagementDialogAdd";
+import { UserManagementDialogDelete } from "./components/DialogDelete/UserManagementDialogDelete";
+import { UserManagementDialogEdit } from "./components/DialogEdit/UserManagementDialogEdit";
 
 const UserManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -143,13 +143,19 @@ const UserManagementTable = () => {
             UserTableData={dataTable}
           />
 
-          <DialogEdit openEdit={openEdit} handleOpenEdit={handleOpenEdit} />
-          <DialogDelete
+          <UserManagementDialogEdit
+            openEdit={openEdit}
+            handleOpenEdit={handleOpenEdit}
+          />
+          <UserManagementDialogDelete
             open={openDelete}
             handleOpen={handleOpenDelete}
             handleDelete={handleDelete}
           />
-          <DialogAdd openAdd={openAdd} handleOpenAdd={handleOpenAdd} />
+          <UserManagementDialogAdd
+            openAdd={openAdd}
+            handleOpenAdd={handleOpenAdd}
+          />
         </CardBody>
 
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
