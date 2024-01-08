@@ -24,7 +24,7 @@ export function CreateExamsDataTable() {
   };
 
   return (
-    <Card className="h-[570px] w-[1200px] overflow-scroll round-full">
+    <Card className="ml-5 h-[620px] w-[1200px] overflow-scroll round-full">
       <table className="w-full  table-auto text-left">
         <thead>
           <tr>

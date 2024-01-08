@@ -46,52 +46,50 @@ const CreateExamsDataStudent = () => {
             </tr>
           </thead>
           <tbody>
-            {CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS?.map(
-              ({ img, name, choosen }, index) => {
-                const isLast =
-                  index === CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS.length - 1;
-                const classes = isLast ? "p-4" : "p-4 border-b border-gray-50";
+            {studentData?.map(({ id, img, name, choosen }, index) => {
+              const isLast =
+                index === CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS.length - 1;
+              const classes = isLast ? "p-4" : "p-4 border-b border-gray-50";
 
-                return (
-                  <tr
-                    key={index}
-                    className={choosen ? `${classes} bg-purple-50 ` : null}
-                  >
-                    <td>
-                      <Checkbox
-                        color="purple"
-                        className="rounded-full"
-                        checked={choosen}
-                        // onClick={() => onChangeSelected(id)}
-                      />
-                    </td>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <Avatar src={img} alt={name} size="sm" />
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {name}
-                          </Typography>
-                        </div>
+              return (
+                <tr
+                  key={index}
+                  className={choosen ? `${classes} bg-purple-50 ` : null}
+                >
+                  <td>
+                    <Checkbox
+                      //   color="purple"
+                      className="rounded-full"
+                      checked={choosen}
+                      onClick={() => onChangeSelected(id)}
+                    />
+                  </td>
+                  <td className={classes}>
+                    <div className="flex items-center gap-3">
+                      <Avatar src={img} alt={name} size="sm" />
+                      <div className="flex flex-col">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {name}
+                        </Typography>
                       </div>
-                    </td>
-                    <td>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        Class
-                      </Typography>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
+                    </div>
+                  </td>
+                  <td>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      Class
+                    </Typography>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </Card>
