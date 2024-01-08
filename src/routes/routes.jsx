@@ -11,6 +11,7 @@ import TeacherPage from "../feature/page/TeacherPage/TeacherPage";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PublicRoute from "./PublicRoute/PublicRoute";
 import ClassManagementPage from "../feature/page/AdminPage/page/ClassManagementPage/ClassManagementPage";
+import CreateExamsPage from "../feature/page/TeacherPage/Tabs/TestManagement/CreateExamsPage/CreateExamsPage";
 
 //Public route
 // const Login_RegisterPage = lazyWithRetry(() =>
@@ -59,6 +60,10 @@ const router = sentryCreateBrowserRouter([
       {
         path: PATHS.teacher_home,
         element: <TeacherPage />,
+      },
+      {
+        path: PATHS.teacher_create_exams,
+        element: <CreateExamsPage />,
       },
     ],
   },

@@ -18,6 +18,7 @@ import {
   navListMenuItems,
   profileMenuItems,
 } from "../constants/constants";
+import { useNavigate } from "react-router-dom";
 
 // profile menu component
 
@@ -139,7 +140,7 @@ function NavList() {
 
   return (
     <ul className="mt-2  mb-4 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      {navListItems.map(({ label, icon }, key) => (
+      {navListItems.map(({ label, icon, path }, key) => (
         <Typography
           key={label}
           as="a"
@@ -148,7 +149,10 @@ function NavList() {
           color="gray"
           className=" text-blue-gray-500"
         >
-          <MenuItem className="flex items-center gap-2 lg:rounded-full">
+          <MenuItem
+            onClick={() => navigate(path)}
+            className="flex items-center gap-2 lg:rounded-full"
+          >
             {createElement(icon, { className: "h-[30px] w-[30px]" })}
             <span className="text-gray-900 font-medium "> {label}</span>
           </MenuItem>
