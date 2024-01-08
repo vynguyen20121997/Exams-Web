@@ -5,7 +5,7 @@ const CreateExamsInfomation = () => {
     <Navbar
       variant="gradient"
       color="blue-gray"
-      className="mx-auto w-96 from-purple-400 to-purple-600 mb-5"
+      className="mx-auto w-96 from-purple-400 to-purple-600 mb-2"
     >
       <div className="flex items-center justify-between py-1 text-white">
         <div>

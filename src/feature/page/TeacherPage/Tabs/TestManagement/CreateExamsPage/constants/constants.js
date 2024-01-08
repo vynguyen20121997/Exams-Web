@@ -8,6 +8,63 @@ export const CREATE_EXAMS_TABLE_HEAD = [
   "Created  Date",
 ];
 
+export const CREATE_EXAMS_STUDENT_TABLE_HEAD = ["", "Student", "Class"];
+
+export const CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS = [
+  {
+    id: 1,
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
+    name: "John Michael",
+    username: "1223fef",
+    email: "john@creative-tim.com",
+    role: "Student",
+    org: "ABC SChool",
+    choosen: true,
+    createdAt: "23/04/18",
+  },
+  {
+    id: 2,
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
+    name: "Alexa Liras",
+    username: "eu123",
+    email: "alexa@creative-tim.com",
+    role: "Student",
+    org: "ABC SChool",
+    choosen: false,
+    createdAt: "23/04/18",
+  },
+  {
+    id: 3,
+    name: "Laurent Perrier",
+    email: "laurent@creative-tim.com",
+    username: "eu123234234",
+    role: "Student",
+    org: "ABC SChool",
+    choosen: false,
+    createdAt: "19/09/17",
+  },
+  {
+    id: 4,
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
+    name: "Michael Levi",
+    email: "michael@creative-tim.com",
+    job: "Programator",
+    org: "Student",
+    choosen: true,
+    date: "24/12/08",
+  },
+  {
+    id: 5,
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
+    name: "Richard Gran",
+    email: "richard@creative-tim.com",
+    job: "Manager",
+    org: "Student",
+    choosen: false,
+    date: "04/10/21",
+  },
+];
+
 export const CREATE_EXAMS_TABLE_ROWS = [
   {
     id: 1,

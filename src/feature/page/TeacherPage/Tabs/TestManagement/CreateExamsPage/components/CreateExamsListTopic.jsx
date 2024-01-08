@@ -10,10 +10,6 @@ import {
 export const CreateExamsListTopic = () => {
   return (
     <>
-      {/* <Typography variant="h4" color="black" className=" text-black-500 pb-5">
-        SUBJECT NAME
-      </Typography> */}
-
       <Card className="w-96">
         <List>
           <ListItem>

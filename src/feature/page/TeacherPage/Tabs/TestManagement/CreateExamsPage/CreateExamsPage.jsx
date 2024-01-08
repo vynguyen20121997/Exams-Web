@@ -3,17 +3,18 @@ import TeacherPageLayout from "../../../components/Layout/layout";
 import { CreateExamsDataTable } from "./components/CreateExamsDataTable";
 import { CreateExamsListTopic } from "./components/CreateExamsListTopic";
 import CreateExamsInfomation from "./components/CreateExamsInfomation";
+import CreateExamsDataStudent from "./components/CreateExamsDataStudent";
 
 const CreateExamsPage = () => {
   return (
     <TeacherPageLayout>
       <div className="flex justify-between	">
         <div>
-          <div>
+          <div className="flex justify-center">
             <Typography
               variant="h4"
               color="black"
-              className=" text-black-500 pb-5"
+              className=" text-black-500 pb-5 "
             >
               SUBJECT NAME
             </Typography>
@@ -25,8 +26,11 @@ const CreateExamsPage = () => {
             <CreateExamsListTopic />
           </div>
           <div>
+            <CreateExamsDataStudent />
+          </div>
+          <div>
             <Button
-              className="rounded-lg my-5 bg-[#cfd8dc] text-slate-800 font-normal   opacity-70"
+              className="rounded-lg mt-3 bg-[#cfd8dc] text-slate-800 font-normal   opacity-70"
               fullWidth
             >
               Create exams
