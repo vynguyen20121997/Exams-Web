@@ -24,10 +24,10 @@ const CreateExamsInfomation = () => {
           color="white"
           label="Insert here..."
           shrink={false}
-          containerProps={{ className: "min-w-[100px] w-48" }}
+          containerProps={{ className: "w-[80px]" }}
         />
       </div>
-      <div className="flex items-center py-1 justify-between text-white">
+      <div className="flex items-center py-2 justify-between text-white">
         <Typography
           as="a"
           href="#"
@@ -41,7 +41,24 @@ const CreateExamsInfomation = () => {
           color="white"
           label="Choose here..."
           shrink={false}
-          containerProps={{ className: "min-w-[100px] w-48 " }}
+          containerProps={{ className: "w-[80px] " }}
+        />
+      </div>
+      <div className="flex items-center pt-2 justify-between text-white">
+        <Typography
+          as="a"
+          href="#"
+          variant="h6"
+          className=" cursor-pointer py-1.5"
+        >
+          End Time:
+        </Typography>
+        <Input
+          type="time"
+          color="white"
+          label="Choose here..."
+          shrink={false}
+          containerProps={{ className: "w-[80px]" }}
         />
       </div>
     </Navbar>

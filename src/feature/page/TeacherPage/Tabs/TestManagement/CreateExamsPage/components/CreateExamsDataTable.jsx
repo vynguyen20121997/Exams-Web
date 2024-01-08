@@ -7,7 +7,6 @@ import { useState } from "react";
 
 export function CreateExamsDataTable() {
   const [questionData, setQuestionData] = useState(CREATE_EXAMS_TABLE_ROWS);
-  console.log(questionData);
 
   const onChangeSelected = (id) => {
     const questionDataUpdated = questionData.map((el) => {

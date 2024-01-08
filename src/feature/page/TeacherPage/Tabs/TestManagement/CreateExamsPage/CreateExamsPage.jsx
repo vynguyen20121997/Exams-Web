@@ -1,11 +1,26 @@
 import { Button, Typography } from "@material-tailwind/react";
+import { useQuery } from "react-query";
 import TeacherPageLayout from "../../../components/Layout/layout";
-import { CreateExamsDataTable } from "./components/CreateExamsDataTable";
-import { CreateExamsListTopic } from "./components/CreateExamsListTopic";
-import CreateExamsInfomation from "./components/CreateExamsInfomation";
 import CreateExamsDataStudent from "./components/CreateExamsDataStudent";
+import { CreateExamsDataTable } from "./components/CreateExamsDataTable";
+import CreateExamsInfomation from "./components/CreateExamsInfomation";
+import { CreateExamsListTopic } from "./components/CreateExamsListTopic";
+import { getListUserTeacherPage } from "../../../../../../services/TeacherPage/GetListUserAPI";
+import ClassAPITeacherPage from "../../../../../../services/TeacherPage/ClassAPI";
 
 const CreateExamsPage = () => {
+  const { data: studentList, loading: studentListLoading } = useQuery(
+    "studentList",
+    () => getListUserTeacherPage.getListStudent(),
+    { fetchPolicy: "network-only" }
+  );
+
+  const { data: classList, loading: classListLoading } = useQuery(
+    "classList",
+    () => ClassAPITeacherPage.classes(),
+    { fetchPolicy: "network-only" }
+  );
+
   return (
     <TeacherPageLayout>
       <div className="flex justify-between	">
@@ -23,10 +38,10 @@ const CreateExamsPage = () => {
             <CreateExamsInfomation />
           </div>
           <div>
-            <CreateExamsListTopic />
+            <CreateExamsListTopic classList={classList} />
           </div>
           <div>
-            <CreateExamsDataStudent />
+            <CreateExamsDataStudent studentList={studentList} />
           </div>
           <div>
             <Button
