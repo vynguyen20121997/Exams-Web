@@ -5,11 +5,11 @@ export const CreateExamsListTopic = (classList) => {
     <>
       <Card className="w-96">
         <Select variant="outlined" label="Select Class">
-{classList?.map((class) => (
-  <Option key={class._id} value={class.title}>
-    {class.title}
-  </Option>
-))}        
+          {classList?.map((item) => (
+            <Option key={item._id} value={item.title}>
+              {item.title}
+            </Option>
+          ))}
         </Select>
       </Card>
     </>

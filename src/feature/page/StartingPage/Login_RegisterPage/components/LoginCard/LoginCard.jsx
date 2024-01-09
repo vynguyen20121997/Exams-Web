@@ -16,6 +16,7 @@ import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/E
 import { login } from "../../../../../../redux/auth/authSlice";
 import AuthAPI from "../../../../../../services/StartingPage/AuthAPI";
 import { loginInitialValues } from "../../constants/constants";
+import { fetchCurrentUser } from "../../../../../../redux/auth/authAction";
 
 export function LoginCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
@@ -32,11 +33,11 @@ export function LoginCard({ setRegister }) {
         const response = await AuthAPI.login(values);
         const accessToken = response.data.accessToken;
         const payload = response;
-        dispatch(login(payload))
+        dispatch(login(payload));
 
         if (accessToken) {
           localStorage.setItem("accessToken", accessToken);
-          // await dispatch(fetchCurrentUser());        
+          await dispatch(fetchCurrentUser());
         }
       } catch (error) {
         setError(error.response.data?.message);
@@ -45,7 +46,7 @@ export function LoginCard({ setRegister }) {
       }
     },
   });
-  console.log('isAuthenticated', isAuthenticated)
+  console.log("isAuthenticated", isAuthenticated);
   const { handleSubmit, handleChange, errors } = formik;
 
   useEffect(() => {
@@ -57,10 +58,7 @@ export function LoginCard({ setRegister }) {
   return (
     <>
       <Card className="w-96">
-        <CardHeader
-          color="gray"
-          className="mb-4 grid h-28 place-items-center"
-        >
+        <CardHeader color="gray" className="mb-4 grid h-28 place-items-center">
           <Typography variant="h3" color="white">
             Sign In
           </Typography>
@@ -97,7 +95,9 @@ export function LoginCard({ setRegister }) {
 
         <CardFooter className="pt-0">
           <Button fullWidth onClick={handleSubmit}>
-            {loading === true && <Spinner color="purple" className="h-6 w-6 ml-[47%]" />}
+            {loading === true && (
+              <Spinner color="purple" className="h-6 w-6 ml-[47%]" />
+            )}
             {loading === false && <h2>Sign In</h2>}
           </Button>
           <Typography variant="small" className="mt-6 flex justify-center">
