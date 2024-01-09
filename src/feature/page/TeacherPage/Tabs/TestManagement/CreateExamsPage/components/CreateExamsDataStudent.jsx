@@ -1,18 +1,26 @@
-import React, { useState } from "react";
-import {
-  CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS,
-  CREATE_EXAMS_STUDENT_TABLE_HEAD,
-} from "../constants/constants";
 import { Avatar, Card, Checkbox, Typography } from "@material-tailwind/react";
+import React, { useEffect, useState } from "react";
+import { CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS } from "../constants/constants";
 
-const CreateExamsDataStudent = () => {
-  const [studentData, setStudentData] = useState(
-    CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS
-  );
+const CreateExamsDataStudent = (studentList) => {
+  const [studentData, setStudentData] = useState([]);
 
-  const onChangeSelected = (id) => {
+  useEffect(() => {
+    if (studentList?.studentList?.data?.data) {
+      const onChooseStudentList = studentList.studentList.data.data.map(
+        (student) => ({
+          ...student,
+          choosen: false,
+        })
+      );
+
+      setStudentData(onChooseStudentList);
+    }
+  }, [studentList]);
+
+  const onChangeSelected = (_id) => {
     const studentDataUpdated = studentData.map((el) => {
-      if (el.id === id) {
+      if (el._id === _id) {
         return {
           ...el,
           choosen: !el.choosen,
@@ -23,30 +31,30 @@ const CreateExamsDataStudent = () => {
     });
     setStudentData(studentDataUpdated);
   };
+  console.log("studentData", studentData);
+
   return (
     <>
-      <Card className="mt-2 h-[150px] w-full overflow-scroll round-full">
+      <Card className="mt-2 h-[280px] w-full overflow-scroll round-full">
         <table className="w-full  table-auto text-left">
           <thead>
             <tr>
-              {CREATE_EXAMS_STUDENT_TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 min-w-8 max-w-48"
+              <th
+                colspan="3"
+                className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 min-w-8 max-w-48"
+              >
+                <Typography
+                  variant="medium"
+                  color="black"
+                  className="font-normal leading-none opacity-70"
                 >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
+                  Assign Student
+                </Typography>
+              </th>
             </tr>
           </thead>
           <tbody>
-            {studentData?.map(({ id, img, name, choosen }, index) => {
+            {studentData?.map(({ _id, img, name, choosen }, index) => {
               const isLast =
                 index === CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS.length - 1;
               const classes = isLast ? "p-4" : "p-4 border-b border-gray-50";
@@ -58,15 +66,18 @@ const CreateExamsDataStudent = () => {
                 >
                   <td>
                     <Checkbox
-                      //   color="purple"
                       className="rounded-full"
                       checked={choosen}
-                      onClick={() => onChangeSelected(id)}
+                      onClick={() => onChangeSelected(_id)}
                     />
                   </td>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
-                      <Avatar src={img} alt={name} size="sm" />
+                      <Avatar
+                        src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-1024.png"
+                        alt={name}
+                        size="sm"
+                      />
                       <div className="flex flex-col">
                         <Typography
                           variant="small"

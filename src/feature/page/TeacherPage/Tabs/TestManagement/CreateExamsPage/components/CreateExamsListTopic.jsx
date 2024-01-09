@@ -1,51 +1,16 @@
-import {
-  Card,
-  Chip,
-  List,
-  ListItem,
-  ListItemSuffix,
-  Typography,
-} from "@material-tailwind/react";
+import { Card, Option, Select } from "@material-tailwind/react";
 
-export const CreateExamsListTopic = () => {
+export const CreateExamsListTopic = (classList) => {
   return (
     <>
       <Card className="w-96">
-        <List>
-          <ListItem>
-            Topic 1
-            <ListItemSuffix>
-              <Chip
-                value="14"
-                variant="ghost"
-                size="sm"
-                className="rounded-full"
-              />
-            </ListItemSuffix>
-          </ListItem>
-          <ListItem>
-            Topic 2
-            <ListItemSuffix>
-              <Chip
-                value="2"
-                variant="ghost"
-                size="sm"
-                className="rounded-full"
-              />
-            </ListItemSuffix>
-          </ListItem>
-          <ListItem>
-            Topic 3
-            <ListItemSuffix>
-              <Chip
-                value="40"
-                variant="ghost"
-                size="sm"
-                className="rounded-full"
-              />
-            </ListItemSuffix>
-          </ListItem>
-        </List>
+        <Select variant="outlined" label="Select Class">
+          {classList?.map((item) => (
+            <Option key={item._id} value={item.title}>
+              {item.title}
+            </Option>
+          ))}
+        </Select>
       </Card>
     </>
   );
