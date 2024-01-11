@@ -8,17 +8,16 @@ import {
   MenuHandler,
   MenuItem,
   MenuList,
-  MobileNav,
   Navbar,
   Typography,
 } from "@material-tailwind/react";
 import React, { createElement, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   navListItems,
   navListMenuItems,
   profileMenuItems,
 } from "../constants/constants";
-import { useNavigate } from "react-router-dom";
 
 // profile menu component
 
@@ -185,9 +184,9 @@ export function TeacherNavbar() {
         <ProfileMenu />
       </div>
 
-      <MobileNav open={isNavOpen} className="overflow-scroll">
+      {/* <MobileNav open={isNavOpen} className="overflow-scroll">
         <NavList />
-      </MobileNav>
+      </MobileNav> */}
     </Navbar>
   );
 }

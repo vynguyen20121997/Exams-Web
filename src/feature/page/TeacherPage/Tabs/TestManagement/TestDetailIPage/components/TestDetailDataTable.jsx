@@ -1,33 +1,33 @@
-import { Card, Checkbox, Typography } from "@material-tailwind/react";
-import {
-  CREATE_EXAMS_TABLE_HEAD,
-  CREATE_EXAMS_TABLE_ROWS,
-} from "../constants/constants";
+import { Card, Typography } from "@material-tailwind/react";
 import { useState } from "react";
+import {
+  CREATE_EXAMS_TABLE_ROWS,
+  TEST_DETAIL_TABLE_HEAD,
+} from "../constants/constants";
 
-export function CreateExamsDataTable() {
-  const [questionData, setQuestionData] = useState(CREATE_EXAMS_TABLE_ROWS);
+export function TestDetailDataTable() {
+  // const [questionData, setQuestionData] = useState(CREATE_EXAMS_TABLE_ROWS);
 
-  const onChangeSelected = (id) => {
-    const questionDataUpdated = questionData.map((el) => {
-      if (el.id === id) {
-        return {
-          ...el,
-          choosen: !el.choosen,
-        };
-      } else {
-        return el;
-      }
-    });
-    setQuestionData(questionDataUpdated);
-  };
+  // const onChangeSelected = (id) => {
+  //   const questionDataUpdated = questionData.map((el) => {
+  //     if (el.id === id) {
+  //       return {
+  //         ...el,
+  //         choosen: !el.choosen,
+  //       };
+  //     } else {
+  //       return el;
+  //     }
+  //   });
+  //   setQuestionData(questionDataUpdated);
+  // };
 
   return (
     <Card className="ml-5 h-[675px] max-w-[1300px] overflow-scroll round-full">
       <table className="w-full  table-auto text-left">
         <thead>
           <tr>
-            {CREATE_EXAMS_TABLE_HEAD.map((head) => (
+            {TEST_DETAIL_TABLE_HEAD.map((head) => (
               <th
                 key={head}
                 className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 min-w-8 max-w-48"
@@ -44,7 +44,7 @@ export function CreateExamsDataTable() {
           </tr>
         </thead>
         <tbody>
-          {questionData?.map(
+          {CREATE_EXAMS_TABLE_ROWS?.map(
             (
               {
                 id,
@@ -66,14 +66,14 @@ export function CreateExamsDataTable() {
                   key={id}
                   className={choosen ? `${classes} bg-purple-50 ` : null}
                 >
-                  <td>
+                  {/* <td>
                     <Checkbox
                       color="purple"
                       className="rounded-full"
                       checked={choosen}
                       onClick={() => onChangeSelected(id)}
                     />
-                  </td>
+                  </td> */}
                   <td className={classes}>
                     <Typography
                       variant="small"

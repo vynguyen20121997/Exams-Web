@@ -1,10 +1,11 @@
+import { Button, Typography } from "@material-tailwind/react";
 import React from "react";
-import { Typography } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 import ExamsByClass from "./ExamsByClass/ExamsByClass";
 import FilterExams from "./ExamsByClass/components/FilterExams";
-import AddDialogExams from "./ExamsByClass/components/AddDialogExams";
 
 const ExamsManagement = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="px-10 ">
@@ -16,7 +17,13 @@ const ExamsManagement = () => {
           </div>
           <div className="flex ">
             <FilterExams />
-            <AddDialogExams />
+            <Button
+              onClick={() => navigate("/teacher/create-exams")}
+              size="md"
+              variant="gradient"
+            >
+              Create Exams
+            </Button>
           </div>
         </div>
 

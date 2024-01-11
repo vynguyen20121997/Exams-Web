@@ -1,6 +1,6 @@
 import { Input, Navbar, Typography } from "@material-tailwind/react";
 
-const CreateExamsInfomation = () => {
+const TestDetailInfomation = () => {
   return (
     <Navbar
       variant="gradient"
@@ -19,9 +19,8 @@ const CreateExamsInfomation = () => {
 
         <Input
           type="search"
-          color="white"
           label="Title"
-          shrink={false}
+          disabled
           containerProps={{ className: "w-[70px]" }}
         />
       </div>
@@ -37,9 +36,8 @@ const CreateExamsInfomation = () => {
 
         <Input
           type="number"
-          color="white"
           label="Minutes"
-          shrink={false}
+          disabled
           containerProps={{ className: "w-[70px]" }}
         />
       </div>
@@ -54,9 +52,8 @@ const CreateExamsInfomation = () => {
         </Typography>
         <Input
           type="datetime-local"
-          color="white"
           label="Date and Time"
-          shrink={false}
+          disabled
           containerProps={{ className: "w-[70px] " }}
         />
       </div>
@@ -71,9 +68,8 @@ const CreateExamsInfomation = () => {
         </Typography>
         <Input
           type="datetime-local"
-          color="white"
           label="Date and Time"
-          shrink={false}
+          disabled
           containerProps={{ className: "w-[70px]" }}
         />
       </div>
@@ -81,4 +77,4 @@ const CreateExamsInfomation = () => {
   );
 };
 
-export default CreateExamsInfomation;
+export default TestDetailInfomation;

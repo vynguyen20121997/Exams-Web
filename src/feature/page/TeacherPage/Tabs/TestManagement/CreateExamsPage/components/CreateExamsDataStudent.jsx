@@ -31,7 +31,6 @@ const CreateExamsDataStudent = (studentList) => {
     });
     setStudentData(studentDataUpdated);
   };
-  console.log("studentData", studentData);
 
   return (
     <>

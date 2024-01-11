@@ -23,7 +23,7 @@ const CreateExamsPage = () => {
 
   return (
     <TeacherPageLayout>
-      <div className="flex justify-between	">
+      <div className="flex justify-between">
         <div>
           <div className="flex justify-center">
             <Typography
@@ -34,18 +34,18 @@ const CreateExamsPage = () => {
               SUBJECT NAME
             </Typography>
           </div>
-          <div>
-            <CreateExamsInfomation />
+          <div className="pb-3">
+            <CreateExamsListTopic />
           </div>
           <div>
-            <CreateExamsListTopic classList={classList} />
+            <CreateExamsInfomation />
           </div>
           <div>
             <CreateExamsDataStudent studentList={studentList} />
           </div>
           <div>
             <Button
-              className="rounded-lg mt-3 bg-[#cfd8dc] text-slate-800 font-normal   opacity-70"
+              className="rounded-lg mt-3 bg-[#cfd8dc] text-slate-800 font-normal  opacity-70"
               fullWidth
             >
               Create exams

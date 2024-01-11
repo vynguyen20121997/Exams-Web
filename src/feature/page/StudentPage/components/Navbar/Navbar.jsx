@@ -8,29 +8,24 @@ import {
   MenuHandler,
   MenuItem,
   MenuList,
-  MobileNav,
   Navbar,
   Typography,
 } from "@material-tailwind/react";
 import React, { createElement, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../../../../redux/auth/authSlice";
 import {
   navListItems,
   navListMenuItems,
   profileMenuItems,
-} from "../../constants/constants";
+} from "../constants/constants";
+
+// profile menu component
 
 function ProfileMenu() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   const closeMenu = () => setIsMenuOpen(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const logoutFunc = (state) => {
-    dispatch(logout(state));
-    navigate("/");
-  };
+
   return (
     <Menu
       allowHover
@@ -57,17 +52,10 @@ function ProfileMenu() {
       <MenuList className="p-1">
         {profileMenuItems.map(({ label, icon }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
-
           return (
             <MenuItem
               key={label}
-              onClick={() => {
-                if (label === "Sign Out") {
-                  logoutFunc();
-                } else {
-                  closeMenu();
-                }
-              }}
+              onClick={closeMenu}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -155,6 +143,7 @@ function NavList() {
         <Typography
           key={label}
           as="a"
+          href="#"
           variant="small"
           color="gray"
           className=" text-blue-gray-500"
@@ -174,15 +163,9 @@ function NavList() {
   );
 }
 
-export function AdminNavbar() {
+export function StudentNavbar() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
   // const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
-  // const logoutFunc = (state) => {
-  //   dispatch(logout(state));
-  //   navigate('/');
-  // }
 
   useEffect(() => {
     window.addEventListener(
@@ -201,9 +184,9 @@ export function AdminNavbar() {
         <ProfileMenu />
       </div>
 
-      {/* <MobileNav open={isNavOpen} className="overflow-scroll"> */}
-      {/* <NavList /> */}
-      {/* </MobileNav> */}
+      {/* <MobileNav open={isNavOpen} className="overflow-scroll">
+        <NavList />
+      </MobileNav> */}
     </Navbar>
   );
 }
