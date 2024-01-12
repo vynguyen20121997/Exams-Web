@@ -1,8 +1,8 @@
 import { Button, Typography } from "@material-tailwind/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ExamsByClass from "./ExamsByClass/ExamsByClass";
-import FilterExams from "./ExamsByClass/components/FilterExams";
+import FilterExams from "./ExamsPage/components/FilterExams";
+import ExamsByClass from "./ExamsPage/ExamsByClass";
 
 const ExamsManagement = () => {
   const navigate = useNavigate();

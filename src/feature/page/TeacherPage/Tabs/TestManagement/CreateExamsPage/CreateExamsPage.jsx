@@ -35,7 +35,7 @@ const CreateExamsPage = () => {
             </Typography>
           </div>
           <div className="pb-3">
-            <CreateExamsListTopic />
+            <CreateExamsListTopic classList={classList} />
           </div>
           <div>
             <CreateExamsInfomation />
