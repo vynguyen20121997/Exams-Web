@@ -6,12 +6,8 @@ const CreateExamsDataStudent = ({ studentList }) => {
   const [studentData, setStudentData] = useState([]);
 
   useEffect(() => {
-    if (studentList?.data?.data) {
-      const onChooseStudentList = studentList.data.data.map((student) => ({
-        ...student,
-        choosen: false,
-      }));
-
+    if (studentList) {
+      const onChooseStudentList = studentList?.data.data || [];
       setStudentData(onChooseStudentList);
     }
   }, [studentList]);
