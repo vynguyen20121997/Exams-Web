@@ -8,9 +8,9 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { testTopicData } from "../../../../../tests/data/TeacherPage/subjectData";
-import { ProgressLabel } from "../../Tabs/TestManagement/ExamsByClass/components/ProgressBar";
+import { ProgressLabel } from "../PrgressBar/ProgressBar";
 
-export const TestCard = () => {
+export const StudentTestCard = () => {
   const topicData = testTopicData.topics;
   return (
     <>
@@ -58,7 +58,7 @@ export const TestCard = () => {
             </CardBody>
             <CardFooter className="pt-0">
               <Button color="blue-gray" size="lg" fullWidth={true}>
-                CHECK
+                CONTINUE
               </Button>
             </CardFooter>
           </Card>

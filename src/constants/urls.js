@@ -16,4 +16,5 @@ export const PATHS = {
 
   // Student
   student_home: "student",
+  student_testing: "student/doing-test",
 };

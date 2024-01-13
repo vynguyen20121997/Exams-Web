@@ -1,8 +1,13 @@
 import React from "react";
-import TeacherPageLayout from "./components/Layout/layout";
+import StudentPageLayout from "./components/Layout/layout";
+import TestManagement from "./Tabs/TestManagement/TestManagement";
 
 const StudentPage = () => {
-  return <TeacherPageLayout></TeacherPageLayout>;
+  return (
+    <StudentPageLayout>
+      <TestManagement />
+    </StudentPageLayout>
+  );
 };
 
 export default StudentPage;

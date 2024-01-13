@@ -18,11 +18,27 @@ const CreateExamsInfomation = () => {
         </Typography>
 
         <Input
-          type="search"
           color="white"
           label="Title"
           shrink={false}
-          containerProps={{ className: "w-[70px]" }}
+          containerProps={{ className: "w-[60px]" }}
+        />
+      </div>
+      <div className="flex items-center justify-between py-1 text-white">
+        <Typography
+          as="a"
+          href="#"
+          variant="h6"
+          className="cursor-pointer py-1.5"
+        >
+          Description:
+        </Typography>
+
+        <Input
+          color="white"
+          label="Description"
+          shrink={false}
+          containerProps={{ className: "w-[60px]" }}
         />
       </div>
       <div className="flex items-center justify-between py-1 text-white">
@@ -40,7 +56,7 @@ const CreateExamsInfomation = () => {
           color="white"
           label="Minutes"
           shrink={false}
-          containerProps={{ className: "w-[70px]" }}
+          containerProps={{ className: "w-[60px]" }}
         />
       </div>
       <div className="flex items-center py-2 justify-between text-white">
@@ -57,7 +73,7 @@ const CreateExamsInfomation = () => {
           color="white"
           label="Date and Time"
           shrink={false}
-          containerProps={{ className: "w-[70px] " }}
+          containerProps={{ className: "w-[60px] " }}
         />
       </div>
       <div className="flex items-center pt-2 justify-between text-white">
@@ -74,7 +90,7 @@ const CreateExamsInfomation = () => {
           color="white"
           label="Date and Time"
           shrink={false}
-          containerProps={{ className: "w-[70px]" }}
+          containerProps={{ className: "w-[60px]" }}
         />
       </div>
     </Navbar>

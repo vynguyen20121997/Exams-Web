@@ -1,5 +1,4 @@
 import { Card, Typography } from "@material-tailwind/react";
-import { useState } from "react";
 import {
   CREATE_EXAMS_TABLE_ROWS,
   TEST_DETAIL_TABLE_HEAD,
@@ -23,7 +22,7 @@ export function TestDetailDataTable() {
   // };
 
   return (
-    <Card className="ml-5 h-[675px] max-w-[1300px] overflow-scroll round-full">
+    <Card className="ml-5 h-[690px] max-w-[1300px] overflow-scroll round-full">
       <table className="w-full  table-auto text-left">
         <thead>
           <tr>
@@ -59,13 +58,12 @@ export function TestDetailDataTable() {
               index
             ) => {
               const isLast = index === CREATE_EXAMS_TABLE_ROWS.length - 1;
-              const classes = isLast ? "p-4" : "p-4 border-b border-gray-50";
+              const classes = isLast
+                ? "p-4 bg-purple-50 "
+                : "p-4 border-b border-gray-50 bg-purple-50 ";
 
               return (
-                <tr
-                  key={id}
-                  className={choosen ? `${classes} bg-purple-50 ` : null}
-                >
+                <tr key={id} className={classes}>
                   {/* <td>
                     <Checkbox
                       color="purple"

@@ -31,6 +31,9 @@ const ExamsManagement = () => {
           <div className="h-[420px]">
             <ExamsByClass />
           </div>
+          <div className="h-[420px] pt-20">
+            <ExamsByClass />
+          </div>
         </div>
       </div>
     </>

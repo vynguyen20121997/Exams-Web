@@ -2,11 +2,12 @@ import { Button, Typography } from "@material-tailwind/react";
 import { useQuery } from "react-query";
 import TeacherPageLayout from "../../../components/Layout/layout";
 import CreateExamsDataStudent from "./components/CreateExamsDataStudent";
-import { CreateExamsDataTable } from "./components/CreateExamsDataTable";
+import { CreateExamsDataQuestion } from "./components/CreateExamsDataTable";
 import CreateExamsInfomation from "./components/CreateExamsInfomation";
 import { CreateExamsListTopic } from "./components/CreateExamsListTopic";
 import { getListUserTeacherPage } from "../../../../../../services/TeacherPage/GetListUserAPI";
 import ClassAPITeacherPage from "../../../../../../services/TeacherPage/ClassAPI";
+import QuestionAPITeacherPage from "../../../../../../services/TeacherPage/QuestionAPI";
 
 const CreateExamsPage = () => {
   const { data: studentList, loading: studentListLoading } = useQuery(
@@ -18,6 +19,12 @@ const CreateExamsPage = () => {
   const { data: classList, loading: classListLoading } = useQuery(
     "classList",
     () => ClassAPITeacherPage.classes(),
+    { fetchPolicy: "network-only" }
+  );
+
+  const { data: questionList, loading: questionListLoading } = useQuery(
+    "questionList",
+    () => QuestionAPITeacherPage.questions(),
     { fetchPolicy: "network-only" }
   );
 
@@ -45,7 +52,7 @@ const CreateExamsPage = () => {
           </div>
           <div>
             <Button
-              className="rounded-lg mt-3 bg-[#cfd8dc] text-slate-800 font-normal  opacity-70"
+              className="rounded-lg  bg-[#cfd8dc] text-slate-800 font-normal  opacity-70"
               fullWidth
             >
               Create exams
@@ -53,7 +60,7 @@ const CreateExamsPage = () => {
           </div>
         </div>
         <div>
-          <CreateExamsDataTable />
+          <CreateExamsDataQuestion questionList={questionList} />
         </div>
       </div>
     </TeacherPageLayout>

@@ -1,5 +1,5 @@
-import { Avatar, Card, Checkbox, Typography } from "@material-tailwind/react";
-import React, { useEffect, useState } from "react";
+import { Avatar, Card, Typography } from "@material-tailwind/react";
+import React from "react";
 import { CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS } from "../constants/constants";
 
 const TestDetailDataStudent = (studentList) => {
@@ -34,7 +34,7 @@ const TestDetailDataStudent = (studentList) => {
 
   return (
     <>
-      <Card className="mt-2 h-[330px] w-full overflow-scroll round-full">
+      <Card className="mt-2 h-[250px] w-full overflow-scroll round-full">
         <table className="w-full  table-auto text-left">
           <thead>
             <tr>
