@@ -19,6 +19,8 @@ import GetListRegisterCardAPI from "../../../../../../services/StartingPage/GetL
 import { RegisterCardRoleData } from "../../untils/data";
 import RegisterValidationSchema from "../../validations/register-schema";
 import { registerInitialValues } from "../../constants/constants";
+import { toast } from "react-toastify";
+import { CustomToastContainer } from "../../../../../../untils/toast";
 
 export function RegisterCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
@@ -48,16 +50,12 @@ export function RegisterCard({ setRegister }) {
         };
         try {
           setLoading(true);
-          const response = await AuthAPI.register(payload);
-          const accessToken = response.data.accessToken;
-
-          if (accessToken) {
-            resetForm();
-            alert("fix the bug");
-          }
+          await AuthAPI.register(payload);
         } catch (error) {
         } finally {
+          resetForm();
           setLoading(false);
+          toast("Class created successfully!");
           setRegister(false);
         }
       }
@@ -73,18 +71,13 @@ export function RegisterCard({ setRegister }) {
         };
         try {
           setLoading(true);
-          const response = await AuthAPI.register(payLoad);
-          const accessToken = response.data.accessToken;
-
-          if (accessToken) {
-            resetForm();
-            alert("fix the bug");
-            setRegister(false);
-          }
+          await AuthAPI.register(payLoad);
         } catch (error) {
           setError(error.response.data?.message);
         } finally {
+          resetForm();
           setLoading(false);
+          toast("Register successfully!");
           setRegister(false);
         }
       }
@@ -233,6 +226,7 @@ export function RegisterCard({ setRegister }) {
           </Typography>
         </CardFooter>
       </Card>
+      <CustomToastContainer />
     </>
   );
 }

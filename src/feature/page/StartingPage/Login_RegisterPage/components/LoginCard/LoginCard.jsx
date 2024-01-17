@@ -46,7 +46,6 @@ export function LoginCard({ setRegister }) {
       }
     },
   });
-  console.log("isAuthenticated", isAuthenticated);
   const { handleSubmit, handleChange, errors } = formik;
 
   useEffect(() => {

@@ -15,6 +15,7 @@ import TeacherPage from "../feature/page/TeacherPage/TeacherPage";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PublicRoute from "./PublicRoute/PublicRoute";
 import DoingTestPage from "../feature/page/StudentPage/Tabs/DoingTestPage/DoingTestPage";
+import { AUTH_ROLES } from "../constants/enums";
 
 //Public route
 // const Login_RegisterPage = lazyWithRetry(() =>
@@ -57,9 +58,9 @@ const router = sentryCreateBrowserRouter([
       {
         path: PATHS.admin_home,
         element: <UserManagementPage />,
-        // handle: {
-        //   roles: [AUTH_ROLES.SYSTEM_ADMIN],
-        // },
+        handle: {
+          roles: [AUTH_ROLES.ADMIN],
+        },
       },
 
       {
