@@ -62,55 +62,54 @@ const router = sentryCreateBrowserRouter([
           roles: [AUTH_ROLES.ADMIN],
         },
       },
-
       {
         path: PATHS.admin_class_management,
         element: <ClassManagementPage />,
-        // handle: {
-        //   roles: [AUTH_ROLES.SYSTEM_ADMIN],
-        // },
+        handle: {
+          roles: [AUTH_ROLES.ADMIN],
+        },
       },
       {
         path: PATHS.admin_subject_managment,
         element: <SubjectManagementPage />,
-        // handle: {
-        //   roles: [AUTH_ROLES.SYSTEM_ADMIN],
-        // },
+        handle: {
+          roles: [AUTH_ROLES.ADMIN],
+        },
       },
       {
         path: PATHS.teacher_home,
         element: <TeacherPage />,
-        // handle: {
-        //   roles: [AUTH_ROLES.SYSTEM_ADMIN],
-        // },
+        handle: {
+          roles: [AUTH_ROLES.TEACHER],
+        },
       },
       {
         path: PATHS.teacher_create_exams,
         element: <CreateExamsPage />,
-        // handle: {
-        //   roles: [AUTH_ROLES.SYSTEM_ADMIN],
-        // },
+        handle: {
+          roles: [AUTH_ROLES.TEACHER],
+        },
       },
       {
         path: PATHS.teacher_exams_detail,
         element: <ExamsDetailPage />,
-        // handle: {
-        //   roles: [AUTH_ROLES.SYSTEM_ADMIN],
-        // },
+        handle: {
+          roles: [AUTH_ROLES.TEACHER],
+        },
       },
       {
         path: PATHS.student_home,
         element: <StudentPage />,
-        // handle: {
-        //   roles: [AUTH_ROLES.SYSTEM_ADMIN],
-        // },
+        handle: {
+          roles: [AUTH_ROLES.STUDENT],
+        },
       },
       {
         path: PATHS.student_testing,
         element: <DoingTestPage />,
-        // handle: {
-        //   roles: [AUTH_ROLES.SYSTEM_ADMIN],
-        // },
+        handle: {
+          roles: [AUTH_ROLES.STUDENT],
+        },
       },
     ],
   },

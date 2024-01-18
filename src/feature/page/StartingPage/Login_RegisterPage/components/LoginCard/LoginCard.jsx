@@ -16,7 +16,6 @@ import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/E
 import { login } from "../../../../../../redux/auth/authSlice";
 import AuthAPI from "../../../../../../services/StartingPage/AuthAPI";
 import { loginInitialValues } from "../../constants/constants";
-import { fetchCurrentUser } from "../../../../../../redux/auth/authAction";
 
 export function LoginCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
@@ -24,6 +23,7 @@ export function LoginCard({ setRegister }) {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
+  const [role, setRole] = useState();
 
   const formik = useFormik({
     initialValues: loginInitialValues,
@@ -32,12 +32,12 @@ export function LoginCard({ setRegister }) {
         setLoading(true);
         const response = await AuthAPI.login(values);
         const accessToken = response.data.accessToken;
-        const payload = response;
-        dispatch(login(payload));
 
         if (accessToken) {
           localStorage.setItem("accessToken", accessToken);
-          await dispatch(fetchCurrentUser());
+          const currentUserResponse = await AuthAPI.currentUser();
+          dispatch(login(currentUserResponse.data.data));
+          setRole(currentUserResponse?.data.data.role);
         }
       } catch (error) {
         setError(error.response.data?.message);
@@ -49,10 +49,10 @@ export function LoginCard({ setRegister }) {
   const { handleSubmit, handleChange, errors } = formik;
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/admin");
+    if (isAuthenticated && role) {
+      navigate(`/${role}`);
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, role]);
 
   return (
     <>
