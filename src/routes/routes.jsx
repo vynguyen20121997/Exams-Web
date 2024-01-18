@@ -17,27 +17,6 @@ import PublicRoute from "./PublicRoute/PublicRoute";
 import DoingTestPage from "../feature/page/StudentPage/Tabs/DoingTestPage/DoingTestPage";
 import { AUTH_ROLES } from "../constants/enums";
 
-//Public route
-// const Login_RegisterPage = lazyWithRetry(() =>
-//   import("feature/page/StartingPage/Login_RegisterPage/Login_RegisterPage")
-// );
-// const ForgotPassPage = lazyWithRetry(() =>
-//   import("feature/page/StartingPage/ForgotPassPage/ForgotPassPage")
-// );
-// const ResetPassPage = lazyWithRetry(() =>
-//   import("feature/page/StartingPage/ResetPassPage/ResetPassPage")
-// );
-
-// //Private routes - Teacher route
-// const AdminPage = lazyWithRetry(() =>
-//   import("feature/page/AdminPage/AdminPage")
-// );
-
-// //Private routes - Teacher route
-// const TeacherPage = lazyWithRetry(() =>
-//   import("feature/page/TeacherPage/TeacherPage")
-// );
-
 const sentryCreateBrowserRouter = wrapCreateBrowserRouter(createBrowserRouter);
 const router = sentryCreateBrowserRouter([
   {

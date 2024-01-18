@@ -18,13 +18,20 @@ import {
   navListMenuItems,
   profileMenuItems,
 } from "../constants/constants";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../../../redux/auth/authSlice";
 
 // profile menu component
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
   const closeMenu = () => setIsMenuOpen(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutFunc = (state) => {
+    dispatch(logout(state));
+    navigate("/");
+  };
 
   return (
     <Menu
@@ -55,7 +62,13 @@ function ProfileMenu() {
           return (
             <MenuItem
               key={label}
-              onClick={closeMenu}
+              onClick={() => {
+                if (label === "Sign Out") {
+                  logoutFunc();
+                } else {
+                  closeMenu();
+                }
+              }}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"

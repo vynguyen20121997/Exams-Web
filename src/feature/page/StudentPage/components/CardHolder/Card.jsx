@@ -7,11 +7,14 @@ import {
   IconButton,
   Typography,
 } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 import { testTopicData } from "../../../../../tests/data/TeacherPage/subjectData";
 import { ProgressLabel } from "../PrgressBar/ProgressBar";
 
 export const StudentTestCard = () => {
   const topicData = testTopicData.topics;
+  const navigate = useNavigate();
+
   return (
     <>
       {topicData.map((item) => {
@@ -57,7 +60,12 @@ export const StudentTestCard = () => {
               </div>
             </CardBody>
             <CardFooter className="pt-0">
-              <Button color="blue-gray" size="lg" fullWidth={true}>
+              <Button
+                color="blue-gray"
+                size="lg"
+                fullWidth={true}
+                onClick={() => navigate("student/doing-test")}
+              >
                 CONTINUE
               </Button>
             </CardFooter>
