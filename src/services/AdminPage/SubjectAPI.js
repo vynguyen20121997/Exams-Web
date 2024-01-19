@@ -6,7 +6,7 @@ const subjectAPI = {
     return api.get(url);
   },
   createSubject: (body) => {
-    const url = "/subjects/create";
+    const url = "/subjects";
     return api.post(url, body);
   },
   deleteSubject: (id) => {

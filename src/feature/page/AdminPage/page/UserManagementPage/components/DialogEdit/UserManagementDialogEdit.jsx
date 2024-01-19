@@ -13,16 +13,24 @@ import { useFormik } from "formik";
 import { CustomToastContainer } from "../../../../../../../utils/toast";
 import { toast } from "react-toastify";
 
-export const UserManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
+export const UserManagementDialogEdit = ({
+  openEdit,
+  handleOpenEdit,
+  subjectList,
+  classList,
+  selectedId,
+}) => {
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
       name: "",
       role: "",
+      subject: "",
+      class: "",
     },
+
     onSubmit: async (values) => {
-      console.log("values", values);
       try {
         setLoading(true);
       } catch (error) {
@@ -32,6 +40,7 @@ export const UserManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
       }
     },
   });
+
   const { handleSubmit, handleChange, setFieldValue, setFieldTouched } = formik;
 
   return (
@@ -60,6 +69,34 @@ export const UserManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
             <Option value="teacher" label="teacher">
               Teacher
             </Option>
+          </Select>
+
+          <Select
+            label="Subject"
+            id="subject"
+            name="subject"
+            onChange={(value) => setFieldValue("subject", value)}
+            onBlur={() => setFieldTouched("subject", true)}
+          >
+            {subjectList.data.data?.map((item) => (
+              <Option value={item._id} label="subject">
+                {item.title}
+              </Option>
+            ))}
+          </Select>
+
+          <Select
+            label="Class"
+            id="class"
+            name="class"
+            onChange={(value) => setFieldValue("class", value)}
+            onBlur={() => setFieldTouched("class", true)}
+          >
+            {classList.data.data?.map((item) => (
+              <Option value={item._id} label="class">
+                {item.title}
+              </Option>
+            ))}
           </Select>
         </DialogBody>
         <DialogFooter>

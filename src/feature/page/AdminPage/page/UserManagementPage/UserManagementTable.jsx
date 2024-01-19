@@ -1,5 +1,5 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { UserPlusIcon } from '@heroicons/react/24/solid';
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Button,
   Card,
@@ -11,31 +11,29 @@ import {
   Tabs,
   TabsHeader,
   Typography,
-} from '@material-tailwind/react';
-import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+} from "@material-tailwind/react";
+import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
-import { getListUserAdminPage } from '../../../../../services/AdminPage/GetlistAPI';
-import { UserAPI } from '../../../../../services/AdminPage/UserAPI';
-import { TABS } from '../../constants/constants';
-import UserManagementDataTable from './components/DataTable/UserManagementDataTable';
-import { UserManagementDialogAdd } from './components/DialogAdd/UserManagementDialogAdd';
-import { UserManagementDialogDelete } from './components/DialogDelete/UserManagementDialogDelete';
-import { UserManagementDialogEdit } from './components/DialogEdit/UserManagementDialogEdit';
-import { CustomToastContainer } from '../../../../../utils/toast';
-
-const DEFAULT_PAGE = 1;
-const USER_ROLES = {
-  TEACHER: 'teacher',
-  STUDENT: 'student',
-};
+import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
+import { TABS } from "../../constants/constants";
+import UserManagementDataTable from "./components/DataTable/UserManagementDataTable";
+import { UserManagementDialogAdd } from "./components/DialogAdd/UserManagementDialogAdd";
+import { UserManagementDialogDelete } from "./components/DialogDelete/UserManagementDialogDelete";
+import { UserManagementDialogEdit } from "./components/DialogEdit/UserManagementDialogEdit";
+import { CustomToastContainer } from "../../../../../utils/toast";
+import { getListUserAdminPage } from "../../../../../services/AdminPage/GetUserAPI";
+import { Pagination } from "../../../../../components/Pagination/Pagination";
+import ClassAPI from "../../../../../services/AdminPage/ClassAPI";
+import subjectAPI from "../../../../../services/AdminPage/SubjectAPI";
+import { DEFAULT_PAGE, USER_ROLES } from "./constants/constants";
 
 const UserManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState("all");
 
   const [dataTable, setDataTable] = useState([]);
   const [selectedId, setSelectedId] = useState(0);
@@ -46,14 +44,14 @@ const UserManagementTable = () => {
   };
 
   const { data: userList, loading: userListLoading } = useQuery(
-    'userList',
+    "userList",
     () => getListUserAdminPage.getListUser({ page }),
-    { fetchPolicy: 'network-only' },
-    { enabled: activeTab === 'all' }
+    { fetchPolicy: "network-only" },
+    { enabled: activeTab === "all" }
   );
 
   const { data: studentList, loading: studentListLoading } = useQuery(
-    'studentList',
+    "studentList",
     () =>
       getListUserAdminPage.getListUser({
         role: USER_ROLES.STUDENT,
@@ -63,7 +61,7 @@ const UserManagementTable = () => {
   );
 
   const { data: teacherList, loading: teacherListLoading } = useQuery(
-    'teacherList',
+    "teacherList",
     () =>
       getListUserAdminPage.getListUser({
         page,
@@ -72,8 +70,22 @@ const UserManagementTable = () => {
     { enabled: activeTab === USER_ROLES.TEACHER }
   );
 
+  const { data: classList } = useQuery(
+    "class",
+    () => ClassAPI.classes(),
+    { refetchOnChange: false },
+    { refetchOnMount: false }
+  );
+
+  const { data: subjectList } = useQuery(
+    "subject",
+    () => subjectAPI.subjects(),
+    { refetchOnChange: false },
+    { refetchOnMount: false }
+  );
+
   useEffect(() => {
-    if (userList && activeTab === 'all') {
+    if (userList && activeTab === "all") {
       setDataTable(userList.data.data);
     } else if (studentList && activeTab === USER_ROLES.STUDENT) {
       setDataTable(studentList.data.data);
@@ -88,49 +100,54 @@ const UserManagementTable = () => {
   };
 
   const handleDelete = async () => {
-    const payload = { id: String(selectedId) };
+    const id = String(selectedId);
     try {
-      await UserAPI.delete(payload);
+      await UserAPI.delete(id);
     } catch (error) {
       console.log(error);
     } finally {
       setOpenDelete(false);
-      toast('User deleted successfully!');
+      toast("User deleted successfully!");
     }
   };
 
-  const handleOpenEdit = (id) => setOpenEdit(!openEdit);
+  const handleOpenEdit = (id) => {
+    setOpenEdit(!openEdit);
+    setSelectedId(id);
+  };
+
   const handleOpenAdd = () => setOpenAdd(!openAdd);
 
   return (
     <>
-      <Card className='h-full w-full'>
-        <CardHeader floated={false} shadow={false} className='rounded-none'>
-          <div className='mb-4 flex items-center justify-between gap-8'>
+      <Card className="h-full w-full">
+        <CardHeader floated={false} shadow={false} className="rounded-none">
+          <div className="mb-4 flex items-center justify-between gap-8">
             <div>
-              <Typography variant='h5' color='blue-gray'>
+              <Typography variant="h5" color="blue-gray">
                 Users list
               </Typography>
-              <Typography color='gray' className='mt-1 font-normal'>
+              <Typography color="gray" className="mt-1 font-normal">
                 See information about all users
               </Typography>
             </div>
-            <div className='w-full md:w-72'>
+            <div className="w-full md:w-72">
               <Input
-                label='Search'
-                icon={<MagnifyingGlassIcon className='h-5 w-5' />}
+                label="Search"
+                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
           </div>
 
-          <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
-            <Tabs className='w-full md:w-max'>
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+            <Tabs className="w-full md:w-max">
               <TabsHeader>
                 {TABS.map(({ label, value }, index) => (
                   <Tab
                     key={index}
                     value={value}
-                    onClick={() => handleTabChange(value)}>
+                    onClick={() => handleTabChange(value)}
+                  >
                     &nbsp;&nbsp;{label}&nbsp;&nbsp;
                   </Tab>
                 ))}
@@ -138,25 +155,29 @@ const UserManagementTable = () => {
             </Tabs>
             <div>
               <Button
-                className='flex items-center gap-3'
-                size='sm'
-                onClick={handleOpenAdd}>
-                <UserPlusIcon strokeWidth={2} className='h-4 w-4' /> Add member
+                className="flex items-center gap-3"
+                size="sm"
+                onClick={handleOpenAdd}
+              >
+                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
               </Button>
             </div>
           </div>
         </CardHeader>
 
-        <CardBody className='max-h-[490px] overflow-y-auto px-0'>
+        <CardBody className="h-[490px] px-0">
           <UserManagementDataTable
             handleOpenEdit={handleOpenEdit}
-            handleDelete={handleOpenDelete}
+            handleOpenDelete={handleOpenDelete}
             UserTableData={dataTable}
           />
 
           <UserManagementDialogEdit
+            subjectList={subjectList}
+            classList={classList}
             openEdit={openEdit}
             handleOpenEdit={handleOpenEdit}
+            selectedId={selectedId}
           />
           <UserManagementDialogDelete
             open={openDelete}
@@ -164,22 +185,23 @@ const UserManagementTable = () => {
             handleDelete={handleDelete}
           />
           <UserManagementDialogAdd
+            subjectList={subjectList}
+            classList={classList}
             openAdd={openAdd}
             handleOpenAdd={handleOpenAdd}
           />
         </CardBody>
 
-        <CardFooter className='flex items-center justify-between border-t border-blue-gray-50 p-4'>
-          <Typography variant='small' color='blue-gray' className='font-normal'>
-            Page 1 of 10
+        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50  py-5">
+          <Typography
+            variant="small"
+            color="blue-gray-200"
+            className="font-normal"
+          >
+            {/* LoremLorem ipsum dolor sit amet, consectetur adipiscing elit. */}
           </Typography>
-          <div className='flex gap-2'>
-            <Button variant='outlined' size='sm'>
-              Previous
-            </Button>
-            <Button variant='outlined' size='sm'>
-              Next
-            </Button>
+          <div>
+            <Pagination />
           </div>
         </CardFooter>
       </Card>

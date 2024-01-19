@@ -19,22 +19,13 @@ import { AddUserInitialValues } from "../../../../constants/constants";
 import { AddUserValidationSchema } from "../../../../validations/admin-page-schema";
 import { CustomToastContainer } from "../../../../../../../utils/toast";
 
-export const UserManagementDialogAdd = ({ openAdd, handleOpenAdd }) => {
+export const UserManagementDialogAdd = ({
+  openAdd,
+  handleOpenAdd,
+  classList,
+  subjectList,
+}) => {
   const [loading, setLoading] = useState(false);
-
-  const { data: classList } = useQuery(
-    "class",
-    () => ClassAPI.classes(),
-    { refetchOnChange: false },
-    { refetchOnMount: false }
-  );
-
-  const { data: subjectList } = useQuery(
-    "subject",
-    () => subjectAPI.subjects(),
-    { refetchOnChange: false },
-    { refetchOnMount: false }
-  );
 
   const formik = useFormik({
     initialValues: AddUserInitialValues,
