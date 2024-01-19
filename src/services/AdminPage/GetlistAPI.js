@@ -1,13 +1,14 @@
-import api from "../axiosInstance";
+import { parseParamsToQueryString } from '../../utils/api';
+import api from '../axiosInstance';
 
 export const getListUserAdminPage = {
-  getListUser: (limit = 5, page, role) => {
-    if (role) {
-      return api.get(`/users?limit=${limit}&page=${page}&role=${role}`);
-    } else {
-      return api.get(`/users?limit=${limit}&page=${page}`);
-    }
-    // const url = `/users?limit=${limit}&page=${page}&role=${role}`;
-    // return api.get(url);
+  getListUser: ({ limit = 5, page = 1, role }) => {
+    const queryParams = parseParamsToQueryString({ limit, page, role });
+
+    return api.get(`/users?${queryParams}`);
   },
 };
+
+// request query ?limit=5&page=1 => limit, page là 2 query
+// request params /users/:id => id là 1 param
+// Javascript ES6: default value

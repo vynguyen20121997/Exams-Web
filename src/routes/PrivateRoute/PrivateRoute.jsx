@@ -1,6 +1,6 @@
-import { Suspense } from "react";
-import { useSelector } from "react-redux";
-import { Navigate, Outlet, useLocation, useMatches } from "react-router-dom";
+import { Suspense } from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate, Outlet, useLocation, useMatches } from 'react-router-dom';
 
 const PrivateRoute = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -11,11 +11,11 @@ const PrivateRoute = () => {
   const match = [...matches.reverse()].find(
     (match) => match.pathname === location.pathname
   );
-  const roles = match?.handle?.roles.join(",");
-  const userRole = user && user.payload?.role;
+  const roles = match?.handle?.roles.join(',');
+  const userRole = user && user?.role;
 
   if (!isAuthenticated) {
-    return <Navigate to="/" />;
+    return <Navigate to='/' />;
   }
 
   if (isAuthenticated) {

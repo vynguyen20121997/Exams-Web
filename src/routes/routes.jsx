@@ -1,4 +1,4 @@
-// import lazyWithRetry from "../untils/lazyWithRetry";
+// import lazyWithRetry from "../utils/lazyWithRetry";
 import { wrapCreateBrowserRouter } from "@sentry/react";
 import { createBrowserRouter } from "react-router-dom";
 import { PATHS } from "../constants/urls";

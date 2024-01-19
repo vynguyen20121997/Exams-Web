@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import subjectAPI from "../../../../../services/AdminPage/SubjectAPI";
-import { CustomToastContainer } from "../../../../../untils/toast";
+import { CustomToastContainer } from "../../../../../utils/toast";
 import SubjectManagementDataTable from "./components/DataTable/SubjectManagementDataTable";
 import { SubjectManagemenDialogAdd } from "./components/DialogAdd/SubjectManagemenDialogAdd";
 import { SubjectManagementDialogDelete } from "./components/DialogDelete/SubjectManagementDialogDelete";

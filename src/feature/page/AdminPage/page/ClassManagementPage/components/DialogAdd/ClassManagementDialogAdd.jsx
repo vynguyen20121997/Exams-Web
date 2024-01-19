@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import ClassAPI from "../../../../../../../services/AdminPage/ClassAPI";
 import { addClassInitialValue } from "../../../../constants/constants";
 import { AddClassValidationSchema } from "../../../../validations/admin-page-schema";
-import { CustomToastContainer } from "../../../../../../../untils/toast";
+import { CustomToastContainer } from "../../../../../../../utils/toast";
 import { toast } from "react-toastify";
 
 export const ClassManagementDialogAdd = ({ openAdd, handleOpenAdd }) => {

@@ -1,5 +1,5 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { UserPlusIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { UserPlusIcon } from '@heroicons/react/24/solid';
 import {
   Button,
   Card,
@@ -11,58 +11,73 @@ import {
   Tabs,
   TabsHeader,
   Typography,
-} from "@material-tailwind/react";
-import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { getListUserAdminPage } from "../../../../../services/AdminPage/GetlistAPI";
-import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
-import { TABS } from "../../constants/constants";
-import UserManagementDataTable from "./components/DataTable/UserManagementDataTable";
-import { UserManagementDialogAdd } from "./components/DialogAdd/UserManagementDialogAdd";
-import { UserManagementDialogDelete } from "./components/DialogDelete/UserManagementDialogDelete";
-import { UserManagementDialogEdit } from "./components/DialogEdit/UserManagementDialogEdit";
-import { toast } from "react-toastify";
-import { CustomToastContainer } from "../../../../../untils/toast";
+} from '@material-tailwind/react';
+import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+
+import { getListUserAdminPage } from '../../../../../services/AdminPage/GetlistAPI';
+import { UserAPI } from '../../../../../services/AdminPage/UserAPI';
+import { TABS } from '../../constants/constants';
+import UserManagementDataTable from './components/DataTable/UserManagementDataTable';
+import { UserManagementDialogAdd } from './components/DialogAdd/UserManagementDialogAdd';
+import { UserManagementDialogDelete } from './components/DialogDelete/UserManagementDialogDelete';
+import { UserManagementDialogEdit } from './components/DialogEdit/UserManagementDialogEdit';
+import { CustomToastContainer } from '../../../../../utils/toast';
+
+const DEFAULT_PAGE = 1;
+const USER_ROLES = {
+  TEACHER: 'teacher',
+  STUDENT: 'student',
+};
 
 const UserManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState('all');
+
   const [dataTable, setDataTable] = useState([]);
   const [selectedId, setSelectedId] = useState(0);
+  const [page, setPage] = useState(DEFAULT_PAGE);
 
   const handleTabChange = (value) => {
     setActiveTab(value);
   };
 
   const { data: userList, loading: userListLoading } = useQuery(
-    "userList",
-    () => getListUserAdminPage.getListUser(1),
-    { fetchPolicy: "network-only" },
-    { enabled: activeTab === "all" }
+    'userList',
+    () => getListUserAdminPage.getListUser({ page }),
+    { fetchPolicy: 'network-only' },
+    { enabled: activeTab === 'all' }
   );
 
   const { data: studentList, loading: studentListLoading } = useQuery(
-    "studentList",
-    () => getListUserAdminPage.getListUser(5, 1, "student"),
-    { enabled: activeTab === "student" }
+    'studentList',
+    () =>
+      getListUserAdminPage.getListUser({
+        role: USER_ROLES.STUDENT,
+        page,
+      }),
+    { enabled: activeTab === USER_ROLES.STUDENT }
   );
 
   const { data: teacherList, loading: teacherListLoading } = useQuery(
-    "teacherList",
-    () => getListUserAdminPage.getListUser(1, "teacher"),
-    { enabled: activeTab === "teacher" }
+    'teacherList',
+    () =>
+      getListUserAdminPage.getListUser({
+        page,
+        role: USER_ROLES.TEACHER,
+      }),
+    { enabled: activeTab === USER_ROLES.TEACHER }
   );
 
   useEffect(() => {
-    if (userList && activeTab === "all") {
+    if (userList && activeTab === 'all') {
       setDataTable(userList.data.data);
-    }
-    if (studentList && activeTab === "student") {
+    } else if (studentList && activeTab === USER_ROLES.STUDENT) {
       setDataTable(studentList.data.data);
-    }
-    if (teacherList && activeTab === "teacher") {
+    } else if (teacherList && activeTab === USER_ROLES.TEACHER) {
       setDataTable(teacherList.data.data);
     }
   }, [activeTab, studentList, teacherList, userList]);
@@ -80,7 +95,7 @@ const UserManagementTable = () => {
       console.log(error);
     } finally {
       setOpenDelete(false);
-      toast("User deleted successfully!");
+      toast('User deleted successfully!');
     }
   };
 
@@ -89,34 +104,33 @@ const UserManagementTable = () => {
 
   return (
     <>
-      <Card className="h-full w-full">
-        <CardHeader floated={false} shadow={false} className="rounded-none">
-          <div className="mb-4 flex items-center justify-between gap-8">
+      <Card className='h-full w-full'>
+        <CardHeader floated={false} shadow={false} className='rounded-none'>
+          <div className='mb-4 flex items-center justify-between gap-8'>
             <div>
-              <Typography variant="h5" color="blue-gray">
+              <Typography variant='h5' color='blue-gray'>
                 Users list
               </Typography>
-              <Typography color="gray" className="mt-1 font-normal">
+              <Typography color='gray' className='mt-1 font-normal'>
                 See information about all users
               </Typography>
             </div>
-            <div className="w-full md:w-72">
+            <div className='w-full md:w-72'>
               <Input
-                label="Search"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                label='Search'
+                icon={<MagnifyingGlassIcon className='h-5 w-5' />}
               />
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs className="w-full md:w-max">
+          <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
+            <Tabs className='w-full md:w-max'>
               <TabsHeader>
                 {TABS.map(({ label, value }, index) => (
                   <Tab
                     key={index}
                     value={value}
-                    onClick={() => handleTabChange(value)}
-                  >
+                    onClick={() => handleTabChange(value)}>
                     &nbsp;&nbsp;{label}&nbsp;&nbsp;
                   </Tab>
                 ))}
@@ -124,17 +138,16 @@ const UserManagementTable = () => {
             </Tabs>
             <div>
               <Button
-                className="flex items-center gap-3"
-                size="sm"
-                onClick={handleOpenAdd}
-              >
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+                className='flex items-center gap-3'
+                size='sm'
+                onClick={handleOpenAdd}>
+                <UserPlusIcon strokeWidth={2} className='h-4 w-4' /> Add member
               </Button>
             </div>
           </div>
         </CardHeader>
 
-        <CardBody className="max-h-[490px] overflow-y-auto px-0">
+        <CardBody className='max-h-[490px] overflow-y-auto px-0'>
           <UserManagementDataTable
             handleOpenEdit={handleOpenEdit}
             handleDelete={handleOpenDelete}
@@ -156,15 +169,15 @@ const UserManagementTable = () => {
           />
         </CardBody>
 
-        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
+        <CardFooter className='flex items-center justify-between border-t border-blue-gray-50 p-4'>
+          <Typography variant='small' color='blue-gray' className='font-normal'>
             Page 1 of 10
           </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
+          <div className='flex gap-2'>
+            <Button variant='outlined' size='sm'>
               Previous
             </Button>
-            <Button variant="outlined" size="sm">
+            <Button variant='outlined' size='sm'>
               Next
             </Button>
           </div>
