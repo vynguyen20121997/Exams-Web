@@ -9,7 +9,8 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { testTopicData } from "../../../../../tests/data/TeacherPage/subjectData";
-import { ProgressLabel } from "../PrgressBar/ProgressBar";
+import { ProgressBar } from "../PrgressBar/ProgressBar";
+import { PATHS } from "../../../../../constants/urls";
 
 export const StudentTestCard = () => {
   const topicData = testTopicData.topics;
@@ -56,7 +57,7 @@ export const StudentTestCard = () => {
                 </Typography>
               </div>
               <div className="pt-2">
-                <ProgressLabel />
+                <ProgressBar />
               </div>
             </CardBody>
             <CardFooter className="pt-0">
@@ -64,7 +65,7 @@ export const StudentTestCard = () => {
                 color="blue-gray"
                 size="lg"
                 fullWidth={true}
-                onClick={() => navigate("student/doing-test")}
+                onClick={() => navigate(`/${PATHS.student_testing}`)}
               >
                 CONTINUE
               </Button>

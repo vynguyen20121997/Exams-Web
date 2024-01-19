@@ -38,22 +38,20 @@ const UserManagementTable = () => {
 
   const { data: userList, loading: userListLoading } = useQuery(
     "userList",
-    () => getListUserAdminPage.getListUser(localStorage.getItem("accessToken")),
+    () => getListUserAdminPage.getListUser(1),
     { fetchPolicy: "network-only" },
     { enabled: activeTab === "all" }
   );
 
   const { data: studentList, loading: studentListLoading } = useQuery(
     "studentList",
-    () =>
-      getListUserAdminPage.getListStudent(localStorage.getItem("accessToken")),
+    () => getListUserAdminPage.getListUser(5, 1, "student"),
     { enabled: activeTab === "student" }
   );
 
   const { data: teacherList, loading: teacherListLoading } = useQuery(
     "teacherList",
-    () =>
-      getListUserAdminPage.getListTeacher(localStorage.getItem("accessToken")),
+    () => getListUserAdminPage.getListUser(1, "teacher"),
     { enabled: activeTab === "teacher" }
   );
 

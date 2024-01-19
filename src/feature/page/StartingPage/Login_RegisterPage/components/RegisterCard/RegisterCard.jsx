@@ -192,7 +192,7 @@ export function RegisterCard({ setRegister }) {
           />
           {errors.password && <CustomErrorMessage content={errors.password} />}
 
-          <Input
+          {/* <Input
             label="Confirm password"
             id="confirm_password"
             name="confirm_password"
@@ -202,7 +202,7 @@ export function RegisterCard({ setRegister }) {
           />
           {errors.confirm_password && (
             <CustomErrorMessage content={errors.reenterpassword} />
-          )}
+          )} */}
         </CardBody>
         <CardFooter className="pt-0">
           <Button variant="gradient" fullWidth onClick={handleSubmit}>

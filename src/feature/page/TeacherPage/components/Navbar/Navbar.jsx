@@ -176,15 +176,15 @@ function NavList() {
 }
 
 export function TeacherNavbar() {
-  const [isNavOpen, setIsNavOpen] = React.useState(false);
+  // const [isNavOpen, setIsNavOpen] = React.useState(false);
   // const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 
-  useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setIsNavOpen(false)
-    );
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener(
+  //     "resize",
+  //     () => window.innerWidth >= 960 && setIsNavOpen(false)
+  //   );
+  // }, []);
 
   return (
     <Navbar className="mx-auto p-2 lg:rounded-full lg:pl-6">

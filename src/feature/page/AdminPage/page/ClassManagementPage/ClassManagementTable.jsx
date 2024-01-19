@@ -51,12 +51,9 @@ const ClassManagementTable = () => {
   };
 
   const handleDelete = async () => {
-    const token = localStorage.getItem("accessToken");
-    const payload = { vriable: String(selectedId) };
-    console.log("payload", payload);
-
+    const id = String(selectedId);
     try {
-      await UserAPI.delete(payload, token);
+      await UserAPI.delete(id);
     } catch (error) {
       console.log(error);
     } finally {

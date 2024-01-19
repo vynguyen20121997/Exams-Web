@@ -9,6 +9,10 @@ const subjectAPI = {
     const url = "/subjects/create";
     return api.post(url, body);
   },
+  deleteSubject: (id) => {
+    const url = `/subjects/${id}`;
+    return api.delete(url);
+  },
 };
 
 export default subjectAPI;

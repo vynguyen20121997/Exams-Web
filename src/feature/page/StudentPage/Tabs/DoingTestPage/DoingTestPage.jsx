@@ -1,11 +1,15 @@
 import React from "react";
-import HeaderDoingTestPage from "./components/HeaderDoingTestPage";
+import ReviewingDoingTestPage from "./components/ReviewingDoingTestPage";
 import LayoutDoingTestPage from "./components/LayoutDoingTestPage";
+import QuestionDoingTestPage from "./components/QuestionDoingTestPage";
+import PagtinationDoingTestPage from "./components/PagtinationDoingTestPage";
 
 const DoingTestPage = () => {
   return (
     <LayoutDoingTestPage>
-      <HeaderDoingTestPage />
+      <ReviewingDoingTestPage />
+      <QuestionDoingTestPage />
+      <PagtinationDoingTestPage />
     </LayoutDoingTestPage>
   );
 };
