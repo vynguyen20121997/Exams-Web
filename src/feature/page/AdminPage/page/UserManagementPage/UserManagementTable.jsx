@@ -43,14 +43,14 @@ const UserManagementTable = () => {
     setActiveTab(value);
   };
 
-  const { data: userList, loading: userListLoading } = useQuery(
+  const { data: userList } = useQuery(
     "userList",
     () => getListUserAdminPage.getListUser({ page }),
     { fetchPolicy: "network-only" },
     { enabled: activeTab === "all" }
   );
 
-  const { data: studentList, loading: studentListLoading } = useQuery(
+  const { data: studentList } = useQuery(
     "studentList",
     () =>
       getListUserAdminPage.getListUser({
@@ -60,7 +60,7 @@ const UserManagementTable = () => {
     { enabled: activeTab === USER_ROLES.STUDENT }
   );
 
-  const { data: teacherList, loading: teacherListLoading } = useQuery(
+  const { data: teacherList } = useQuery(
     "teacherList",
     () =>
       getListUserAdminPage.getListUser({

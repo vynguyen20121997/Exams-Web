@@ -1,3 +1,6 @@
+export const CREATE_EXAMS_STUDENT_TABLE_HEAD = ["", "Student", "Class"];
+export const DEFAULT_PAGE = 1;
+
 export const CREATE_EXAMS_TABLE_HEAD = [
   "",
   "Question",
@@ -16,8 +19,6 @@ export const TEST_DETAIL_TABLE_HEAD = [
   "Answers 4",
   "Created  Date",
 ];
-
-export const CREATE_EXAMS_STUDENT_TABLE_HEAD = ["", "Student", "Class"];
 
 export const CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS = [
   {

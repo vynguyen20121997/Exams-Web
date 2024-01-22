@@ -1,18 +1,15 @@
+import { parseParamsToQueryString } from "../../utils/api";
 import api from "../axiosInstance";
 
-const QuestionAPITeacherPage = {
-  questions: () => {
-    const url = "/questions";
+export const QuestionAPITeacherPage = {
+  getQuestions: ({ limit = 10, page = 1, classId, subjectId }) => {
+    const queryParams = parseParamsToQueryString({
+      limit,
+      page,
+      classId,
+      subjectId,
+    });
+    const url = `/questions/?${queryParams}`;
     return api.get(url);
   },
-  questionBySubject: (body) => {
-    const url = "/questions/subject";
-    return api.get(url, body);
-  },
-  questionByClass: (body) => {
-    const url = "/questions/class";
-    return api.get(url, body);
-  },
 };
-
-export default QuestionAPITeacherPage;

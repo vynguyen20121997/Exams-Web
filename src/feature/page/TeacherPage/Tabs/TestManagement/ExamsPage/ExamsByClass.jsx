@@ -3,7 +3,7 @@ import React from "react";
 import { Pagination } from "../../../../../../components/Pagination/Pagination";
 import { TestCard } from "../../../components/CardHolder/Card";
 
-const ExamsByClass = () => {
+const ExamsByClass = ({ allTestList }) => {
   return (
     <>
       <div>
@@ -11,8 +11,8 @@ const ExamsByClass = () => {
           Test in January:
         </Typography>
       </div>
-      <div className="flex justify-between	 px-10 overflow-x">
-        <TestCard />
+      <div className="flex justify-start	px-10 overflow-x">
+        <TestCard allTestList={allTestList} />
       </div>
       <div className="float-right py-6">
         <Pagination />

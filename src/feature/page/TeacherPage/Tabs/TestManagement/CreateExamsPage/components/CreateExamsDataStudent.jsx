@@ -2,7 +2,11 @@ import { Avatar, Card, Checkbox, Typography } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import { CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS } from "../constants/constants";
 
-const CreateExamsDataStudent = ({ studentList }) => {
+export const CreateExamsDataStudent = ({
+  studentList,
+  setValues,
+  setFieldValue,
+}) => {
   const [studentData, setStudentData] = useState([]);
 
   useEffect(() => {
@@ -26,9 +30,14 @@ const CreateExamsDataStudent = ({ studentList }) => {
     setStudentData(studentDataUpdated);
   };
 
+  useEffect(() => {
+    const chosenStudentList = studentData.filter((e) => e.choosen === true);
+    setFieldValue("assignees", chosenStudentList);
+  }, [setFieldValue, setValues, studentData]);
+
   return (
     <>
-      <Card className="my-4 max-h-[280px] w-full overflow-scroll round-full">
+      <Card className="my-4 max-h-[230px] w-96 overflow-scroll mx-auto round-full">
         <table className="w-full  table-auto text-left">
           <thead>
             <tr>
@@ -100,5 +109,3 @@ const CreateExamsDataStudent = ({ studentList }) => {
     </>
   );
 };
-
-export default CreateExamsDataStudent;

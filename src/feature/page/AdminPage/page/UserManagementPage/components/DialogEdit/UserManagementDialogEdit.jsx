@@ -78,11 +78,12 @@ export const UserManagementDialogEdit = ({
             onChange={(value) => setFieldValue("subject", value)}
             onBlur={() => setFieldTouched("subject", true)}
           >
-            {subjectList.data.data?.map((item) => (
-              <Option value={item._id} label="subject">
-                {item.title}
-              </Option>
-            ))}
+            {subjectList &&
+              subjectList.data.data?.map((item) => (
+                <Option value={item._id} label="subject">
+                  {item.title}
+                </Option>
+              ))}
           </Select>
 
           <Select
@@ -92,11 +93,12 @@ export const UserManagementDialogEdit = ({
             onChange={(value) => setFieldValue("class", value)}
             onBlur={() => setFieldTouched("class", true)}
           >
-            {classList.data.data?.map((item) => (
-              <Option value={item._id} label="class">
-                {item.title}
-              </Option>
-            ))}
+            {classList &&
+              classList.data.data?.map((item) => (
+                <Option value={item._id} label="class">
+                  {item.title}
+                </Option>
+              ))}
           </Select>
         </DialogBody>
         <DialogFooter>

@@ -1,6 +1,7 @@
 // import lazyWithRetry from "../utils/lazyWithRetry";
 import { wrapCreateBrowserRouter } from "@sentry/react";
 import { createBrowserRouter } from "react-router-dom";
+import { AUTH_ROLES } from "../constants/enums";
 import { PATHS } from "../constants/urls";
 import ClassManagementPage from "../feature/page/AdminPage/page/ClassManagementPage/ClassManagementPage";
 import SubjectManagementPage from "../feature/page/AdminPage/page/SubjectManagementPage/SubjectManagementPage";
@@ -9,13 +10,12 @@ import ForgotPassPage from "../feature/page/StartingPage/ForgotPassPage/ForgotPa
 import LoginRegisterPage from "../feature/page/StartingPage/Login_RegisterPage/LoginRegisterPage";
 import ResetPassPage from "../feature/page/StartingPage/ResetPassPage/ResetPassPage";
 import StudentPage from "../feature/page/StudentPage/StudentPage";
+import DoingTestPage from "../feature/page/StudentPage/Tabs/DoingTestPage/DoingTestPage";
 import CreateExamsPage from "../feature/page/TeacherPage/Tabs/TestManagement/CreateExamsPage/CreateExamsPage";
 import ExamsDetailPage from "../feature/page/TeacherPage/Tabs/TestManagement/TestDetailIPage/TestDetailIPage";
 import TeacherPage from "../feature/page/TeacherPage/TeacherPage";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PublicRoute from "./PublicRoute/PublicRoute";
-import DoingTestPage from "../feature/page/StudentPage/Tabs/DoingTestPage/DoingTestPage";
-import { AUTH_ROLES } from "../constants/enums";
 
 const sentryCreateBrowserRouter = wrapCreateBrowserRouter(createBrowserRouter);
 const router = sentryCreateBrowserRouter([

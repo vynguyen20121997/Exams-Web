@@ -2,7 +2,7 @@ import { Card, Checkbox, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { CREATE_EXAMS_TABLE_HEAD } from "../constants/constants";
 
-export function CreateExamsDataQuestion({ questionList }) {
+export function CreateExamsDataQuestion({ questionList, setFieldValue }) {
   const [questionData, setQuestionData] = useState([]);
 
   useEffect(() => {
@@ -10,9 +10,7 @@ export function CreateExamsDataQuestion({ questionList }) {
       const questionListData = questionList?.data.data || [];
       setQuestionData(questionListData);
     }
-  }, [questionList]);
-
-  console.log(questionData);
+  }, [questionList, setFieldValue]);
 
   const onChangeSelected = (_id) => {
     const questionDataUpdated = questionData.map((el) => {
@@ -28,8 +26,17 @@ export function CreateExamsDataQuestion({ questionList }) {
     setQuestionData(questionDataUpdated);
   };
 
+  useEffect(() => {
+    const chosenQuestionsList = questionData?.filter((e) => e.choosen === true);
+    if (chosenQuestionsList) {
+      setFieldValue("questions", chosenQuestionsList);
+    }
+    console.log("chosenQuestionsList", chosenQuestionsList);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionData]);
+
   return (
-    <Card className="ml-5 max-h-[735px] min-w-[1300px] max-w-[1400px] overflow-scroll round-full">
+    <Card className="ml-5 max-h-[735px] min-w-full max-w-[1400px] overflow-scroll round-full">
       <table className="w-full  table-auto text-left">
         <thead>
           <tr>
