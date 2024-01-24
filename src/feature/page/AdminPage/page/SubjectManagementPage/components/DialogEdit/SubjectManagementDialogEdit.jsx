@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import { CustomToastContainer } from "../../../../../../../untils/toast";
+import { CustomToastContainer } from "../../../../../../../utils/toastElement";
 
 export const SubjectManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,6 @@ export const SubjectManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
   const formik = useFormik({
     initialValues: {
       name: "",
-      role: "",
     },
     onSubmit: async (values) => {
       try {
@@ -32,36 +31,21 @@ export const SubjectManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
       }
     },
   });
-  const { handleSubmit, handleChange, setFieldValue, setFieldTouched } = formik;
+  const { handleSubmit, handleChange } = formik;
 
   console.log("openEdit", openEdit);
   return (
     <>
       <Dialog open={openEdit} handler={handleOpenEdit}>
-        <DialogHeader>Editing user</DialogHeader>
+        <DialogHeader>Editing Subject</DialogHeader>
         <DialogBody className="flex flex-col gap-4">
           <Input
-            label="Name"
+            label="Name Subject"
             id="name"
             name="name"
             onChange={handleChange}
             size="lg"
           />
-
-          <Select
-            label="Role"
-            id="role"
-            name="role"
-            onChange={(value) => setFieldValue("role", value)}
-            onBlur={() => setFieldTouched("role", true)}
-          >
-            <Option value="student" label="student">
-              Student
-            </Option>
-            <Option value="teacher" label="teacher">
-              Teacher
-            </Option>
-          </Select>
         </DialogBody>
         <DialogFooter>
           <Button
@@ -74,7 +58,7 @@ export const SubjectManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
           </Button>
           <Button
             variant="gradient"
-            color="green"
+            color="purple"
             onClick={(() => handleSubmit, handleOpenEdit)}
           >
             <span>Confirm</span>

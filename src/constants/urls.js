@@ -12,6 +12,10 @@ export const PATHS = {
   teacher_home: "teacher",
   teacher_student_management: "teacher/student-management",
   teacher_create_exams: "teacher/create-exams",
+  teacher_exams_detail: "teacher/exams_detail",
 
   // Student
+  student_home: "student",
+  student_submit_testing: "student/submit-test/:id",
+  student_testing: "student/doing-test/:id",
 };

@@ -16,9 +16,11 @@ import { useQuery } from "react-query";
 import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/ErrorCutomMessage";
 import AuthAPI from "../../../../../../services/StartingPage/AuthAPI";
 import GetListRegisterCardAPI from "../../../../../../services/StartingPage/GetListRegisterCardAPI";
-import { RegisterCardRoleData } from "../../untils/data";
 import RegisterValidationSchema from "../../validations/register-schema";
 import { registerInitialValues } from "../../constants/constants";
+import { toast } from "react-toastify";
+import { CustomToastContainer } from "../../../../../../utils/toastElement";
+import { RegisterCardRoleData } from "../../untils/data";
 
 export function RegisterCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
@@ -48,16 +50,12 @@ export function RegisterCard({ setRegister }) {
         };
         try {
           setLoading(true);
-          const response = await AuthAPI.register(payload);
-          const accessToken = response.data.accessToken;
-
-          if (accessToken) {
-            resetForm();
-            alert("fix the bug");
-          }
+          await AuthAPI.register(payload);
         } catch (error) {
         } finally {
+          resetForm();
           setLoading(false);
+          toast("Class created successfully!");
           setRegister(false);
         }
       }
@@ -73,19 +71,20 @@ export function RegisterCard({ setRegister }) {
         };
         try {
           setLoading(true);
-          const response = await AuthAPI.register(payLoad);
-          const accessToken = response.data.accessToken;
-
-          if (accessToken) {
-            resetForm();
-            alert("fix the bug");
-            setRegister(false);
-          }
+          await AuthAPI.register(payLoad);
         } catch (error) {
           setError(error.response.data?.message);
+          console.log(error);
         } finally {
-          setLoading(false);
-          setRegister(false);
+          if (error.code === "ERR_BAD_REQUEST") {
+            console.log(error);
+            console.log(error);
+            setLoading(loading);
+          } else {
+            setLoading(false);
+            toast("Register successfully!");
+            setRegister(false);
+          }
         }
       }
     },
@@ -112,9 +111,12 @@ export function RegisterCard({ setRegister }) {
             Sign Up
           </Typography>
         </CardHeader>
+
         {error && <p className="text-red-500 my-4">{error}</p>}
 
         <CardBody className="flex flex-col gap-4">
+          {errors.name && <CustomErrorMessage content={errors.name} />}
+
           <Input
             label="Name"
             id="name"
@@ -122,6 +124,8 @@ export function RegisterCard({ setRegister }) {
             onChange={handleChange}
             size="lg"
           />
+
+          {errors.role && <CustomErrorMessage content={errors.role} />}
 
           <Select
             label="Who are you?"
@@ -136,8 +140,6 @@ export function RegisterCard({ setRegister }) {
               </Option>
             ))}
           </Select>
-
-          {errors.role && <CustomErrorMessage content={errors.role} />}
 
           {values.role !== "" && values.role === "teacher" && (
             <Select
@@ -170,7 +172,7 @@ export function RegisterCard({ setRegister }) {
               ))}
             </Select>
           )}
-
+          {errors.email && <CustomErrorMessage content={errors.email} />}
           <Input
             label="Email"
             id="email"
@@ -178,8 +180,8 @@ export function RegisterCard({ setRegister }) {
             onChange={handleChange}
             size="lg"
           />
-          {errors.email && <CustomErrorMessage content={errors.email} />}
 
+          {errors.username && <CustomErrorMessage content={errors.username} />}
           <Input
             label="Username"
             id="username"
@@ -187,8 +189,8 @@ export function RegisterCard({ setRegister }) {
             onChange={handleChange}
             size="lg"
           />
-          {errors.username && <CustomErrorMessage content={errors.username} />}
 
+          {errors.password && <CustomErrorMessage content={errors.password} />}
           <Input
             label="Password"
             id="password"
@@ -197,19 +199,6 @@ export function RegisterCard({ setRegister }) {
             onChange={handleChange}
             size="lg"
           />
-          {errors.password && <CustomErrorMessage content={errors.password} />}
-
-          <Input
-            label="Confirm password"
-            id="confirm_password"
-            name="confirm_password"
-            type="password"
-            onChange={handleChange}
-            size="lg"
-          />
-          {errors.confirm_password && (
-            <CustomErrorMessage content={errors.reenterpassword} />
-          )}
         </CardBody>
         <CardFooter className="pt-0">
           <Button variant="gradient" fullWidth onClick={handleSubmit}>
@@ -233,6 +222,7 @@ export function RegisterCard({ setRegister }) {
           </Typography>
         </CardFooter>
       </Card>
+      <CustomToastContainer />
     </>
   );
 }

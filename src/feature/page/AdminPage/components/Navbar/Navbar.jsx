@@ -201,9 +201,9 @@ export function AdminNavbar() {
         <ProfileMenu />
       </div>
 
-      <MobileNav open={isNavOpen} className="overflow-scroll">
-        <NavList />
-      </MobileNav>
+      {/* <MobileNav open={isNavOpen} className="overflow-scroll"> */}
+      {/* <NavList /> */}
+      {/* </MobileNav> */}
     </Navbar>
   );
 }

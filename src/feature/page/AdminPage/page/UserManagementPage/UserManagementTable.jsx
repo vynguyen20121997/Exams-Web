@@ -12,59 +12,84 @@ import {
   TabsHeader,
   Typography,
 } from "@material-tailwind/react";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { getListUserAdminPage } from "../../../../../services/AdminPage/GetlistAPI";
+
 import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
 import { TABS } from "../../constants/constants";
 import UserManagementDataTable from "./components/DataTable/UserManagementDataTable";
 import { UserManagementDialogAdd } from "./components/DialogAdd/UserManagementDialogAdd";
 import { UserManagementDialogDelete } from "./components/DialogDelete/UserManagementDialogDelete";
 import { UserManagementDialogEdit } from "./components/DialogEdit/UserManagementDialogEdit";
-import { toast } from "react-toastify";
-import { CustomToastContainer } from "../../../../../untils/toast";
+import { CustomToastContainer } from "../../../../../utils/toastElement";
+import { getListUserAdminPage } from "../../../../../services/AdminPage/GetUserAPI";
+import { Pagination } from "../../../../../components/Pagination/Pagination";
+import ClassAPI from "../../../../../services/AdminPage/ClassAPI";
+import subjectAPI from "../../../../../services/AdminPage/SubjectAPI";
+import { DEFAULT_PAGE, USER_ROLES } from "./constants/constants";
 
 const UserManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
+
   const [dataTable, setDataTable] = useState([]);
   const [selectedId, setSelectedId] = useState(0);
+  const [page, setPage] = useState(DEFAULT_PAGE);
 
   const handleTabChange = (value) => {
     setActiveTab(value);
   };
 
-  const { data: userList, loading: userListLoading } = useQuery(
+  const { data: userList } = useQuery(
     "userList",
-    () => getListUserAdminPage.getListUser(localStorage.getItem("accessToken")),
+    () => getListUserAdminPage.getListUser({ page }),
     { fetchPolicy: "network-only" },
     { enabled: activeTab === "all" }
   );
 
-  const { data: studentList, loading: studentListLoading } = useQuery(
+  const { data: studentList } = useQuery(
     "studentList",
     () =>
-      getListUserAdminPage.getListStudent(localStorage.getItem("accessToken")),
-    { enabled: activeTab === "student" }
+      getListUserAdminPage.getListUser({
+        role: USER_ROLES.STUDENT,
+        page,
+      }),
+    { enabled: activeTab === USER_ROLES.STUDENT }
   );
 
-  const { data: teacherList, loading: teacherListLoading } = useQuery(
+  const { data: teacherList } = useQuery(
     "teacherList",
     () =>
-      getListUserAdminPage.getListTeacher(localStorage.getItem("accessToken")),
-    { enabled: activeTab === "teacher" }
+      getListUserAdminPage.getListUser({
+        page,
+        role: USER_ROLES.TEACHER,
+      }),
+    { enabled: activeTab === USER_ROLES.TEACHER }
+  );
+
+  const { data: classList } = useQuery(
+    "class",
+    () => ClassAPI.classes(),
+    { refetchOnChange: false },
+    { refetchOnMount: false }
+  );
+
+  const { data: subjectList } = useQuery(
+    "subject",
+    () => subjectAPI.subjects(),
+    { refetchOnChange: false },
+    { refetchOnMount: false }
   );
 
   useEffect(() => {
     if (userList && activeTab === "all") {
       setDataTable(userList.data.data);
-    }
-    if (studentList && activeTab === "student") {
+    } else if (studentList && activeTab === USER_ROLES.STUDENT) {
       setDataTable(studentList.data.data);
-    }
-    if (teacherList && activeTab === "teacher") {
+    } else if (teacherList && activeTab === USER_ROLES.TEACHER) {
       setDataTable(teacherList.data.data);
     }
   }, [activeTab, studentList, teacherList, userList]);
@@ -75,9 +100,9 @@ const UserManagementTable = () => {
   };
 
   const handleDelete = async () => {
-    const payload = { id: String(selectedId) };
+    const id = String(selectedId);
     try {
-      await UserAPI.delete(payload);
+      await UserAPI.delete(id);
     } catch (error) {
       console.log(error);
     } finally {
@@ -86,7 +111,11 @@ const UserManagementTable = () => {
     }
   };
 
-  const handleOpenEdit = (id) => setOpenEdit(!openEdit);
+  const handleOpenEdit = (id) => {
+    setOpenEdit(!openEdit);
+    setSelectedId(id);
+  };
+
   const handleOpenAdd = () => setOpenAdd(!openAdd);
 
   return (
@@ -136,16 +165,19 @@ const UserManagementTable = () => {
           </div>
         </CardHeader>
 
-        <CardBody className="max-h-[490px] overflow-y-auto px-0">
+        <CardBody className="h-[490px] px-0">
           <UserManagementDataTable
             handleOpenEdit={handleOpenEdit}
-            handleDelete={handleOpenDelete}
+            handleOpenDelete={handleOpenDelete}
             UserTableData={dataTable}
           />
 
           <UserManagementDialogEdit
+            subjectList={subjectList}
+            classList={classList}
             openEdit={openEdit}
             handleOpenEdit={handleOpenEdit}
+            selectedId={selectedId}
           />
           <UserManagementDialogDelete
             open={openDelete}
@@ -153,22 +185,23 @@ const UserManagementTable = () => {
             handleDelete={handleDelete}
           />
           <UserManagementDialogAdd
+            subjectList={subjectList}
+            classList={classList}
             openAdd={openAdd}
             handleOpenAdd={handleOpenAdd}
           />
         </CardBody>
 
-        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Page 1 of 10
+        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50  py-5">
+          <Typography
+            variant="small"
+            color="blue-gray-200"
+            className="font-normal"
+          >
+            {/* LoremLorem ipsum dolor sit amet, consectetur adipiscing elit. */}
           </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              Previous
-            </Button>
-            <Button variant="outlined" size="sm">
-              Next
-            </Button>
+          <div>
+            <Pagination />
           </div>
         </CardFooter>
       </Card>

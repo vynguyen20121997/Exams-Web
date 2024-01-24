@@ -8,25 +8,30 @@ import {
   MenuHandler,
   MenuItem,
   MenuList,
-  MobileNav,
   Navbar,
   Typography,
 } from "@material-tailwind/react";
 import React, { createElement, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   navListItems,
   navListMenuItems,
   profileMenuItems,
 } from "../constants/constants";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../../../redux/auth/authSlice";
 
 // profile menu component
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
   const closeMenu = () => setIsMenuOpen(false);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutFunc = (state) => {
+    dispatch(logout(state));
+    navigate("/");
+  };
   return (
     <Menu
       allowHover
@@ -56,7 +61,13 @@ function ProfileMenu() {
           return (
             <MenuItem
               key={label}
-              onClick={closeMenu}
+              onClick={() => {
+                if (label === "Sign Out") {
+                  logoutFunc();
+                } else {
+                  closeMenu();
+                }
+              }}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -165,15 +176,15 @@ function NavList() {
 }
 
 export function TeacherNavbar() {
-  const [isNavOpen, setIsNavOpen] = React.useState(false);
+  // const [isNavOpen, setIsNavOpen] = React.useState(false);
   // const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 
-  useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setIsNavOpen(false)
-    );
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener(
+  //     "resize",
+  //     () => window.innerWidth >= 960 && setIsNavOpen(false)
+  //   );
+  // }, []);
 
   return (
     <Navbar className="mx-auto p-2 lg:rounded-full lg:pl-6">
@@ -185,9 +196,9 @@ export function TeacherNavbar() {
         <ProfileMenu />
       </div>
 
-      <MobileNav open={isNavOpen} className="overflow-scroll">
+      {/* <MobileNav open={isNavOpen} className="overflow-scroll">
         <NavList />
-      </MobileNav>
+      </MobileNav> */}
     </Navbar>
   );
 }

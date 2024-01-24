@@ -11,14 +11,13 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 import subjectAPI from "../../../../../services/AdminPage/SubjectAPI";
-import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
+import { CustomToastContainer } from "../../../../../utils/toastElement";
 import SubjectManagementDataTable from "./components/DataTable/SubjectManagementDataTable";
 import { SubjectManagemenDialogAdd } from "./components/DialogAdd/SubjectManagemenDialogAdd";
 import { SubjectManagementDialogDelete } from "./components/DialogDelete/SubjectManagementDialogDelete";
 import { SubjectManagementDialogEdit } from "./components/DialogEdit/SubjectManagementDialogEdit";
-import { toast } from "react-toastify";
-import { CustomToastContainer } from "../../../../../untils/toast";
 
 const SubjectManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -45,10 +44,10 @@ const SubjectManagementTable = () => {
   };
 
   const handleDelete = async () => {
-    const token = localStorage.getItem("accessToken");
-    const payload = { vriable: String(selectedId) };
+    const id = String(selectedId);
+    console.log("id", id);
     try {
-      await UserAPI.delete(payload, token);
+      await subjectAPI.deleteSubject(id);
     } catch (error) {
       console.log(error);
     } finally {

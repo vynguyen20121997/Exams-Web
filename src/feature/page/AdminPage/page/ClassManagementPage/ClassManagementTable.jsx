@@ -17,7 +17,7 @@ import ClassManagementDataTable from "./components/DataTable/ClassManagementData
 import { ClassManagementDialogAdd } from "./components/DialogAdd/ClassManagementDialogAdd";
 import { ClassManagementDialogDelete } from "./components/DialogDelete/ClassManagementDialogDelete";
 import { ClassManagementDialogEdit } from "./components/DialogEdit/ClassManagementDialogEdit";
-import { CustomToastContainer } from "../../../../../untils/toast";
+import { CustomToastContainer } from "../../../../../utils/toastElement";
 import { toast } from "react-toastify";
 
 const ClassManagementTable = () => {
@@ -51,12 +51,9 @@ const ClassManagementTable = () => {
   };
 
   const handleDelete = async () => {
-    const token = localStorage.getItem("accessToken");
-    const payload = { vriable: String(selectedId) };
-    console.log("payload", payload);
-
+    const id = String(selectedId);
     try {
-      await UserAPI.delete(payload, token);
+      await UserAPI.delete(id);
     } catch (error) {
       console.log(error);
     } finally {

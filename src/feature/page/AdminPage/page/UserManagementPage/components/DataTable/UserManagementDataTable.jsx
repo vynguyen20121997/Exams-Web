@@ -15,7 +15,7 @@ import { TABLE_HEAD_USER_MANAGEMENT } from "../../../../constants/constants";
 
 const UserManagementDataTable = ({
   handleOpenEdit,
-  handleDelete,
+  handleOpenDelete,
   UserTableData,
 }) => {
   return (
@@ -127,8 +127,10 @@ const UserManagementDataTable = ({
                         </IconButton>
                       </MenuHandler>
                       <MenuList>
-                        <MenuItem onClick={handleOpenEdit}>Edit</MenuItem>
-                        <MenuItem onClick={() => handleDelete(_id)}>
+                        <MenuItem onClick={() => handleOpenEdit(_id)}>
+                          Edit
+                        </MenuItem>
+                        <MenuItem onClick={() => handleOpenDelete(_id)}>
                           <>Delete</>
                         </MenuItem>
                       </MenuList>

@@ -10,6 +10,11 @@ export const CREATE_EXAMS_TABLE_HEAD = [
 
 export const CREATE_EXAMS_STUDENT_TABLE_HEAD = ["", "Student", "Class"];
 
+export const USER_ROLES = {
+  TEACHER: "teacher",
+  STUDENT: "student",
+};
+
 export const CREATE_EXAMS_STUDENT_DATA_TABLE_ROWS = [
   {
     id: 1,

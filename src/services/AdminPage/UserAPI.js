@@ -5,9 +5,9 @@ export const UserAPI = {
     const url = "/";
     return api.put(url, body);
   },
-  delete: (body) => {
-    const url = "/users/delete";
-    return api.delete(url, body);
+  delete: (id) => {
+    const url = `/users/${id}`;
+    return api.delete(url);
   },
   register: (body) => {
     const url = "/auth/signup";
