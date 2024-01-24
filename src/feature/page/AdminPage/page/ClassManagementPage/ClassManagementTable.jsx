@@ -9,7 +9,7 @@ import {
   Input,
   Typography,
 } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useQuery } from "react-query";
 import ClassAPI from "../../../../../services/AdminPage/ClassAPI";
 import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
@@ -19,31 +19,44 @@ import { ClassManagementDialogDelete } from "./components/DialogDelete/ClassMana
 import { ClassManagementDialogEdit } from "./components/DialogEdit/ClassManagementDialogEdit";
 import { CustomToastContainer } from "../../../../../utils/toastElement";
 import { toast } from "react-toastify";
+import { Pagination } from "../../../../../components/Pagination/Pagination";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  DEFAULT_PAGE,
+  DEFAULT_TOTAL_PAGE,
+} from "../UserManagementPage/constants/constants";
 
 const ClassManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
-  const [activeTab, setActiveTab] = useState("all");
   const [dataTable, setDataTable] = useState([]);
   const [selectedId, setSelectedId] = useState(0);
-
-  const handleTabChange = (value) => {
-    setActiveTab(value);
-  };
+  const [page, setPage] = useState(DEFAULT_PAGE);
+  const [totalPage, setTotalPage] = useState(DEFAULT_TOTAL_PAGE);
+  const isDeleteState = useSelector((state) => state.admin.isDelete);
+  const isCreateState = useSelector((state) => state.admin.isCreate);
 
   const { data: classList, loading: classListLoading } = useQuery(
-    "classList",
-    () => ClassAPI.classes(),
-    { fetchPolicy: "network-only" },
-    { enabled: activeTab === "all" }
+    ["classList", page, isDeleteState, isCreateState],
+    () => ClassAPI.classes({ limit: 5, page: page }),
+    { fetchPolicy: "network-only" }
   );
 
   useEffect(() => {
     if (classList) {
       setDataTable(classList.data.data);
+      setTotalPage(classList && classList.data.pagination);
     }
-  }, [activeTab, classList]);
+  }, [classList]);
+
+  const onChangePagtination = useCallback(
+    (number) => {
+      setPage(number);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [page]
+  );
 
   const handleOpenDelete = (id) => {
     setOpenDelete(!openDelete);
@@ -122,16 +135,19 @@ const ClassManagementTable = () => {
         </CardBody>
 
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Page 1 of 10
+          <Typography
+            variant="small"
+            color="blue-gray-200"
+            className="font-normal"
+          >
+            {/* LoremLorem ipsum dolor sit amet, consectetur adipiscing elit. */}
           </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              Previous
-            </Button>
-            <Button variant="outlined" size="sm">
-              Next
-            </Button>
+          <div>
+            <Pagination
+              page={page}
+              onChangePagtination={onChangePagtination}
+              totalSize={totalPage}
+            />
           </div>
         </CardFooter>
       </Card>

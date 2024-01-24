@@ -8,8 +8,10 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { isCreate } from "../../../../../../../redux/admin/adminSlice";
 import subjectAPI from "../../../../../../../services/AdminPage/SubjectAPI";
 import { CustomToastContainer } from "../../../../../../../utils/toastElement";
 import { addSubjectInitialValue } from "../../../../constants/constants";
@@ -17,6 +19,7 @@ import { AddSubjectValidationSchema } from "../../../../validations/admin-page-s
 
 export const SubjectManagemenDialogAdd = ({ openAdd, handleOpenAdd }) => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: addSubjectInitialValue,
@@ -35,6 +38,7 @@ export const SubjectManagemenDialogAdd = ({ openAdd, handleOpenAdd }) => {
         setLoading(false);
         resetForm();
         handleOpenAdd();
+        dispatch(isCreate());
         toast("Subject created successfully!");
       }
     },

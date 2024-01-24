@@ -1,8 +1,8 @@
 import api from "../axiosInstance";
 
 export const UserAPI = {
-  edit: (body) => {
-    const url = "/";
+  edit: ({ id, body }) => {
+    const url = `users/profile/${id}`;
     return api.put(url, body);
   },
   delete: (id) => {

@@ -15,7 +15,7 @@ export const ClassManagementDialogDelete = ({
   return (
     <>
       <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Are you sure to delete this user?</DialogHeader>
+        <DialogHeader>Are you sure to delete this class?</DialogHeader>
         <DialogBody>
           The key to more success is to have a lot of pillows. Put it this way,
           it took me twenty five years to get these plants, twenty five years of

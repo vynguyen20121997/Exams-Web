@@ -1,8 +1,10 @@
+import { parseParamsToQueryString } from "../../utils/parseParamsToQueryString";
 import api from "../axiosInstance";
 
 const subjectAPI = {
-  subjects: () => {
-    const url = "/subjects";
+  subjects: ({ limit = 5, page = 1 }) => {
+    const queryParams = parseParamsToQueryString({ limit, page });
+    const url = `/subjects?${queryParams}`;
     return api.get(url);
   },
   createSubject: (body) => {
