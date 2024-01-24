@@ -10,7 +10,7 @@ import {
   Option,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
-import { CustomToastContainer } from "../../../../../../../utils/toast";
+import { CustomToastContainer } from "../../../../../../../utils/toastElement";
 import { toast } from "react-toastify";
 
 export const UserManagementDialogEdit = ({

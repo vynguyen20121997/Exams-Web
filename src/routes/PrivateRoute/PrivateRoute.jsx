@@ -14,10 +14,6 @@ const PrivateRoute = () => {
   const roles = match?.handle?.roles.join(",");
   const userRole = user && user?.role;
 
-  // if (!isAuthenticated) {
-  //   return <Navigate to='/' />;
-  // }
-
   if (isAuthenticated) {
     if (roles && roles === userRole) {
       return (

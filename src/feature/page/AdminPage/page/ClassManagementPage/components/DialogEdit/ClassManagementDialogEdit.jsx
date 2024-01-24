@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import AuthAPI from "../../../../../../../services/StartingPage/AuthAPI";
-import { CustomToastContainer } from "../../../../../../../utils/toast";
+import { CustomToastContainer } from "../../../../../../../utils/toastElement";
 import { toast } from "react-toastify";
 
 export const ClassManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {

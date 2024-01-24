@@ -12,7 +12,7 @@ import { CreateExamsDataQuestion } from "./components/CreateExamsDataTable";
 import { CreateExamsListTopic } from "./components/CreateExamsListTopic";
 import testAPI from "../../../../../../services/TeacherPage/TestAPI";
 import { toast } from "react-toastify";
-import { CustomToastContainer } from "../../../../../../utils/toast";
+import { CustomToastContainer } from "../../../../../../utils/toastElement";
 import { useNavigate } from "react-router-dom";
 
 function CreateExamsPage() {

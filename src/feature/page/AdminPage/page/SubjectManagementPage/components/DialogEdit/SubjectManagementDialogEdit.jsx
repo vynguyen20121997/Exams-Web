@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import { CustomToastContainer } from "../../../../../../../utils/toast";
+import { CustomToastContainer } from "../../../../../../../utils/toastElement";
 
 export const SubjectManagementDialogEdit = ({ openEdit, handleOpenEdit }) => {
   const [loading, setLoading] = useState(false);

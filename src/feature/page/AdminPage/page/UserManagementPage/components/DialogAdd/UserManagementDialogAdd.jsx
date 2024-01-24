@@ -17,7 +17,7 @@ import subjectAPI from "../../../../../../../services/AdminPage/SubjectAPI";
 import AuthAPI from "../../../../../../../services/StartingPage/AuthAPI";
 import { AddUserInitialValues } from "../../../../constants/constants";
 import { AddUserValidationSchema } from "../../../../validations/admin-page-schema";
-import { CustomToastContainer } from "../../../../../../../utils/toast";
+import { CustomToastContainer } from "../../../../../../../utils/toastElement";
 
 export const UserManagementDialogAdd = ({
   openAdd,

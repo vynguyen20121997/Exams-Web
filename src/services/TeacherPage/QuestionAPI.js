@@ -1,4 +1,4 @@
-import { parseParamsToQueryString } from "../../utils/api";
+import { parseParamsToQueryString } from "../../utils/parseParamsToQueryString";
 import api from "../axiosInstance";
 
 export const QuestionAPITeacherPage = {

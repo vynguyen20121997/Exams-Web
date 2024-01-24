@@ -22,7 +22,7 @@ import UserManagementDataTable from "./components/DataTable/UserManagementDataTa
 import { UserManagementDialogAdd } from "./components/DialogAdd/UserManagementDialogAdd";
 import { UserManagementDialogDelete } from "./components/DialogDelete/UserManagementDialogDelete";
 import { UserManagementDialogEdit } from "./components/DialogEdit/UserManagementDialogEdit";
-import { CustomToastContainer } from "../../../../../utils/toast";
+import { CustomToastContainer } from "../../../../../utils/toastElement";
 import { getListUserAdminPage } from "../../../../../services/AdminPage/GetUserAPI";
 import { Pagination } from "../../../../../components/Pagination/Pagination";
 import ClassAPI from "../../../../../services/AdminPage/ClassAPI";

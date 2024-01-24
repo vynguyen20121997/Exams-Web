@@ -1,6 +1,6 @@
 export const answers = [
-  { answer: "answers1" },
-  { answer: "answers2" },
-  { answer: "answers3" },
-  { answer: "answers4" },
+  { id: 1, answer: "answers1" },
+  { id: 2, answer: "answers2" },
+  { id: 3, answer: "answers3" },
+  { id: 4, answer: "answers4" },
 ];

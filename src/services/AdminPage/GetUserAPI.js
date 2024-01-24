@@ -1,5 +1,5 @@
-import { parseParamsToQueryString } from '../../utils/api';
-import api from '../axiosInstance';
+import { parseParamsToQueryString } from "../../utils/parseParamsToQueryString";
+import api from "../axiosInstance";
 
 export const getListUserAdminPage = {
   getListUser: ({ limit = 5, page = 1, role }) => {

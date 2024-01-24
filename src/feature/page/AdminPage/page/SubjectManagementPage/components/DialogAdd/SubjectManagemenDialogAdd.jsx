@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import subjectAPI from "../../../../../../../services/AdminPage/SubjectAPI";
-import { CustomToastContainer } from "../../../../../../../utils/toast";
+import { CustomToastContainer } from "../../../../../../../utils/toastElement";
 import { addSubjectInitialValue } from "../../../../constants/constants";
 import { AddSubjectValidationSchema } from "../../../../validations/admin-page-schema";
 

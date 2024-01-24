@@ -11,6 +11,7 @@ import LoginRegisterPage from "../feature/page/StartingPage/Login_RegisterPage/L
 import ResetPassPage from "../feature/page/StartingPage/ResetPassPage/ResetPassPage";
 import StudentPage from "../feature/page/StudentPage/StudentPage";
 import DoingTestPage from "../feature/page/StudentPage/Tabs/DoingTestPage/DoingTestPage";
+import SubmitTestPage from "../feature/page/StudentPage/Tabs/DoingTestPage/SubmitTestPage";
 import CreateExamsPage from "../feature/page/TeacherPage/Tabs/TestManagement/CreateExamsPage/CreateExamsPage";
 import ExamsDetailPage from "../feature/page/TeacherPage/Tabs/TestManagement/TestDetailIPage/TestDetailIPage";
 import TeacherPage from "../feature/page/TeacherPage/TeacherPage";
@@ -86,6 +87,13 @@ const router = sentryCreateBrowserRouter([
       {
         path: PATHS.student_testing,
         element: <DoingTestPage />,
+        handle: {
+          roles: [AUTH_ROLES.STUDENT],
+        },
+      },
+      {
+        path: PATHS.student_submit_testing,
+        element: <SubmitTestPage />,
         handle: {
           roles: [AUTH_ROLES.STUDENT],
         },

@@ -17,7 +17,7 @@ import ClassManagementDataTable from "./components/DataTable/ClassManagementData
 import { ClassManagementDialogAdd } from "./components/DialogAdd/ClassManagementDialogAdd";
 import { ClassManagementDialogDelete } from "./components/DialogDelete/ClassManagementDialogDelete";
 import { ClassManagementDialogEdit } from "./components/DialogEdit/ClassManagementDialogEdit";
-import { CustomToastContainer } from "../../../../../utils/toast";
+import { CustomToastContainer } from "../../../../../utils/toastElement";
 import { toast } from "react-toastify";
 
 const ClassManagementTable = () => {

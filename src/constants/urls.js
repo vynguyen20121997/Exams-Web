@@ -16,5 +16,6 @@ export const PATHS = {
 
   // Student
   student_home: "student",
-  student_testing: "student/doing-test",
+  student_submit_testing: "student/submit-test/:id",
+  student_testing: "student/doing-test/:id",
 };

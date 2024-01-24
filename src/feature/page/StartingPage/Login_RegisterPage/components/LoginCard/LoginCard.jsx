@@ -16,6 +16,7 @@ import CustomErrorMessage from "../../../../../../components/ErrorCutomMessage/E
 import { login } from "../../../../../../redux/auth/authSlice";
 import AuthAPI from "../../../../../../services/StartingPage/AuthAPI";
 import { loginInitialValues } from "../../constants/constants";
+import LoginValidationSchema from "../../validations/login-schema";
 
 export function LoginCard({ setRegister }) {
   const [loading, setLoading] = useState(false);
@@ -27,6 +28,7 @@ export function LoginCard({ setRegister }) {
 
   const formik = useFormik({
     initialValues: loginInitialValues,
+    validationSchema: LoginValidationSchema,
     onSubmit: async (values) => {
       try {
         setLoading(true);
@@ -42,11 +44,12 @@ export function LoginCard({ setRegister }) {
       } catch (error) {
         setError(error.response.data?.message);
       } finally {
+        resetForm();
         setLoading(false);
       }
     },
   });
-  const { handleSubmit, handleChange, errors } = formik;
+  const { handleSubmit, handleChange, errors, resetForm } = formik;
 
   useEffect(() => {
     if (isAuthenticated && role) {
@@ -63,7 +66,7 @@ export function LoginCard({ setRegister }) {
           </Typography>
         </CardHeader>
 
-        {error && <p className="text-red-500 my-4">{error}</p>}
+        {error && <p className="text-red-500 mx-auto my-4">{error}</p>}
 
         <CardBody className="flex flex-col gap-4">
           {errors.email && <CustomErrorMessage content={errors.email} />}
