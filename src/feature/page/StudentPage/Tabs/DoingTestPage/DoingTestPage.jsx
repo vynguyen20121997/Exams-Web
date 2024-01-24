@@ -54,6 +54,7 @@ const DoingTestPage = () => {
       <ReviewingDoingTestPage />
       <QuestionDoingTestPage testQuestion={testQuestion} />
       <PagtinationDoingTestPage
+        testQuestion={testQuestion}
         page={page}
         onChangePagtination={onChangePagtination}
       />

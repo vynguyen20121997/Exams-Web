@@ -2,9 +2,9 @@ import React from "react";
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
-export function Pagination({ page, onChangePagtination }) {
+export function Pagination({ page, onChangePagtination, totalSize }) {
   const next = () => {
-    if (page === 10) return;
+    if (page === totalSize) return;
 
     onChangePagtination(page + 1);
   };
@@ -27,13 +27,13 @@ export function Pagination({ page, onChangePagtination }) {
       </IconButton>
       <Typography color="gray" className="font-normal">
         Page <strong className="text-gray-900">{page}</strong> of{" "}
-        <strong className="text-gray-900">10</strong>
+        <strong className="text-gray-900">{totalSize}</strong>
       </Typography>
       <IconButton
         size="sm"
         variant="outlined"
         onClick={next}
-        disabled={page === 10}
+        disabled={page === totalSize}
       >
         <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
       </IconButton>

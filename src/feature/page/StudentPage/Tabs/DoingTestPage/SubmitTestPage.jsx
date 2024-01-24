@@ -43,6 +43,7 @@ const SubmitTestPage = () => {
     assignees: test && test.assignees,
     createdBy: test && test.createdBy,
     subjectId: test && test.subject,
+    time: test && test.timeOfTheTest,
   };
 
   const onSubmitStartingTest = () => {
