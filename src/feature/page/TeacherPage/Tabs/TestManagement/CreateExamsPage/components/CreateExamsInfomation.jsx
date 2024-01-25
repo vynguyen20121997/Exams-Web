@@ -7,6 +7,7 @@ export const CreateExamsInfomation = ({
   description,
   timeOfTheTest,
   deadline,
+  startTime,
 }) => {
   return (
     <Card
@@ -44,6 +45,17 @@ export const CreateExamsInfomation = ({
             onBlur={onBlur}
             value={timeOfTheTest}
             name="timeOfTheTest"
+          />
+        </div>
+        <div className=" items-center  py-2 ">
+          <Input
+            type="datetime-local"
+            color="white"
+            label="Starting Time"
+            onChange={onChange}
+            onBlur={onBlur}
+            value={startTime}
+            name="startTime"
           />
         </div>
         <div className=" items-center  py-2 ">

@@ -43,6 +43,7 @@ function CreateExamsPage() {
         description: "",
         timeOfTheTest: "",
         deadline: "",
+        startTime: "",
         assignees: [],
         questions: [],
       }}
@@ -61,7 +62,7 @@ function CreateExamsPage() {
         <>
           <TeacherPageLayout>
             <div className="grid grid-cols-4">
-              <div>
+              <div className="col-span-1">
                 <div className="flex justify-center">
                   <Typography
                     variant="h4"
@@ -86,6 +87,7 @@ function CreateExamsPage() {
                     description={props.values.description}
                     timeOfTheTest={props.values.timeOfTheTest}
                     deadline={props.values.deadline}
+                    startTime={props.values.startTime}
                   />
                 </div>
                 <div>

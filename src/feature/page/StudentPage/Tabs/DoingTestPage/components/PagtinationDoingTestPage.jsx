@@ -5,17 +5,15 @@ import { Button } from "@material-tailwind/react";
 const PagtinationDoingTestPage = ({
   page,
   onChangePagtination,
-  testQuestion,
+  totalPages,
 }) => {
-  const totalSize = testQuestion && testQuestion.data.data.totalItem;
-
   return (
     <div className="flex justify-center">
       <div className="self-center">
         <Pagination
           page={page}
           onChangePagtination={onChangePagtination}
-          totalSize={totalSize}
+          totalSize={totalPages}
         />
       </div>
       <div className="ml-20 ">

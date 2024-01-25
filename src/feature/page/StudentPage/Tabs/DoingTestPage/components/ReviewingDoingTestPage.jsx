@@ -3,7 +3,7 @@ import { Button } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-const ReviewingDoingTestPage = () => {
+const ReviewingDoingTestPage = ({ value }) => {
   const testResourceAPI = useSelector((state) => state.test.fetchTestResources);
 
   const minutes = testResourceAPI.time;
@@ -17,13 +17,14 @@ const ReviewingDoingTestPage = () => {
   useEffect(() => {
     const interval = setInterval(tick, 60000 / minutes);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
 
   return (
     <div className="grid grid-cols-7 gap-4">
       <div>Test Name</div>
       <div className="col-span-4 self-center">
-        <ProgressBar size="lg" />
+        <ProgressBar size="lg" value={value} />
       </div>
       <div>
         <Button className="rounded-full" size="sm" color="purple">
