@@ -29,6 +29,7 @@ export function LoginCard({ setRegister }) {
   const formik = useFormik({
     initialValues: loginInitialValues,
     validationSchema: LoginValidationSchema,
+    validationOnMount: false,
     onSubmit: async (values) => {
       try {
         setLoading(true);
@@ -49,7 +50,7 @@ export function LoginCard({ setRegister }) {
       }
     },
   });
-  const { handleSubmit, handleChange, errors, resetForm } = formik;
+  const { handleSubmit, handleChange, errors, resetForm, values } = formik;
 
   useEffect(() => {
     if (isAuthenticated && role) {
@@ -59,64 +60,73 @@ export function LoginCard({ setRegister }) {
 
   return (
     <>
-      <Card className="w-96">
-        <CardHeader color="gray" className="mb-4 grid h-28 place-items-center">
-          <Typography variant="h3" color="white">
-            Sign In
-          </Typography>
-        </CardHeader>
-
-        {error && <p className="text-red-500 mx-auto my-4">{error}</p>}
-
-        <CardBody className="flex flex-col gap-4">
-          {errors.email && <CustomErrorMessage content={errors.email} />}
-
-          <Input
-            label="Email"
-            size="lg"
-            id="email"
-            name="email"
-            onChange={handleChange}
-          />
-          {errors.password && <CustomErrorMessage content={errors.password} />}
-
-          <Input
-            label="Password"
-            size="lg"
-            id="password"
-            name="password"
-            type="password"
-            onChange={handleChange}
-          />
-          <div>
-            <Link to="forgot-password">
-              <Typography variant="small">Forgot password?</Typography>
-            </Link>
-          </div>
-        </CardBody>
-
-        <CardFooter className="pt-0">
-          <Button fullWidth onClick={handleSubmit}>
-            {loading === true && (
-              <Spinner color="purple" className="h-6 w-6 ml-[47%]" />
-            )}
-            {loading === false && <h2>Sign In</h2>}
-          </Button>
-          <Typography variant="small" className="mt-6 flex justify-center">
-            Don&apos;t have an account?
-            <Typography
-              as="a"
-              href="#signup"
-              variant="small"
-              color="blue-gray"
-              className="ml-1 font-bold"
-              onClick={() => setRegister(true)}
-            >
-              Sign up
+      <form onSubmit={handleSubmit}>
+        <Card className="w-96">
+          <CardHeader
+            color="gray"
+            className="mb-4 grid h-28 place-items-center"
+          >
+            <Typography variant="h3" color="white">
+              Sign In
             </Typography>
-          </Typography>
-        </CardFooter>
-      </Card>
+          </CardHeader>
+
+          {error && <p className="text-red-500 mx-auto my-4">{error}</p>}
+
+          <CardBody className="flex flex-col gap-4">
+            {errors.email && <CustomErrorMessage content={errors.email} />}
+
+            <Input
+              label="Email"
+              size="lg"
+              id="email"
+              name="email"
+              onChange={handleChange}
+              value={values.email}
+            />
+            {errors.password && (
+              <CustomErrorMessage content={errors.password} />
+            )}
+
+            <Input
+              label="Password"
+              size="lg"
+              id="password"
+              name="password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+            />
+            <div>
+              <Link to="forgot-password">
+                <Typography variant="small">Forgot password?</Typography>
+              </Link>
+            </div>
+          </CardBody>
+
+          <CardFooter className="pt-0">
+            <Button fullWidth type="submit" onClick={handleSubmit}>
+              {loading === true && (
+                <Spinner color="purple" className="h-6 w-6 ml-[47%]" />
+              )}
+              {loading === false && <h2>Sign In</h2>}
+            </Button>
+            <Typography variant="small" className="mt-6 flex justify-center">
+              Don&apos;t have an account?
+              <Typography
+                as="a"
+                href="#signup"
+                variant="small"
+                color="blue-gray"
+                className="ml-1 font-bold"
+                onClick={() => setRegister(true)}
+              >
+                Sign up
+              </Typography>
+            </Typography>
+          </CardFooter>
+        </Card>
+      </form>
     </>
   );
 }

@@ -12,7 +12,6 @@ import { testTopicData } from "../../../../../tests/data/TeacherPage/subjectData
 import { useEffect, useState } from "react";
 
 export const TestCard = ({ allTestList }) => {
-  const topicData = testTopicData.topics;
   const navigate = useNavigate();
   const [testData, setTestData] = useState([]);
 
@@ -22,7 +21,6 @@ export const TestCard = ({ allTestList }) => {
       setTestData(testsDataList);
     }
   }, [allTestList]);
-  console.log(allTestList);
   console.log(testData);
 
   return (
@@ -44,10 +42,13 @@ export const TestCard = ({ allTestList }) => {
                   color="blue-gray"
                   className="font-small"
                 >
-                  {item.topic}
+                  {item.title}
                 </Typography>
                 <Typography variant="small" color="gray" className="font-small">
-                  lorem islum dolor sit amet, consectetur
+                  {item.description}
+                </Typography>
+                <Typography variant="small" color="gray" className="font-small">
+                  {item.count}
                 </Typography>
               </div>
             </CardBody>

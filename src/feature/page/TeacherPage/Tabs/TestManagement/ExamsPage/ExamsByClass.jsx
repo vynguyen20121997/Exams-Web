@@ -3,7 +3,12 @@ import React from "react";
 import { Pagination } from "../../../../../../components/Pagination/Pagination";
 import { TestCard } from "../../../components/CardHolder/Card";
 
-const ExamsByClass = ({ allTestList }) => {
+const ExamsByClass = ({
+  allTestList,
+  page,
+  onChangePagtination,
+  totalPage,
+}) => {
   return (
     <>
       <div>
@@ -15,7 +20,11 @@ const ExamsByClass = ({ allTestList }) => {
         <TestCard allTestList={allTestList} />
       </div>
       <div className="float-right py-6">
-        <Pagination />
+        <Pagination
+          page={page}
+          onChangePagtination={onChangePagtination}
+          totalSize={totalPage}
+        />
       </div>
     </>
   );

@@ -10,9 +10,9 @@ const testQuestionAPI = {
     const url = `/tests?${queryParams}`;
     return api.get(url, body);
   },
-  questionTest: ({ page, body }) => {
+  questionTest: ({ limit, page, body }) => {
     const queryParams = parseParamsToQueryString({
-      limit: 1,
+      limit,
       page,
     });
     const url = `/questions/test?${queryParams}`;

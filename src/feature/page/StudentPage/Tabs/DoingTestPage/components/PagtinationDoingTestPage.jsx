@@ -6,6 +6,7 @@ const PagtinationDoingTestPage = ({
   page,
   onChangePagtination,
   totalPages,
+  Onfinish,
 }) => {
   return (
     <div className="flex justify-center">
@@ -17,7 +18,7 @@ const PagtinationDoingTestPage = ({
         />
       </div>
       <div className="ml-20 ">
-        <Button className="rounded-full" size="md">
+        <Button className="rounded-full" size="md" onClick={Onfinish}>
           Finish
         </Button>
       </div>

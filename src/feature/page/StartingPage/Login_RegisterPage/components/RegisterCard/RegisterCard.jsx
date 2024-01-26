@@ -55,7 +55,7 @@ export function RegisterCard({ setRegister }) {
         } finally {
           resetForm();
           setLoading(false);
-          toast("Class created successfully!");
+          toast("Registered successfully!");
           setRegister(false);
         }
       }
@@ -76,7 +76,7 @@ export function RegisterCard({ setRegister }) {
           setError(error.response.data?.message);
         } finally {
           setLoading(false);
-          toast("Register successfully!");
+          toast("Registered successfully!");
           setRegister(false);
         }
       }

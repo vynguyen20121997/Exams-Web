@@ -20,6 +20,10 @@ const testAPI = {
     const url = "/resultTests";
     return api.post(url, body);
   },
+  updateResults: (body) => {
+    const url = "/resultTests";
+    return api.put(url, body);
+  },
 };
 
 export default testAPI;

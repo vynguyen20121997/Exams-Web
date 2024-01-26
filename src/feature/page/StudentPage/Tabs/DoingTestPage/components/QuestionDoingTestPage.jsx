@@ -8,14 +8,12 @@ import {
 } from "@material-tailwind/react";
 import { useCallback, useEffect, useState } from "react";
 
-const QuestionDoingTestPage = ({ testQuestion, onChoosenAnswer }) => {
+const QuestionDoingTestPage = ({ testQuestion, onChoosenAnswer, onNext }) => {
   const [testQuestionData, setTestQuestionData] = useState([]);
 
   useEffect(() => {
     if (testQuestion) {
-      const questionListData =
-        (testQuestion && testQuestion.data.data[0]) || [];
-      setTestQuestionData(questionListData);
+      setTestQuestionData(testQuestion || {});
     }
   }, [testQuestion]);
 
@@ -24,22 +22,35 @@ const QuestionDoingTestPage = ({ testQuestion, onChoosenAnswer }) => {
       const choosenAsnwer =
         testQuestionData &&
         testQuestionData.answers?.filter((e) => e.choosen === true);
+
       if (choosenAsnwer.length > 0) {
-        return null;
+        setTestQuestionData((prevAnswerData) => ({
+          ...prevAnswerData,
+          answers: prevAnswerData.answers.map((el) => {
+            if (el._id === _id) {
+              return { ...el, choosen: !el.choosen };
+            } else if (el.choosen === false || !el.hasOwnProperty("choosen")) {
+              return el;
+            } else {
+              return { ...el, choosen: !el.choosen };
+            }
+          }),
+        }));
+      } else {
+        setTestQuestionData((prevAnswerData) => ({
+          ...prevAnswerData,
+          answers: prevAnswerData.answers.map((el) =>
+            el._id === _id ? { ...el, choosen: !el.choosen } : el
+          ),
+        }));
       }
-      setTestQuestionData((prevAnswerData) => ({
-        ...prevAnswerData,
-        answers: prevAnswerData.answers.map((el) =>
-          el._id === _id ? { ...el, choosen: !el.choosen } : el
-        ),
-      }));
     },
 
     [testQuestionData]
   );
 
   useEffect(() => {
-    onChoosenAnswer(testQuestionData.answers);
+    onChoosenAnswer(testQuestionData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testQuestionData]);
 

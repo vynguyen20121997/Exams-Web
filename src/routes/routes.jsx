@@ -17,6 +17,7 @@ import ExamsDetailPage from "../feature/page/TeacherPage/Tabs/TestManagement/Tes
 import TeacherPage from "../feature/page/TeacherPage/TeacherPage";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PublicRoute from "./PublicRoute/PublicRoute";
+import WebExamsLogo from "../assets/Logo/WebExamsLogo";
 
 const sentryCreateBrowserRouter = wrapCreateBrowserRouter(createBrowserRouter);
 const router = sentryCreateBrowserRouter([
@@ -29,6 +30,10 @@ const router = sentryCreateBrowserRouter([
       {
         path: PATHS.reset_password,
         element: <ResetPassPage />,
+      },
+      {
+        path: "he",
+        element: <WebExamsLogo />,
       },
     ],
   },

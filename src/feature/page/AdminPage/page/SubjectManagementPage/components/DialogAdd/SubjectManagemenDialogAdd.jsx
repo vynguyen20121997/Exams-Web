@@ -16,6 +16,7 @@ import subjectAPI from "../../../../../../../services/AdminPage/SubjectAPI";
 import { CustomToastContainer } from "../../../../../../../utils/toastElement";
 import { addSubjectInitialValue } from "../../../../constants/constants";
 import { AddSubjectValidationSchema } from "../../../../validations/admin-page-schema";
+import handleError from "../../../../../../../components/HandleError/HandleError";
 
 export const SubjectManagemenDialogAdd = ({ openAdd, handleOpenAdd }) => {
   const [loading, setLoading] = useState(false);
@@ -32,14 +33,14 @@ export const SubjectManagemenDialogAdd = ({ openAdd, handleOpenAdd }) => {
       try {
         setLoading(true);
         await subjectAPI.createSubject(payload);
-      } catch (error) {
-        console.log("response", error);
-      } finally {
-        setLoading(false);
         resetForm();
         handleOpenAdd();
         dispatch(isCreate());
         toast("Subject created successfully!");
+      } catch (error) {
+        handleError(error);
+      } finally {
+        setLoading(false);
       }
     },
   });

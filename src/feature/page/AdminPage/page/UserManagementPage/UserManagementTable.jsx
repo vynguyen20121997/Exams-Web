@@ -34,6 +34,7 @@ import {
   USER_ROLES,
 } from "./constants/constants";
 import { isCreate, isDelete } from "../../../../../redux/admin/adminSlice";
+import GlobalLoading from "../../../../../components/GlobalLoading/GlobalLoading";
 
 const UserManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -54,14 +55,14 @@ const UserManagementTable = () => {
     setActiveTab(value);
   };
 
-  const { data: userList } = useQuery(
+  const { data: userList, isLoading: userListListLoading } = useQuery(
     ["userList", isDeleteState, isCreateState, page],
     () => getListUserAdminPage.getListUser({ page }),
     { fetchPolicy: "network-only" },
     { enabled: activeTab === USER_ROLES.ALL }
   );
 
-  const { data: studentList } = useQuery(
+  const { data: studentList, isLoading: studentListLoading } = useQuery(
     ["studentList", isDeleteState, isCreateState, page],
     () =>
       getListUserAdminPage.getListUser({
@@ -71,7 +72,7 @@ const UserManagementTable = () => {
     { enabled: activeTab === USER_ROLES.STUDENT }
   );
 
-  const { data: teacherList } = useQuery(
+  const { data: teacherList, isLoading: teacherListLoading } = useQuery(
     ["teacherList", isDeleteState, isCreateState, page],
     () =>
       getListUserAdminPage.getListUser({
@@ -81,13 +82,17 @@ const UserManagementTable = () => {
     { enabled: activeTab === USER_ROLES.TEACHER }
   );
 
-  const { data: classList } = useQuery("class", () => ClassAPI.classes(), {
-    refetchOnMount: false,
-  });
+  const { data: classList } = useQuery(
+    "class",
+    () => ClassAPI.classes({ limit: 20, page: 1 }),
+    {
+      refetchOnMount: false,
+    }
+  );
 
   const { data: subjectList } = useQuery(
     "subject",
-    () => subjectAPI.subjects(),
+    () => subjectAPI.subjects({ limit: 20, page: 1 }),
     { refetchOnMount: false }
   );
 
@@ -139,6 +144,10 @@ const UserManagementTable = () => {
 
   return (
     <>
+      {(userListListLoading || studentListLoading || teacherListLoading) && (
+        <GlobalLoading />
+      )}
+
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-4 flex items-center justify-between gap-8">
@@ -216,9 +225,7 @@ const UserManagementTable = () => {
             variant="small"
             color="blue-gray-200"
             className="font-normal"
-          >
-            {/* LoremLorem ipsum dolor sit amet, consectetur adipiscing elit. */}
-          </Typography>
+          ></Typography>
           <div>
             <Pagination
               page={page}

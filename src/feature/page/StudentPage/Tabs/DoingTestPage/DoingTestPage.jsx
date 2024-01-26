@@ -1,99 +1,132 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import testQuestionAPI from "../../../../../services/StudentPage/TestQuestionAPI";
 import LayoutDoingTestPage from "./components/LayoutDoingTestPage";
 import PagtinationDoingTestPage from "./components/PagtinationDoingTestPage";
 import QuestionDoingTestPage from "./components/QuestionDoingTestPage";
 import ReviewingDoingTestPage from "./components/ReviewingDoingTestPage";
+import { end } from "../../../../../redux/test/testSlice";
+import { useParams } from "react-router-dom";
+import testAPI from "../../../../../services/StudentPage/TestAPI";
 
 const DoingTestPage = () => {
-  // const params = useParams();
+  const params = useParams();
   const testResourceAPI = useSelector((state) => state.test.fetchTestResources);
   const [page, setPage] = useState(1);
   const [choosenAnswer, setChoosenAnswer] = useState([]);
-  const [isMovingForward, setIsMovingFoward] = useState(true);
-  const [remindNumber, setRemindNumber] = useState([1]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
   const [allDataTestQuesstion, setAllDataTestQuestion] = useState([]);
+  const [onNext, setOnNext] = useState(false);
+  const dispatch = useDispatch();
+  const testStatusAPI = useSelector((state) => state.test.isDoingTest);
 
-  // const payloadGetResult = {
-  //   testId: params.id,
-  //   sendToId: testResourceAPI.createdBy,
-  //   subjectId: testResourceAPI.subjectId,
-  // };
+  const payloadCreateResult = {
+    testId: params.id,
+    sendToId: testResourceAPI.createdBy,
+    subjectId: testResourceAPI.subjectId,
+  };
 
   const payloadGetQuestion = {
     QuestionIds: testResourceAPI.QuestionIds,
     assignees: testResourceAPI.assignees,
   };
 
+  const payloadUpdateResult = {
+    testId: params.id,
+    answers: choosenAnswer,
+  };
+
   const { data: testQuestion } = useQuery(
-    ["testQuestion", page],
+    "testQuestion",
     () =>
-      testQuestionAPI.questionTest({ page: page, body: payloadGetQuestion }),
+      testQuestionAPI.questionTest({ limit: 100, body: payloadGetQuestion }),
     {
       fetchPolicy: "network-only",
     },
     {
-      refetchOnChange: true,
+      refetchOnChange: false,
     }
   );
 
   useEffect(() => {
-    if (isMovingForward && testQuestion) {
-      setAllDataTestQuestion([...allDataTestQuesstion, testQuestion.data.data]);
+    if (testQuestion) {
+      setAllDataTestQuestion(testQuestion && testQuestion.data.data);
+      setCurrentQuestion(testQuestion && testQuestion.data.data[0]);
     }
   }, [testQuestion]);
 
-  // const { result } = useQuery(
-  //   "result",
-  //   () => testAPI.getResults(payloadGetResult),
-  //   {
-  //     fetchPolicy: "network-only",
-  //   }
-  // );
+  const createTestResult = async () => {
+    try {
+      const response = await testAPI.getResults(payloadCreateResult);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("createTestResult");
+    createTestResult();
+  }, []);
 
   const onChangePagtination = useCallback(
     (number) => {
       setPage(number);
-      const isNumberExist = remindNumber.includes(number);
-      if (isNumberExist) {
-        setIsMovingFoward(false);
-      } else {
-        setIsMovingFoward(true);
-        setRemindNumber([...remindNumber, number]);
-      }
-      console.log("isNumberExist", isNumberExist);
+      setCurrentIndex(number - 1);
+      setOnNext(!onNext);
     },
-
     [page]
   );
 
-  console.log("allDataTestQuesstion", allDataTestQuesstion);
-
-  console.log("isMovingForward", isMovingForward);
-
-  const totalPages = testQuestion && testQuestion.data.pagination;
-
-  // useEffect(() => {
-  //   const progressOftheTest = page/totalPages
-  // }, [])
+  const totalPages = testQuestion && testQuestion.data.totalItem;
 
   const onChoosenAnswer = useCallback((answersData) => {
+    const answers = [...answersData];
+
     if (answersData !== undefined) {
-      const arrayOfAnswer = [];
       const updateChoonsenAnswer =
-        (answersData && answersData.find((e) => e.choosen === true)) || [];
-      arrayOfAnswer.push(updateChoonsenAnswer);
-      setChoosenAnswer(arrayOfAnswer);
+        answersData &&
+        answersData.answers?.findIndex((e) => e.choosen === true);
+
+      if (updateChoonsenAnswer !== -1) {
+        answers[updateChoonsenAnswer] = {
+          answerId: answersData[updateChoonsenAnswer]._id,
+          questionId: answersData._id,
+        };
+
+        setChoosenAnswer(answers);
+      }
     }
   }, []);
 
+  const filterQuestionByIndex = () => {
+    const question = allDataTestQuesstion.find(
+      (e, index) => index === currentIndex
+    );
+    setCurrentQuestion(question);
+  };
+
+  useEffect(() => {
+    filterQuestionByIndex();
+  }, [page, currentIndex]);
+
+  const Onfinish = async () => {
+    dispatch(end());
+    try {
+      const response = await testAPI.updateResults(payloadUpdateResult);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  console.log("choosenAnswer", choosenAnswer);
   return (
     <LayoutDoingTestPage>
       <ReviewingDoingTestPage value={69} />
+
       <QuestionDoingTestPage
-        testQuestion={testQuestion}
+        onNext={onNext}
+        testQuestion={currentQuestion}
         onChoosenAnswer={onChoosenAnswer}
       />
       <PagtinationDoingTestPage
@@ -101,6 +134,7 @@ const DoingTestPage = () => {
         page={page}
         totalPages={totalPages}
         onChangePagtination={onChangePagtination}
+        Onfinish={Onfinish}
       />
     </LayoutDoingTestPage>
   );
