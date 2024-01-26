@@ -9,6 +9,7 @@ import ReviewingDoingTestPage from "./components/ReviewingDoingTestPage";
 import { end } from "../../../../../redux/test/testSlice";
 import { useParams } from "react-router-dom";
 import testAPI from "../../../../../services/StudentPage/TestAPI";
+import { NotificationDialog } from "../../../../../components/MessDialog/MessDialog";
 
 const DoingTestPage = () => {
   const params = useParams();
@@ -20,6 +21,10 @@ const DoingTestPage = () => {
   const [allDataTestQuesstion, setAllDataTestQuestion] = useState([]);
   const [onNext, setOnNext] = useState(false);
   const dispatch = useDispatch();
+  const [idQuestion, setIdQuestion] = useState(0);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [score, setScore] = useState(0);
+  const handleOpenDialog = () => setOpenDialog(!openDialog);
   const testStatusAPI = useSelector((state) => state.test.isDoingTest);
 
   const payloadCreateResult = {
@@ -68,6 +73,7 @@ const DoingTestPage = () => {
   useEffect(() => {
     console.log("createTestResult");
     createTestResult();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onChangePagtination = useCallback(
@@ -76,28 +82,42 @@ const DoingTestPage = () => {
       setCurrentIndex(number - 1);
       setOnNext(!onNext);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [page]
   );
 
   const totalPages = testQuestion && testQuestion.data.totalItem;
 
   const onChoosenAnswer = useCallback((answersData) => {
-    const answers = [...answersData];
-
     if (answersData !== undefined) {
       const updateChoonsenAnswer =
-        answersData &&
-        answersData.answers?.findIndex((e) => e.choosen === true);
+        answersData && answersData.answers?.find((e) => e.choosen === true);
+      setIdQuestion(answersData._id);
 
-      if (updateChoonsenAnswer !== -1) {
-        answers[updateChoonsenAnswer] = {
-          answerId: answersData[updateChoonsenAnswer]._id,
-          questionId: answersData._id,
-        };
-
-        setChoosenAnswer(answers);
+      if (updateChoonsenAnswer !== undefined) {
+        setChoosenAnswer((prevChoosenAnswer) => {
+          if (idQuestion.length > 0 && answersData._id === idQuestion) {
+            const test2 = {
+              answerId: updateChoonsenAnswer._id,
+              questionId: answersData._id,
+            };
+            const test = choosenAnswer
+              .map((answer) => answer.questionId !== idQuestion)
+              .push(test2);
+            return [test];
+          } else {
+            return [
+              ...prevChoosenAnswer,
+              {
+                answerId: updateChoonsenAnswer._id,
+                questionId: answersData._id,
+              },
+            ];
+          }
+        });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filterQuestionByIndex = () => {
@@ -106,23 +126,30 @@ const DoingTestPage = () => {
     );
     setCurrentQuestion(question);
   };
+  const countProgress = (Number(choosenAnswer.length) / totalPages) * 100;
 
   useEffect(() => {
     filterQuestionByIndex();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, currentIndex]);
 
   const Onfinish = async () => {
     dispatch(end());
     try {
       const response = await testAPI.updateResults(payloadUpdateResult);
+      console.log("response", response);
+      if (response) {
+        setScore(response && response.data.result);
+        handleOpenDialog();
+      }
     } catch (error) {
       console.log("error", error);
     }
   };
-  console.log("choosenAnswer", choosenAnswer);
+
   return (
     <LayoutDoingTestPage>
-      <ReviewingDoingTestPage value={69} />
+      <ReviewingDoingTestPage value={countProgress} />
 
       <QuestionDoingTestPage
         onNext={onNext}
@@ -132,9 +159,15 @@ const DoingTestPage = () => {
       <PagtinationDoingTestPage
         testQuestion={testQuestion}
         page={page}
+        s
         totalPages={totalPages}
         onChangePagtination={onChangePagtination}
         Onfinish={Onfinish}
+      />
+      <NotificationDialog
+        open={openDialog}
+        handleOpen={handleOpenDialog}
+        score={score}
       />
     </LayoutDoingTestPage>
   );
