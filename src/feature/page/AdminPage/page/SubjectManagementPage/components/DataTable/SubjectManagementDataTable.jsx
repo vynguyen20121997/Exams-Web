@@ -1,13 +1,10 @@
 import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
-import { PencilIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/solid";
 import {
   Avatar,
   Chip,
   IconButton,
   Menu,
-  MenuHandler,
-  MenuItem,
-  MenuList,
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
@@ -107,17 +104,12 @@ const SubjectManagementDataTable = ({
                 <td className={classes}>
                   <Tooltip content="Edit Subject">
                     <Menu>
-                      <MenuHandler>
-                        <IconButton>
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </MenuHandler>
-                      <MenuList>
-                        <MenuItem onClick={handleOpenEdit}>Edit</MenuItem>
-                        <MenuItem onClick={() => handleDelete(_id)}>
-                          <>Delete</>
-                        </MenuItem>
-                      </MenuList>
+                      <IconButton>
+                        <TrashIcon
+                          onClick={() => handleDelete(_id)}
+                          className="h-4 w-4"
+                        />
+                      </IconButton>
                     </Menu>
                   </Tooltip>
                 </td>

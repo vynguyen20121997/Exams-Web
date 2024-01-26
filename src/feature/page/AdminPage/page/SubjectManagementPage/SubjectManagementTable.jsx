@@ -9,7 +9,7 @@ import {
   Input,
   Typography,
 } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import subjectAPI from "../../../../../services/AdminPage/SubjectAPI";
@@ -18,6 +18,14 @@ import SubjectManagementDataTable from "./components/DataTable/SubjectManagement
 import { SubjectManagemenDialogAdd } from "./components/DialogAdd/SubjectManagemenDialogAdd";
 import { SubjectManagementDialogDelete } from "./components/DialogDelete/SubjectManagementDialogDelete";
 import { SubjectManagementDialogEdit } from "./components/DialogEdit/SubjectManagementDialogEdit";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  DEFAULT_PAGE,
+  DEFAULT_TOTAL_PAGE,
+} from "../UserManagementPage/constants/constants";
+import { isDelete } from "../../../../../redux/admin/adminSlice";
+import { Pagination } from "../../../../../components/Pagination/Pagination";
+import handleError from "../../../../../components/HandleError/HandleError";
 
 const SubjectManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -25,17 +33,35 @@ const SubjectManagementTable = () => {
   const [openAdd, setOpenAdd] = useState(false);
   const [dataTable, setDataTable] = useState([]);
   const [selectedId, setSelectedId] = useState(0);
+  const [page, setPage] = useState(DEFAULT_PAGE);
+  const [totalPage, setTotalPage] = useState(DEFAULT_TOTAL_PAGE);
+  const isDeleteState = useSelector((state) => state.admin.isDelete);
+  const isCreateState = useSelector((state) => state.admin.isCreate);
+  const dispatch = useDispatch();
+  const [error, setError] = useState("");
 
   const { data: subjectList, loading: subjectListLoading } = useQuery(
-    "subjectList",
-    () => subjectAPI.subjects(),
+    ["subjectList", page, isDeleteState, isCreateState],
+    () => subjectAPI.subjects({ limit: 5, page: page }),
     { fetchPolicy: "network-only" }
   );
 
   useEffect(() => {
     if (subjectList) {
-      setDataTable(subjectList.data.data);
+      setDataTable(subjectList && subjectList.data.data);
     }
+  }, [subjectList]);
+
+  const onChangePagtination = useCallback(
+    (number) => {
+      setPage(number);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [page]
+  );
+
+  useEffect(() => {
+    setTotalPage(subjectList && subjectList.data.pagination);
   }, [subjectList]);
 
   const handleOpenDelete = (id) => {
@@ -45,13 +71,14 @@ const SubjectManagementTable = () => {
 
   const handleDelete = async () => {
     const id = String(selectedId);
-    console.log("id", id);
     try {
       await subjectAPI.deleteSubject(id);
     } catch (error) {
-      console.log(error);
+      setError(error.response.data?.message);
+      return handleError(error);
     } finally {
       setOpenDelete(false);
+      dispatch(isDelete());
       toast("Subject deleted successfully!");
     }
   };
@@ -117,16 +144,19 @@ const SubjectManagementTable = () => {
         </CardBody>
 
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Page 1 of 10
+          <Typography
+            variant="small"
+            color="blue-gray-200"
+            className="font-normal"
+          >
+            {/* LoremLorem ipsum dolor sit amet, consectetur adipiscing elit. */}
           </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              Previous
-            </Button>
-            <Button variant="outlined" size="sm">
-              Next
-            </Button>
+          <div>
+            <Pagination
+              page={page}
+              onChangePagtination={onChangePagtination}
+              totalSize={totalPage}
+            />
           </div>
         </CardFooter>
       </Card>

@@ -14,7 +14,6 @@ export function Pagination({ page, onChangePagtination, totalSize }) {
 
     onChangePagtination(page - 1);
   };
-
   return (
     <div className="flex items-center gap-8">
       <IconButton

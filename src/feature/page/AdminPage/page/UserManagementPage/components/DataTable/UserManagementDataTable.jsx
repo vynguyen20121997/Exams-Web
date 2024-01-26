@@ -43,7 +43,18 @@ const UserManagementDataTable = ({
       </thead>
       <tbody>
         {UserTableData?.map(
-          ({ name, email, role, online, createdAt, username, _id }, index) => {
+          (
+            {
+              name,
+              email,
+              role,
+              online = Math.random() >= 0.5 ? "Active" : "Inactive",
+              createdAt,
+              username,
+              _id,
+            },
+            index
+          ) => {
             const isLast = index === UserTableData.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 

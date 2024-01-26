@@ -1,53 +1,69 @@
 import {
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Checkbox,
   List,
   ListItem,
-  Typography,
 } from "@material-tailwind/react";
 import { useCallback, useEffect, useState } from "react";
 
-const QuestionDoingTestPage = ({ testQuestion }) => {
-  const [answerData, setAnswerData] = useState([]);
+const QuestionDoingTestPage = ({ testQuestion, onChoosenAnswer, onNext }) => {
+  const [testQuestionData, setTestQuestionData] = useState([]);
 
   useEffect(() => {
     if (testQuestion) {
-      const questionListData = testQuestion?.data.data[0] || [];
-      setAnswerData(questionListData);
+      setTestQuestionData(testQuestion || {});
     }
   }, [testQuestion]);
 
   const onChangeSelected = useCallback(
     (_id) => {
       const choosenAsnwer =
-        answerData && answerData.answers?.filter((e) => e.choosen === true);
+        testQuestionData &&
+        testQuestionData.answers?.filter((e) => e.choosen === true);
+
       if (choosenAsnwer.length > 0) {
-        return null;
+        setTestQuestionData((prevAnswerData) => ({
+          ...prevAnswerData,
+          answers: prevAnswerData.answers.map((el) => {
+            if (el._id === _id) {
+              return { ...el, choosen: !el.choosen };
+            } else if (el.choosen === false || !el.hasOwnProperty("choosen")) {
+              return el;
+            } else {
+              return { ...el, choosen: !el.choosen };
+            }
+          }),
+        }));
+      } else {
+        setTestQuestionData((prevAnswerData) => ({
+          ...prevAnswerData,
+          answers: prevAnswerData.answers.map((el) =>
+            el._id === _id ? { ...el, choosen: !el.choosen } : el
+          ),
+        }));
       }
-      setAnswerData((prevAnswerData) => ({
-        ...prevAnswerData,
-        answers: prevAnswerData.answers.map((el) =>
-          el._id === _id ? { ...el, choosen: !el.choosen } : el
-        ),
-      }));
     },
-    [answerData]
+
+    [testQuestionData]
   );
-  console.log(answerData);
+
+  useEffect(() => {
+    onChoosenAnswer(testQuestionData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [testQuestionData]);
 
   return (
     <div className="px-14 py-14 bg-gray-100	rounded-lg my-10">
       <Card className="w-full">
         <CardHeader>
-          {answerData && answerData.questionContent?.toUpperCase()}
+          {testQuestionData && testQuestionData.questionContent?.toUpperCase()}
         </CardHeader>
         <CardBody>
           <List className="w-full">
-            {answerData &&
-              answerData.answers?.map((item) => {
+            {testQuestionData &&
+              testQuestionData.answers?.map((item) => {
                 const unChoosenStyle =
                   "text-sm font-normal text-blue-gray-700 hover:bg-purple-50 hover:text-black focus:bg-purple-50 focus:text-black";
                 const choosenStyle =

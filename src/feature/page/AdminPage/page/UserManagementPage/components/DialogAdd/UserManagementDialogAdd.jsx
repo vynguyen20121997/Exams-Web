@@ -10,14 +10,13 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
 import { toast } from "react-toastify";
-import ClassAPI from "../../../../../../../services/AdminPage/ClassAPI";
-import subjectAPI from "../../../../../../../services/AdminPage/SubjectAPI";
 import AuthAPI from "../../../../../../../services/StartingPage/AuthAPI";
+import { CustomToastContainer } from "../../../../../../../utils/toastElement";
 import { AddUserInitialValues } from "../../../../constants/constants";
 import { AddUserValidationSchema } from "../../../../validations/admin-page-schema";
-import { CustomToastContainer } from "../../../../../../../utils/toastElement";
+import { useDispatch, useSelector } from "react-redux";
+import { isCreate } from "../../../../../../../redux/admin/adminSlice";
 
 export const UserManagementDialogAdd = ({
   openAdd,
@@ -26,7 +25,7 @@ export const UserManagementDialogAdd = ({
   subjectList,
 }) => {
   const [loading, setLoading] = useState(false);
-
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: AddUserInitialValues,
     validationSchema: AddUserValidationSchema,
@@ -47,6 +46,8 @@ export const UserManagementDialogAdd = ({
         } catch (error) {
         } finally {
           resetForm();
+          handleOpenAdd();
+          dispatch(isCreate());
           setLoading(false);
           toast("User created successfully!");
         }
@@ -63,11 +64,13 @@ export const UserManagementDialogAdd = ({
         try {
           setLoading(true);
           await AuthAPI.register(payLoad);
+          resetForm();
         } catch (error) {
         } finally {
           resetForm();
-          setLoading(false);
           handleOpenAdd();
+          dispatch(isCreate());
+          setLoading(false);
           toast("User created successfully!");
         }
       }

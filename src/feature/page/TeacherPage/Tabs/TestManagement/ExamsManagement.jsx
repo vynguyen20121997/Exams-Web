@@ -1,5 +1,5 @@
 import { Button, Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FilterExams from "./ExamsPage/components/FilterExams";
 import ExamsByClass from "./ExamsPage/ExamsByClass";
@@ -11,12 +11,24 @@ const ExamsManagement = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(DEFAULT_PAGE);
   const { data: testsData } = useQuery("tests", () => testAPI.tests(page));
-
+  const [totalPage, setTotalPage] = useState(0);
   const { data: allTestList } = useQuery(
     "allTestList",
     () => testAPI.tests({ limit: 5, page: 1 }),
     { fetchPolicy: "network-only" }
   );
+
+  const onChangePagtination = useCallback(
+    (number) => {
+      setPage(number);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [page]
+  );
+
+  useEffect(() => {
+    setTotalPage(testsData && testsData.data.pagination);
+  }, [testsData]);
 
   return (
     <>
@@ -41,7 +53,12 @@ const ExamsManagement = () => {
 
         <div className="min-h-[420px] overflow-auto	 max-h-[600px]	">
           <div className="h-[420px]">
-            <ExamsByClass allTestList={allTestList} />
+            <ExamsByClass
+              allTestList={allTestList}
+              page={page}
+              onChangePagtination={onChangePagtination}
+              totalSize={totalPage}
+            />
           </div>
         </div>
       </div>

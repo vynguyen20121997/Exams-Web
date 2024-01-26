@@ -55,7 +55,7 @@ export function RegisterCard({ setRegister }) {
         } finally {
           resetForm();
           setLoading(false);
-          toast("Class created successfully!");
+          toast("Registered successfully!");
           setRegister(false);
         }
       }
@@ -74,17 +74,10 @@ export function RegisterCard({ setRegister }) {
           await AuthAPI.register(payLoad);
         } catch (error) {
           setError(error.response.data?.message);
-          console.log(error);
         } finally {
-          if (error.code === "ERR_BAD_REQUEST") {
-            console.log(error);
-            console.log(error);
-            setLoading(loading);
-          } else {
-            setLoading(false);
-            toast("Register successfully!");
-            setRegister(false);
-          }
+          setLoading(false);
+          toast("Registered successfully!");
+          setRegister(false);
         }
       }
     },

@@ -1,5 +1,7 @@
 import { Progress } from "@material-tailwind/react";
 
-export function ProgressBar({ size }) {
-  return <Progress size={size} value={50} label="Completed" color="purple" />;
+export function ProgressBar({ size, value }) {
+  return (
+    <Progress size={size} value={value} label="Completed" color="purple" />
+  );
 }

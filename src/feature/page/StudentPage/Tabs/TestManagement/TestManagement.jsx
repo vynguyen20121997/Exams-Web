@@ -8,7 +8,7 @@ import testAPI from "../../../../../services/StudentPage/TestAPI";
 const TestManagement = () => {
   const { data: studentAllTestList } = useQuery(
     "studentTestList",
-    () => testAPI.tests({ limit: 1, page: 1 }),
+    () => testAPI.tests({ limit: 5, page: 1 }),
     {
       fetchPolicy: "network-only",
     }

@@ -12,46 +12,58 @@ import {
   TabsHeader,
   Typography,
 } from "@material-tailwind/react";
-import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 
+import { useDispatch, useSelector } from "react-redux";
+import { Pagination } from "../../../../../components/Pagination/Pagination";
+import ClassAPI from "../../../../../services/AdminPage/ClassAPI";
+import { getListUserAdminPage } from "../../../../../services/AdminPage/GetUserAPI";
+import subjectAPI from "../../../../../services/AdminPage/SubjectAPI";
 import { UserAPI } from "../../../../../services/AdminPage/UserAPI";
+import { CustomToastContainer } from "../../../../../utils/toastElement";
 import { TABS } from "../../constants/constants";
 import UserManagementDataTable from "./components/DataTable/UserManagementDataTable";
 import { UserManagementDialogAdd } from "./components/DialogAdd/UserManagementDialogAdd";
 import { UserManagementDialogDelete } from "./components/DialogDelete/UserManagementDialogDelete";
 import { UserManagementDialogEdit } from "./components/DialogEdit/UserManagementDialogEdit";
-import { CustomToastContainer } from "../../../../../utils/toastElement";
-import { getListUserAdminPage } from "../../../../../services/AdminPage/GetUserAPI";
-import { Pagination } from "../../../../../components/Pagination/Pagination";
-import ClassAPI from "../../../../../services/AdminPage/ClassAPI";
-import subjectAPI from "../../../../../services/AdminPage/SubjectAPI";
-import { DEFAULT_PAGE, USER_ROLES } from "./constants/constants";
+import {
+  DEFAULT_PAGE,
+  DEFAULT_TOTAL_PAGE,
+  USER_ROLES,
+} from "./constants/constants";
+import { isCreate, isDelete } from "../../../../../redux/admin/adminSlice";
+import GlobalLoading from "../../../../../components/GlobalLoading/GlobalLoading";
 
 const UserManagementTable = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
-
   const [dataTable, setDataTable] = useState([]);
   const [selectedId, setSelectedId] = useState(0);
   const [page, setPage] = useState(DEFAULT_PAGE);
+  const [totalPage, setTotalPage] = useState(DEFAULT_TOTAL_PAGE);
+
+  const dispatch = useDispatch();
+  const isDeleteState = useSelector((state) => state.admin.isDelete);
+  const isCreateState = useSelector((state) => state.admin.isCreate);
+  const isEditState = useSelector((state) => state.admin.isEdit);
 
   const handleTabChange = (value) => {
     setActiveTab(value);
   };
 
-  const { data: userList } = useQuery(
-    "userList",
+  const { data: userList, isLoading: userListListLoading } = useQuery(
+    ["userList", isDeleteState, isCreateState, page],
     () => getListUserAdminPage.getListUser({ page }),
     { fetchPolicy: "network-only" },
-    { enabled: activeTab === "all" }
+    { enabled: activeTab === USER_ROLES.ALL }
   );
 
-  const { data: studentList } = useQuery(
-    "studentList",
+  const { data: studentList, isLoading: studentListLoading } = useQuery(
+    ["studentList", isDeleteState, isCreateState, page],
     () =>
       getListUserAdminPage.getListUser({
         role: USER_ROLES.STUDENT,
@@ -60,8 +72,8 @@ const UserManagementTable = () => {
     { enabled: activeTab === USER_ROLES.STUDENT }
   );
 
-  const { data: teacherList } = useQuery(
-    "teacherList",
+  const { data: teacherList, isLoading: teacherListLoading } = useQuery(
+    ["teacherList", isDeleteState, isCreateState, page],
     () =>
       getListUserAdminPage.getListUser({
         page,
@@ -72,25 +84,36 @@ const UserManagementTable = () => {
 
   const { data: classList } = useQuery(
     "class",
-    () => ClassAPI.classes(),
-    { refetchOnChange: false },
-    { refetchOnMount: false }
+    () => ClassAPI.classes({ limit: 20, page: 1 }),
+    {
+      refetchOnMount: false,
+    }
   );
 
   const { data: subjectList } = useQuery(
     "subject",
-    () => subjectAPI.subjects(),
-    { refetchOnChange: false },
+    () => subjectAPI.subjects({ limit: 20, page: 1 }),
     { refetchOnMount: false }
+  );
+
+  const onChangePagtination = useCallback(
+    (number) => {
+      setPage(number);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [page]
   );
 
   useEffect(() => {
     if (userList && activeTab === "all") {
       setDataTable(userList.data.data);
+      setTotalPage(userList.data.pagination);
     } else if (studentList && activeTab === USER_ROLES.STUDENT) {
       setDataTable(studentList.data.data);
+      setTotalPage(studentList.data.pagination);
     } else if (teacherList && activeTab === USER_ROLES.TEACHER) {
       setDataTable(teacherList.data.data);
+      setTotalPage(teacherList.data.pagination);
     }
   }, [activeTab, studentList, teacherList, userList]);
 
@@ -107,6 +130,7 @@ const UserManagementTable = () => {
       console.log(error);
     } finally {
       setOpenDelete(false);
+      dispatch(isDelete());
       toast("User deleted successfully!");
     }
   };
@@ -120,6 +144,10 @@ const UserManagementTable = () => {
 
   return (
     <>
+      {(userListListLoading || studentListLoading || teacherListLoading) && (
+        <GlobalLoading />
+      )}
+
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-4 flex items-center justify-between gap-8">
@@ -197,11 +225,13 @@ const UserManagementTable = () => {
             variant="small"
             color="blue-gray-200"
             className="font-normal"
-          >
-            {/* LoremLorem ipsum dolor sit amet, consectetur adipiscing elit. */}
-          </Typography>
+          ></Typography>
           <div>
-            <Pagination />
+            <Pagination
+              page={page}
+              onChangePagtination={onChangePagtination}
+              totalSize={totalPage}
+            />
           </div>
         </CardFooter>
       </Card>

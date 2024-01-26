@@ -36,7 +36,7 @@ export function CreateExamsDataQuestion({ questionList, setFieldValue }) {
   }, [questionData]);
 
   return (
-    <Card className="ml-5 max-h-[735px] min-w-full max-w-[1400px] overflow-scroll round-full">
+    <Card className="ml-8 max-h-[735px] min-w-full max-w-[1400px] overflow-scroll round-full">
       <table className="w-full  table-auto text-left">
         <thead>
           <tr>
